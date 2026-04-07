@@ -276,18 +276,137 @@ Pages rebuild instantly without waiting for the 60s timer.
 
 ---
 
-## 6. Seeding
+## 6. Contacts & Newsletter
+
+### New Prisma Models
+
+```prisma
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Subscriber {
+  id              String          @id @default(cuid())
+  email           String          @unique
+  status          SubscriberStatus @default(ACTIVE)
+  subscribedAt    DateTime        @default(now())
+  unsubscribedAt  DateTime?
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+}
+```
+
+### Admin Pages
+- `/admin/contacts` — table: name, email, message preview, date, read/unread badge, delete action. Click row to expand full message and mark as read.
+- `/admin/newsletter` — subscriber list with status, export CSV, plus broadcast composer: subject + body textarea, send to all ACTIVE via nodemailer.
+
+### API Routes
+
+| Method | Route | Action |
+|--------|-------|--------|
+| POST | `/api/contact` | Updated — saves to DB + sends SMTP email |
+| POST | `/api/newsletter/subscribe` | Public subscribe (validates email, creates Subscriber) |
+| GET | `/api/admin/contacts` | List all submissions (admin) |
+| PUT | `/api/admin/contacts/[id]` | Mark read/unread |
+| DELETE | `/api/admin/contacts/[id]` | Delete submission |
+| GET | `/api/admin/newsletter` | List subscribers |
+| DELETE | `/api/admin/newsletter/[id]` | Remove subscriber |
+| POST | `/api/admin/newsletter/broadcast` | Send email to all ACTIVE subscribers via nodemailer |
+
+### Newsletter Widget (Frontend)
+A small subscribe form (email input + submit button) placed in the footer and/or CTA section. Calls `POST /api/newsletter/subscribe`. Shows success/error message inline.
+
+---
+
+## 7. Seeding
 
 A Prisma seed script (`prisma/seed.js`) creates:
-- 1 admin user (email + hashed password from `.env`)
-- 5–6 sample blog posts in both French and English with full SEO fields and schema
-- Sample uploads records pointing to existing `/public/assets/imgs/blog/` images
+- 1 admin user — credentials loaded from `.env` (`ADMIN_EMAIL`, `ADMIN_PASSWORD`)
+- 5–6 sample blog posts in both French and English with full SEO fields, schema type, and schemaOverrides
+- 3 sample contact submissions (mixed read/unread)
+- 5 sample newsletter subscribers (mix of ACTIVE and UNSUBSCRIBED)
+- Sample upload records pointing to existing `/public/assets/imgs/blog/` images
 
 Run with: `npx prisma db seed`
 
 ---
 
-## 7. New Dependencies
+## 8. API Testing
+
+Every API route has a corresponding test file using **Jest** + `node-mocks-http` (no external test server needed — tests call handler functions directly).
+
+### Test files structure
+```
+src/
+  __tests__/
+    api/
+      blog/
+        posts.test.js      ← GET /api/blog/posts (list published)
+        post.test.js       ← GET /api/blog/posts/[slug]
+      admin/
+        posts.test.js      ← CRUD + auth guard
+        uploads.test.js    ← upload + delete
+        contacts.test.js   ← list, mark read, delete
+        newsletter.test.js ← list, broadcast, delete
+      newsletter/
+        subscribe.test.js  ← public subscribe endpoint
+      contact.test.js      ← public contact form submit
+      sitemap.test.js      ← sitemap XML output
+```
+
+### What each test covers
+- **Happy path** — correct input returns expected status + data shape
+- **Auth guard** — unauthenticated request to `/api/admin/*` returns 401
+- **Validation** — missing required fields return 400 with error message
+- **Not found** — unknown slug/id returns 404
+- **File upload** — wrong file type returns 400, oversized file returns 413
+- **Broadcast** — mocks nodemailer transport, verifies `sendMail` called with correct recipients
+
+### Test utilities
+- `prisma/__mocks__/index.js` — Prisma client mock (jest.mock)
+- `src/__tests__/helpers/mockSession.js` — helper to inject fake NextAuth session into handler tests
+
+---
+
+## 9. Environment Variables (`.env`)
+
+```env
+# Database
+DATABASE_URL="postgresql://postgres:password@localhost:5432/novaimpact_blog"
+
+# NextAuth
+NEXTAUTH_SECRET="generate-a-random-32-char-string"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Admin seed credentials (used by prisma/seed.js)
+ADMIN_EMAIL="admin@novaimpact.fr"
+ADMIN_PASSWORD="your-secure-password-here"
+
+# SMTP (existing nodemailer config)
+SMTP_HOST="smtp.example.com"
+SMTP_PORT=587
+SMTP_USER="your-smtp-user"
+SMTP_PASS="your-smtp-password"
+SMTP_FROM="noreply@novaimpact.fr"
+
+# Site
+NEXT_PUBLIC_SITE_URL="https://novaimpact.fr"
+```
+
+All secrets loaded via `process.env` — never hardcoded. `.env` added to `.gitignore`.
+
+---
+
+## 10. New Dependencies
 
 | Package | Purpose |
 |---------|---------|
@@ -297,15 +416,21 @@ Run with: `npx prisma db seed`
 | `bcryptjs` | Password hashing |
 | `multer` | File upload handling in API routes |
 | `slugify` | Auto-generate URL slugs from titles |
+| `jest` (dev) | Test runner |
+| `jest-environment-node` (dev) | Node environment for API handler tests |
+| `node-mocks-http` (dev) | Mock req/res for Next.js API handler tests |
+| `@types/bcryptjs` (dev) | TypeScript types |
 
 ---
 
-## 8. File Structure (new files)
+## 11. File Structure (new files)
 
 ```
 prisma/
   schema.prisma
   seed.js
+  __mocks__/
+    index.js         ← Prisma client mock for tests
 
 public/
   robots.txt
@@ -326,6 +451,10 @@ src/
         [id].jsx
       uploads/
         index.jsx
+      contacts/
+        index.jsx
+      newsletter/
+        index.jsx
       settings/
         index.jsx
     api/
@@ -338,16 +467,29 @@ src/
         uploads/
           index.js
           [id].js
+        contacts/
+          index.js
+          [id].js
+        newsletter/
+          index.js
+          [id].js
+          broadcast.js
         settings.js
+      blog/
+        posts.js       ← public: list published posts
+        [slug].js      ← public: get single post by slug
+      newsletter/
+        subscribe.js   ← public subscribe endpoint
       sitemap.xml.js
       revalidate.js
 
   components/
     blog/
-      Blog1.jsx      ← updated (dynamic props)
+      Blog1.jsx        ← updated (dynamic props)
       BlogDetails1.jsx ← updated (dynamic props + SEO)
-      BlogCard.jsx   ← extracted reusable card
-      BlogSeo.jsx    ← SEO Head component for articles
+      BlogCard.jsx     ← extracted reusable card
+      BlogSeo.jsx      ← SEO Head component for articles
+      NewsletterWidget.jsx ← subscribe form for footer/CTA
     admin/
       AdminLayout.jsx
       PostEditor/
@@ -357,6 +499,34 @@ src/
         SchemaPreview.jsx
       UploadLibrary.jsx
       ImagePicker.jsx
+      ContactsTable.jsx
+      NewsletterTable.jsx
+      BroadcastComposer.jsx
+
+  lib/
+    prisma.js          ← Prisma client singleton
+    auth.js            ← NextAuth options
+    schema-builder.js  ← builds JSON-LD from post data
+    slugify.js         ← slug generation helper
+    upload.js          ← multer config
+    mailer.js          ← nodemailer transport singleton
+
+  __tests__/
+    api/
+      blog/
+        posts.test.js
+        post.test.js
+      admin/
+        posts.test.js
+        uploads.test.js
+        contacts.test.js
+        newsletter.test.js
+      newsletter/
+        subscribe.test.js
+      contact.test.js
+      sitemap.test.js
+    helpers/
+      mockSession.js
 
   lib/
     prisma.js        ← Prisma client singleton
