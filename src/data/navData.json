@@ -1,0 +1,86 @@
+{
+  "nav": [
+    {
+      "nav_name": "Home",
+      "link": "/digital-agency",
+      "type": "",
+      "sub_nav": []
+    },
+    {
+      "nav_name": "Services",
+      "link": "/service",
+      "type": "dropdown",
+      "sub_nav": [
+        {
+          "name": "Website Creation",
+          "link": "/service"
+        },
+        {
+          "name": "Social Media Management",
+          "link": "/service"
+        },
+        {
+          "name": "Content Creation",
+          "link": "/service"
+        },
+        {
+          "name": "Meta Ads (Facebook & Instagram)",
+          "link": "/service"
+        },
+        {
+          "name": "Google Ads",
+          "link": "/service"
+        },
+        {
+          "name": "SEO (Search Engine Optimization)",
+          "link": "/service"
+        },
+        {
+          "name": "Brand Identity",
+          "link": "/service"
+        },
+        {
+          "name": "Comparator Creation (Personalized)",
+          "link": "/service"
+        },
+        {
+          "name": "Consulting & Support",
+          "link": "/service"
+        }
+      ]
+    },
+    {
+      "nav_name": "Case Studies",
+      "link": "/portfolio-v4",
+      "type": "dropdown",
+      "sub_nav": [
+        {
+          "name": "Our Solutions",
+          "link": "/portfolio-v4"
+        },
+        {
+          "name": "Our Work",
+          "link": "/portfolio-v5"
+        }
+      ]
+    },
+    {
+      "nav_name": "About",
+      "link": "/about",
+      "type": "",
+      "sub_nav": []
+    },
+    {
+      "nav_name": "Blog",
+      "link": "/blog-dark",
+      "type": "",
+      "sub_nav": []
+    },
+    {
+      "nav_name": "Contact",
+      "link": "/contact",
+      "type": "",
+      "sub_nav": []
+    }
+  ]
+}
