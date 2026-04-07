@@ -122,7 +122,7 @@ export async function getStaticProps() {
   return {
     props: {
       posts: STATIC_POSTS,
-      lang: "fr",
+      lang: "en",
     },
     revalidate: 60,
   };
