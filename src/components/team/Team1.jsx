@@ -181,7 +181,7 @@ const Team1 = () => {
                   />
                   <div className="team__info">
                     <h4 className="team__member-name-6">Saymon D. Halk</h4>
-                    <h5 className="team__member-role-6">SEO Strategist</h5>
+                    <h5 className="team__member-role-6">CEO & Founder</h5>
                   </div>
                 </Link>
               </div>
@@ -198,7 +198,7 @@ const Team1 = () => {
                   />
                   <div className="team__info">
                     <h4 className="team__member-name-6">Jassica Oliver</h4>
-                    <h5 className="team__member-role-6">Lead Designer</h5>
+                    <h5 className="team__member-role-6">SEO Strategist</h5>
                   </div>
                 </Link>
               </div>
@@ -283,7 +283,7 @@ const Team1 = () => {
                   />
                   <div className="team__info">
                     <h4 className="team__member-name-6">Saymon D. Halk</h4>
-                    <h5 className="team__member-role-6">SEO Strategist</h5>
+                    <h5 className="team__member-role-6">CEO & Founder</h5>
                   </div>
                 </Link>
               </div>
@@ -300,7 +300,7 @@ const Team1 = () => {
                   />
                   <div className="team__info">
                     <h4 className="team__member-name-6">Jassica Oliver</h4>
-                    <h5 className="team__member-role-6">Lead Designer</h5>
+                    <h5 className="team__member-role-6">SEO Strategist</h5>
                   </div>
                 </Link>
               </div>
