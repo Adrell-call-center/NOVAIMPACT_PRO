@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+
+  titleFr     String
+  titleEn     String
+  excerptFr   String
+  excerptEn   String
+  contentFr   String     @db.Text
+  contentEn   String     @db.Text
+
+  coverImage  String?
+  ogImageUrl  String?
+
+  category    String
+  tags        String[]
+
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  metaTitleFr     String?
+  metaTitleEn     String?
+  metaDescFr      String?
+  metaDescEn      String?
+  focusKeywordFr  String?
+  focusKeywordEn  String?
+  canonicalUrl    String?
+  noIndex         Boolean  @default(false)
+
+  schemaType      SchemaType @default(Article)
+  schemaOverrides Json?
+
+  @@map("posts")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum SchemaType {
+  Article
+  BlogPosting
+  HowTo
+  FAQPage
+  NewsArticle
+}
+
+model Upload {
+  id        String   @id @default(cuid())
+  filename  String
+  path      String
+  size      Int
+  mimeType  String
+  createdAt DateTime @default(now())
+
+  @@map("uploads")
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contact_submissions")
+}
+
+model Subscriber {
+  id              String           @id @default(cuid())
+  email           String           @unique
+  status          SubscriberStatus @default(ACTIVE)
+  subscribedAt    DateTime         @default(now())
+  unsubscribedAt  DateTime?
+
+  @@map("subscribers")
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+}

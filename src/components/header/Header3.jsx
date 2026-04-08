@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Canvas from "../canvas/Canvas";
 import Link from "next/link";
-import LogoWhite from "../../../public/assets/imgs/logo/site-logo-white.png";
-import LogoWhite2 from "../../../public/assets/imgs/logo/site-logo-white-2.png";
+import LogoWhite from "../../../public/assets/imgs/logo/footer-logo-white.png";
 import MenuWhite from "../../../public/assets/imgs/icon/menu-white.png";
 import Image from "next/image";
 
@@ -48,22 +47,24 @@ export default function Header3() {
       <header className="header__area" ref={headerArea}>
         <div className="header__inner">
           <div className="header__logo">
-            <Link href="/digital-agency">
+            <Link href="/">
               <Image
                 priority
-                width={33}
-                height={100}
+                width={160}
+                height={45}
                 className="logo-primary"
                 src={LogoWhite}
-                alt="Site Logo"
+                alt="Nova Impact Logo"
+                style={{ width: "auto", height: "45px", objectFit: "contain" }}
               />
               <Image
                 priority
-                width={100}
-                height={33}
+                width={160}
+                height={45}
                 className="logo-secondary"
-                src={LogoWhite2}
-                alt="Moibile Logo"
+                src={LogoWhite}
+                alt="Nova Impact Logo"
+                style={{ width: "auto", height: "36px", objectFit: "contain" }}
               />
             </Link>
           </div>
@@ -80,7 +81,7 @@ export default function Header3() {
           </div>
           <div className="header__support">
             <p>
-              Contact us <a href="tel:+33700000000">+33 7 00 00 00 00</a>
+              Contact us <a href="tel:+447477884817">+44 7477 884817</a>
             </p>
           </div>
         </div>

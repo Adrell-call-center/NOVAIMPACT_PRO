@@ -50,19 +50,10 @@
       ]
     },
     {
-      "nav_name": "Case Studies",
-      "link": "/portfolio-v4",
-      "type": "dropdown",
-      "sub_nav": [
-        {
-          "name": "Our Solutions",
-          "link": "/portfolio-v4"
-        },
-        {
-          "name": "Our Work",
-          "link": "/our-work"
-        }
-      ]
+      "nav_name": "Portfolio",
+      "link": "/portfolio",
+      "type": "",
+      "sub_nav": []
     },
     {
       "nav_name": "About",

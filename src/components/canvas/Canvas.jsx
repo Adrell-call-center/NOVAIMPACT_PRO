@@ -2,7 +2,7 @@ import { faMagnifyingGlass, faXmark, faSun, faMoon } from "@fortawesome/free-sol
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import logoWhite2 from "../../../public/assets/imgs/logo/site-logo-white-2.png";
+import logoWhite2 from "../../../public/assets/imgs/logo/footer-logo-white.png";
 import Shape11 from "../../../public/assets/imgs/shape/11.png";
 import Shape12 from "../../../public/assets/imgs/shape/12.png";
 import Image from "next/image";
@@ -81,14 +81,16 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
               <Link href="/">
                 <Image
                   priority
-                  style={{ width: "auto", height: "auto" }}
+                  width={160}
+                  height={45}
+                  style={{ width: "auto", height: "45px", objectFit: "contain" }}
                   src={logoWhite2}
                   alt="Nova Impact Logo"
                 />
               </Link>
             </div>
             <div className="offcanvas__social">
-              <h3 className="social-title">Follow Us</h3>
+              <p className="social-title">Follow Us</p>
               <ul>
                 <li><a href="https://instagram.com/novaimpact" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 <li><a href="https://facebook.com/novaimpact" target="_blank" rel="noopener noreferrer">Facebook</a></li>
@@ -107,6 +109,19 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
           </div>
 
           <div className="offcanvas__mid">
+            {/* Mobile-only logo inside menu panel */}
+            <div className="offcanvas__mobile-logo" style={{ padding: "24px 24px 0", display: "none" }}>
+              <Link href="/" onClick={closeCanvas}>
+                <Image
+                  priority
+                  width={140}
+                  height={40}
+                  src={logoWhite2}
+                  alt="Nova Impact Logo"
+                  style={{ width: "auto", height: "36px", objectFit: "contain" }}
+                />
+              </Link>
+            </div>
             <div className="offcanvas__menu-wrapper">
               <nav className="offcanvas__menu">
                 <ul className="menu-anim title" ref={headerTitle}>
@@ -146,25 +161,11 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
                     </ul>
                   </li>
 
-                  {/* CASE STUDIES */}
+                  {/* PORTFOLIO */}
                   <li>
-                    <div className="header_title d-flex">
-                      <Link href="/portfolio-v4">CASE STUDIES</Link>
-                      <div className="accordian-btn">
-                        {accordion === 3 ? (
-                          <a onClick={() => openData(0)}>-</a>
-                        ) : (
-                          <a onClick={() => openData(3)}>+</a>
-                        )}
-                      </div>
+                    <div className="header_title">
+                      <Link href="/portfolio">PORTFOLIO</Link>
                     </div>
-                    <ul
-                      className="sub_title"
-                      style={accordion === 3 ? { display: "" } : { display: "none" }}
-                    >
-                      <li><Link href="/portfolio-v4">Our Solutions</Link></li>
-                      <li><Link href="/our-work">Our Work</Link></li>
-                    </ul>
                   </li>
 
                   {/* ABOUT */}
@@ -204,7 +205,7 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
               </form>
             </div>
             <div className="offcanvas__contact">
-              <h3>Get in touch</h3>
+              <p className="offcanvas-contact-title">Get in touch</p>
               <ul>
                 <li>
                   <a href="tel:+447477884817">+44 7477 884817</a>
