@@ -25,17 +25,17 @@ const steps = [
 
 const HomeProcess = () => {
   return (
-    <section style={{ padding: "120px 0", background: "#fff" }}>
+    <section className="home-process pt-120 pb-120">
       <div className="container">
-        <div className="row" style={{ marginBottom: "70px" }}>
+        <div className="row home-process-header mb-70">
           <div className="col-xxl-6 col-xl-6 col-lg-6">
             <h2 className="sec-sub-title title-anim">Our Process</h2>
             <h3 className="sec-title title-anim">
               How we turn your<br />goals into results
             </h3>
           </div>
-          <div className="col-xxl-6 col-xl-6 col-lg-6" style={{ display: "flex", alignItems: "flex-end" }}>
-            <p style={{ color: "#555", lineHeight: "1.8", marginBottom: "0" }}>
+          <div className="col-xxl-6 col-xl-6 col-lg-6 home-process-desc">
+            <p className="home-process-intro">
               Every engagement follows the same proven process — from discovery to scaling — so you always know where we are and what comes next.
             </p>
           </div>
@@ -43,30 +43,18 @@ const HomeProcess = () => {
 
         <div className="row">
           {steps.map((s, i) => (
-            <div key={i} className="col-xxl-3 col-xl-3 col-lg-3 col-md-6" style={{ marginBottom: "32px" }}>
-              <div style={{
-                borderTop: "2px solid #FFC81A",
-                paddingTop: "32px",
-                height: "100%",
-              }}>
-                <span style={{
-                  display: "block",
-                  fontSize: "48px",
-                  fontWeight: 700,
-                  color: "#f0f0f0",
-                  fontFamily: "Kanit, sans-serif",
-                  lineHeight: 1,
-                  marginBottom: "16px",
-                }}>{s.num}</span>
-                <h4 style={{ fontSize: "20px", fontWeight: 600, color: "#1a1a1a", marginBottom: "14px" }}>{s.title}</h4>
-                <p style={{ color: "#666", lineHeight: "1.8", fontSize: "15px", margin: 0 }}>{s.desc}</p>
+            <div key={i} className="col-xxl-3 col-xl-3 col-lg-3 col-md-6 mb-32">
+              <div className="process-step">
+                <span className="step-number">{s.num}</span>
+                <h4 className="step-title">{s.title}</h4>
+                <p className="step-desc">{s.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div style={{ marginTop: "60px" }}>
-          <Link href="/about" style={{ color: "#1a1a1a", fontWeight: 500, textDecoration: "underline", fontSize: "15px" }}>
+        <div className="home-process-cta mt-60">
+          <Link href="/about" className="home-process-link">
             Learn more about us →
           </Link>
         </div>

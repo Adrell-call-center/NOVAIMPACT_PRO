@@ -41,23 +41,18 @@ export default function Footer3() {
                     </p>
                     <ul className="footer__social">
                       <li>
-                        <a href="https://youtube.com/@novaimpact" target="_blank" rel="noopener noreferrer">
-                          <span><i className="fa-brands fa-youtube"></i></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://linkedin.com/company/novaimpact" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
                           <span><i className="fa-brands fa-linkedin"></i></span>
                         </a>
                       </li>
                       <li>
-                        <a href="https://x.com/novaimpact" target="_blank" rel="noopener noreferrer">
-                          <span><i className="fa-brands fa-x-twitter"></i></span>
+                        <a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer">
+                          <span><i className="fa-brands fa-instagram"></i></span>
                         </a>
                       </li>
                       <li>
-                        <a href="https://instagram.com/novaimpact" target="_blank" rel="noopener noreferrer">
-                          <span><i className="fa-brands fa-instagram"></i></span>
+                        <a href="https://x.com/ImpactNova_io" target="_blank" rel="noopener noreferrer">
+                          <span><i className="fa-brands fa-x-twitter"></i></span>
                         </a>
                       </li>
                     </ul>

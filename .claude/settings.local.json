@@ -4,7 +4,8 @@
       "Bash(npm run:*)",
       "Bash(node:*)",
       "Bash(npx prisma:*)",
-      "Bash(curl -s http://localhost:5555/api/overview)"
+      "Bash(curl -s http://localhost:5555/api/overview)",
+      "mcp__ide__executeCode"
     ]
   }
 }

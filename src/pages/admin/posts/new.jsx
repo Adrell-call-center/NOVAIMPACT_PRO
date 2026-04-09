@@ -9,26 +9,24 @@ import { buildSchema } from '@/lib/schema-builder';
 export default function AdminPostNew() {
   const router = useRouter();
   const [tab, setTab] = useState('general');
-  const [langTab, setLangTab] = useState('fr');
   const [saving, setSaving] = useState(false);
   const [uploads, setUploads] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  const [previewLang, setPreviewLang] = useState('fr');
   const [scheduleMode, setScheduleMode] = useState(false);
   const [existingCategories, setExistingCategories] = useState([]);
   const [existingTags, setExistingTags] = useState([]);
-  const [showNewCategory, setShowNewCategory] = useState(false);
-  const [newCategory, setNewCategory] = useState('');
   const [tagSearch, setTagSearch] = useState('');
-  const [publishStatus, setPublishStatus] = useState('draft'); // draft, published, scheduled
+  const [categorySearch, setCategorySearch] = useState('');
+  const [showManageCategories, setShowManageCategories] = useState(false);
+  const [publishStatus, setPublishStatus] = useState('draft');
 
   const [form, setForm] = useState({
-    titleFr: '', titleEn: '', excerptFr: '', excerptEn: '', contentFr: '', contentEn: '',
+    titleFr: '', slug: '', excerptFr: '', contentFr: '',
     category: '', tags: '', coverImage: '', status: 'DRAFT', publishedAt: '',
-    metaTitleFr: '', metaTitleEn: '', metaDescFr: '', metaDescEn: '',
-    focusKeywordFr: '', focusKeywordEn: '', canonicalUrl: '', noIndex: false,
-    ogImageUrl: '', schemaType: 'Article', schemaOverridesRaw: '',
+    metaTitleFr: '', metaDescFr: '',
+    focusKeywordFr: '', canonicalUrl: '', noIndex: false,
+    ogImageUrl: '', schemaOverridesRaw: '',
   });
 
   useEffect(() => {
@@ -49,7 +47,7 @@ export default function AdminPostNew() {
       const posts = data.posts || [];
       
       // Extract unique categories
-      const categories = [...new Set(posts.map(p => p.category).filter(Boolean))];
+      const categories = [...new Set(posts.flatMap(p => (p.category || '').split(',').map(c => c.trim())).filter(Boolean))];
       setExistingCategories(categories);
       
       // Extract unique tags
@@ -104,11 +102,11 @@ export default function AdminPostNew() {
   };
 
   const SchemaPreview = () => {
+    if (!form.schemaOverridesRaw.trim()) return <p className="schema-empty">No JSON-LD entered yet.</p>;
     try {
-      const overrides = form.schemaOverridesRaw ? JSON.parse(form.schemaOverridesRaw) : {};
-      const schema = buildSchema({ ...form, schemaType: form.schemaType, schemaOverrides: overrides }, 'fr');
-      return <pre className="schema-preview">{JSON.stringify(schema, null, 2)}</pre>;
-    } catch { return <p className="text-danger">Invalid JSON in overrides</p>; }
+      const parsed = JSON.parse(form.schemaOverridesRaw);
+      return <pre className="schema-preview">{JSON.stringify(parsed, null, 2)}</pre>;
+    } catch { return <p className="text-danger">⚠ Invalid JSON</p>; }
   };
 
   return (
@@ -146,223 +144,48 @@ export default function AdminPostNew() {
           </div>
         </div>
 
-        <div className="admin-tabs">
-          <button className={`admin-tab ${tab === 'general' ? 'active' : ''}`} onClick={() => setTab('general')}>
-            <i className="fa-solid fa-pen me-2"></i>Content
-          </button>
-          <button className={`admin-tab ${tab === 'seo' ? 'active' : ''}`} onClick={() => setTab('seo')}>
-            <i className="fa-solid fa-search me-2"></i>SEO
-          </button>
-          <button className={`admin-tab ${tab === 'schema' ? 'active' : ''}`} onClick={() => setTab('schema')}>
-            <i className="fa-solid fa-code me-2"></i>Schema
-          </button>
-        </div>
+        <div className="admin-editor-2col">
 
-        <div className="admin-editor-layout">
-          <div className="admin-editor-main">
-            {tab === 'general' && (
-              <>
-                <div className="admin-light-card admin-editor-card">
-                  <div className="form-group">
-                    <label className="admin-label">Title (French) *</label>
-                    <input className="admin-input admin-input-lg" value={form.titleFr} onChange={e => { update('titleFr', e.target.value); update('metaTitleFr', e.target.value); }} placeholder="Enter post title in French" />
-                  </div>
-                  <div className="form-group">
-                    <label className="admin-label">Title (English)</label>
-                    <input className="admin-input admin-input-lg" value={form.titleEn} onChange={e => { update('titleEn', e.target.value); update('metaTitleEn', e.target.value); }} placeholder="Enter post title in English" />
-                  </div>
-
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label className="admin-label">Category</label>
-                      <div className="admin-category-select">
-                        <select className="admin-input admin-select" value={form.category || ''} onChange={(e) => {
-                          if (e.target.value === '__new__') {
-                            setShowNewCategory(true);
-                          } else {
-                            update('category', e.target.value);
-                            setShowNewCategory(false);
-                          }
-                        }}>
-                          <option value="">Select Category</option>
-                          {existingCategories.map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
-                          ))}
-                          <option value="__new__">+ Create New Category</option>
-                        </select>
-                        {showNewCategory && (
-                          <div className="admin-new-category-input">
-                            <input className="admin-input admin-input-sm" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Enter new category name" autoFocus />
-                            <div className="admin-new-category-actions">
-                              <button className="admin-btn-sm admin-btn-primary" onClick={() => {
-                                if (newCategory.trim()) {
-                                  update('category', newCategory.trim());
-                                  setExistingCategories(prev => [...prev, newCategory.trim()]);
-                                  setNewCategory('');
-                                  setShowNewCategory(false);
-                                }
-                              }}>Add</button>
-                              <button className="admin-btn-sm admin-btn-secondary" onClick={() => {
-                                setShowNewCategory(false);
-                                setNewCategory('');
-                              }}>Cancel</button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="admin-label">Tags</label>
-                      <div className="admin-tags-container">
-                        {form.tags.split(',').map((tag, i) => tag.trim() && (
-                          <span key={i} className="admin-tag-chip">
-                            {tag.trim()}
-                            <button className="admin-tag-remove" onClick={() => {
-                              const currentTags = form.tags.split(',').map(t => t.trim()).filter(t => t);
-                              currentTags.splice(i, 1);
-                              update('tags', currentTags.join(', '));
-                            }}>×</button>
-                          </span>
-                        ))}
-                        <div className="admin-tag-input-wrapper">
-                          <input className="admin-input admin-input-sm admin-tag-input" 
-                            value={tagSearch} 
-                            onChange={(e) => setTagSearch(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' && tagSearch.trim()) {
-                                e.preventDefault();
-                                const currentTags = form.tags.split(',').map(t => t.trim()).filter(t => t);
-                                if (!currentTags.includes(tagSearch.trim())) {
-                                  update('tags', [...currentTags, tagSearch.trim()].join(', '));
-                                }
-                                setTagSearch('');
-                              }
-                            }}
-                            placeholder="Type and press Enter to add tag..."
-                          />
-                          {tagSearch && existingTags.filter(t => t.toLowerCase().includes(tagSearch.toLowerCase())).length > 0 && (
-                            <div className="admin-tag-suggestions">
-                              {existingTags.filter(t => t.toLowerCase().includes(tagSearch.toLowerCase())).slice(0, 5).map((tag, i) => (
-                                <button key={i} className="admin-tag-suggestion" onClick={() => {
-                                  const currentTags = form.tags.split(',').map(t => t.trim()).filter(t => t);
-                                  if (!currentTags.includes(tag)) {
-                                    update('tags', [...currentTags, tag].join(', '));
-                                  }
-                                  setTagSearch('');
-                                }}>{tag}</button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="admin-label">Excerpt (French)</label>
-                    <textarea className="admin-textarea" rows={3} value={form.excerptFr} onChange={e => update('excerptFr', e.target.value)} placeholder="Short description for cards..." />
-                  </div>
-                  <div className="form-group">
-                    <label className="admin-label">Excerpt (English)</label>
-                    <textarea className="admin-textarea" rows={3} value={form.excerptEn} onChange={e => update('excerptEn', e.target.value)} placeholder="Short description for cards..." />
-                  </div>
-                </div>
-
-                <div className="admin-light-card admin-editor-card mt-4">
-                  <div className="admin-editor-lang-tabs">
-                    <button className={`admin-lang-tab ${langTab === 'fr' ? 'active' : ''}`} onClick={() => setLangTab('fr')}>
-                      <span className="admin-lang-flag">🇫🇷</span> French Content
-                    </button>
-                    <button className={`admin-lang-tab ${langTab === 'en' ? 'active' : ''}`} onClick={() => setLangTab('en')}>
-                      <span className="admin-lang-flag">🇬🇧</span> English Content
-                    </button>
-                  </div>
-                  <div className="admin-editor-lang-content">
-                    {langTab === 'fr' ? (
-                      <div className="form-group mb-0">
-                        <RichTextEditor value={form.contentFr} onChange={(val) => update('contentFr', val)} uploads={uploads} onUpload={handleFileUpload} placeholder="Write your post content in French..." />
-                      </div>
-                    ) : (
-                      <div className="form-group mb-0">
-                        <RichTextEditor value={form.contentEn} onChange={(val) => update('contentEn', val)} uploads={uploads} onUpload={handleFileUpload} placeholder="Write your post content in English..." />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </>
-            )}
-
-            {tab === 'seo' && (
-              <div className="admin-light-card admin-editor-card">
-                <h3 className="admin-section-title"><i className="fa-solid fa-google me-2" style={{ color: '#FFC81A' }}></i>Search Engine Optimization</h3>
-                <p className="admin-section-desc">Optimize how your post appears in search results and social media.</p>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label className="admin-label">Meta Title FR <span className="char-count">{form.metaTitleFr?.length || 0}/60</span></label>
-                    <input className={`admin-input ${form.metaTitleFr?.length > 60 ? 'input-error' : ''}`} value={form.metaTitleFr} onChange={e => update('metaTitleFr', e.target.value)} />
-                  </div>
-                  <div className="form-group">
-                    <label className="admin-label">Meta Title EN <span className="char-count">{form.metaTitleEn?.length || 0}/60</span></label>
-                    <input className={`admin-input ${form.metaTitleEn?.length > 60 ? 'input-error' : ''}`} value={form.metaTitleEn} onChange={e => update('metaTitleEn', e.target.value)} />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label className="admin-label">Meta Description FR <span className="char-count">{form.metaDescFr?.length || 0}/160</span></label>
-                  <textarea className={`admin-textarea ${form.metaDescFr?.length > 160 ? 'input-error' : ''}`} rows={3} value={form.metaDescFr} onChange={e => update('metaDescFr', e.target.value)} />
-                </div>
-                <div className="form-group">
-                  <label className="admin-label">Meta Description EN <span className="char-count">{form.metaDescEn?.length || 0}/160</span></label>
-                  <textarea className={`admin-textarea ${form.metaDescEn?.length > 160 ? 'input-error' : ''}`} rows={3} value={form.metaDescEn} onChange={e => update('metaDescEn', e.target.value)} />
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label className="admin-label">Focus Keyword FR</label>
-                    <input className="admin-input" value={form.focusKeywordFr} onChange={e => update('focusKeywordFr', e.target.value)} />
-                  </div>
-                  <div className="form-group">
-                    <label className="admin-label">Focus Keyword EN</label>
-                    <input className="admin-input" value={form.focusKeywordEn} onChange={e => update('focusKeywordEn', e.target.value)} />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label className="admin-label">Canonical URL (optional)</label>
-                  <input className="admin-input" value={form.canonicalUrl} onChange={e => update('canonicalUrl', e.target.value)} placeholder="https://example.com/canonical-url" />
-                </div>
-
-                <div className="checkbox-group">
-                  <input className="admin-checkbox" type="checkbox" checked={form.noIndex} onChange={e => update('noIndex', e.target.checked)} id="noIndex" />
-                  <label className="admin-checkbox-label" htmlFor="noIndex">No Index - Hide from search engines</label>
+          {/* LEFT — editor */}
+          <div className="admin-col-left editor-scroll">
+            <div className="admin-light-card admin-editor-card">
+              <div className="form-group mb-0">
+                <label className="admin-label">Title *</label>
+                <input className="admin-input admin-input-lg" value={form.titleFr} onChange={e => { update('titleFr', e.target.value); update('metaTitleFr', e.target.value); if (!form._slugEdited) update('slug', generateSlug(e.target.value)); }} placeholder="Enter post title" />
+              </div>
+              <div className="form-group mb-0 mt-3">
+                <label className="admin-label" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <i className="fa-solid fa-link" style={{ color: '#6c757d', fontSize: 12 }}></i>
+                  Slug
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 10, padding: '6px 12px' }}>
+                  <span style={{ color: '#94a3b8', fontSize: 13, whiteSpace: 'nowrap' }}>/blog/</span>
+                  <input
+                    className="admin-input"
+                    style={{ border: 'none', background: 'transparent', padding: 0, margin: 0, flex: 1, fontSize: 13 }}
+                    value={form.slug}
+                    onChange={e => { update('slug', e.target.value); update('_slugEdited', true); }}
+                    placeholder="auto-generated-from-title"
+                  />
                 </div>
               </div>
-            )}
+            </div>
 
-            {tab === 'schema' && (
-              <div className="admin-light-card admin-editor-card">
-                <div className="form-group">
-                  <label className="admin-label">Schema Type</label>
-                  <select className="admin-select" value={form.schemaType} onChange={e => update('schemaType', e.target.value)}>
-                    {['Article', 'BlogPosting', 'HowTo', 'FAQPage', 'NewsArticle'].map(t => <option key={t}>{t}</option>)}
-                  </select>
-                </div>
+            <div className="admin-quill-card mt-4">
+              <RichTextEditor defaultValue={form.contentFr} onChange={(val) => update('contentFr', val)} onImageUpload={handleFileUpload} onPdfUpload={async (file) => { const url = await handleFileUpload(file); return { url, name: file.name }; }} placeholder="Write your post content..." minHeight={600} />
+            </div>
 
-                <div className="form-group">
-                  <label className="admin-label">Custom JSON Overrides</label>
-                  <textarea className="admin-textarea admin-textarea-code" rows={8} value={form.schemaOverridesRaw} onChange={e => update('schemaOverridesRaw', e.target.value)} placeholder='{"@type": "FAQPage"}' />
-                </div>
-
-                <div className="schema-preview-wrapper">
-                  <h4 className="admin-schema-title">JSON-LD Preview</h4>
-                  <SchemaPreview />
-                </div>
+            <div className="admin-light-card admin-editor-card mt-4">
+              <div className="form-group mb-0">
+                <label className="admin-label">Excerpt</label>
+                <textarea className="admin-textarea" rows={4} value={form.excerptFr} onChange={e => update('excerptFr', e.target.value)} placeholder="Short description shown on blog cards and in SEO..." />
               </div>
-            )}
+            </div>
           </div>
 
-          <div className="admin-editor-sidebar">
+          {/* RIGHT — meta sidebar */}
+          <div className="admin-col-right">
+
             {/* Featured Image */}
             <div className="admin-light-card admin-sidebar-card">
               <h3 className="admin-sidebar-title"><i className="fa-solid fa-image me-2" style={{ color: '#FFC81A' }}></i>Featured Image</h3>
@@ -381,8 +204,6 @@ export default function AdminPostNew() {
                   </div>
                 )}
               </div>
-
-              {/* Upload New */}
               <div className="admin-upload-section">
                 <label className="admin-upload-btn" title="Upload New Image">
                   <i className="fa-solid fa-upload me-2"></i>Upload New
@@ -394,50 +215,186 @@ export default function AdminPostNew() {
                       fd.append('file', file);
                       const res = await fetch('/api/admin/uploads', { method: 'POST', body: fd });
                       const data = await res.json();
-                      if (data.url) handleImagePick(data.url);
+                      if (data.url) { handleImagePick(data.url); fetchUploads(); }
                       setUploading(false);
                     }
                   }} style={{ display: 'none' }} disabled={uploading} />
                 </label>
               </div>
-
-              {/* Choose from Library */}
               <div className="admin-library-section">
                 <h4 className="admin-library-title">Choose from Library</h4>
                 <div className="admin-library-grid">
-                  {uploads.map(u => (
+                  {uploads.filter(u => u.path && /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(u.path)).map(u => (
                     <div key={u.id} className={`admin-library-item ${form.coverImage === u.path ? 'selected' : ''}`} onClick={() => handleImagePick(u.path)}>
                       <img src={u.path} alt={u.filename} />
                       {form.coverImage === u.path && <div className="admin-library-check"><i className="fa-solid fa-check"></i></div>}
                     </div>
                   ))}
-                  {uploads.length === 0 && <p className="admin-library-empty">No images uploaded yet</p>}
+                  {uploads.filter(u => u.path && /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(u.path)).length === 0 && <p className="admin-library-empty">No images uploaded yet</p>}
                 </div>
               </div>
             </div>
 
-            {/* Settings */}
-            <div className="admin-light-card admin-sidebar-card">
-              <h3 className="admin-sidebar-title"><i className="fa-solid fa-gear me-2" style={{ color: '#6c757d' }}></i>Status</h3>
-
-              <div className="form-group">
-                <label className="admin-label">Visibility</label>
-                <select className="admin-select" value={form.status} onChange={e => update('status', e.target.value)}>
-                  <option value="DRAFT">Draft</option>
-                  <option value="PUBLISHED">Published</option>
-                </select>
+            {/* Category & Tags */}
+            <div className="admin-light-card admin-sidebar-card mt-4">
+              <div className="admin-sidebar-title-row">
+                <h3 className="admin-sidebar-title" style={{ border: 'none', padding: 0, margin: 0 }}><i className="fa-solid fa-folder me-2" style={{ color: '#14B8A6' }}></i>Category &amp; Tags</h3>
+                <button className="admin-manage-btn" onClick={() => setShowManageCategories(v => !v)}>
+                  {showManageCategories ? 'Done' : 'Manage'}
+                </button>
               </div>
 
-              <div className="admin-status-info">
-                {scheduleMode && form.publishedAt ? (
-                  <p className="admin-status-scheduled">📅 Scheduled for {new Date(form.publishedAt).toLocaleString()}</p>
-                ) : form.status === 'PUBLISHED' ? (
-                  <p className="admin-status-published">✅ Published</p>
-                ) : (
-                  <p className="admin-status-draft">📝 Draft</p>
-                )}
+              {showManageCategories ? (
+                <div className="admin-manage-categories" style={{ marginTop: 12 }}>
+                  <p className="admin-manage-hint">Click × to remove a category from suggestions</p>
+                  <div className="admin-cat-manage-list">
+                    {existingCategories.length === 0 && <p className="admin-library-empty">No categories yet</p>}
+                    {existingCategories.map((cat, i) => (
+                      <span key={i} className="admin-cat-manage-chip">
+                        {cat}
+                        <button onClick={() => setExistingCategories(prev => prev.filter((_, j) => j !== i))}>×</button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="form-group" style={{ marginTop: 12 }}>
+                  <label className="admin-label">Categories</label>
+                  <div className="admin-tags-container">
+                    {(form.category || '').split(',').map((cat, i) => cat.trim() && (
+                      <span key={i} className="admin-tag-chip admin-cat-chip">
+                        {cat.trim()}
+                        <button className="admin-tag-remove" onClick={() => {
+                          const cats = form.category.split(',').map(c => c.trim()).filter(c => c);
+                          cats.splice(i, 1);
+                          update('category', cats.join(', '));
+                        }}>×</button>
+                      </span>
+                    ))}
+                    <div className="admin-tag-input-wrapper">
+                      <input className="admin-input admin-input-sm admin-tag-input"
+                        value={categorySearch}
+                        onChange={e => setCategorySearch(e.target.value)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' && categorySearch.trim()) {
+                            e.preventDefault();
+                            const cats = form.category.split(',').map(c => c.trim()).filter(c => c);
+                            if (!cats.includes(categorySearch.trim())) {
+                              update('category', [...cats, categorySearch.trim()].join(', '));
+                              if (!existingCategories.includes(categorySearch.trim())) {
+                                setExistingCategories(prev => [...prev, categorySearch.trim()]);
+                              }
+                            }
+                            setCategorySearch('');
+                          }
+                        }}
+                        placeholder="Type and press Enter..."
+                      />
+                      {categorySearch && existingCategories.filter(c => c.toLowerCase().includes(categorySearch.toLowerCase())).length > 0 && (
+                        <div className="admin-tag-suggestions">
+                          {existingCategories.filter(c => c.toLowerCase().includes(categorySearch.toLowerCase())).slice(0, 6).map((cat, i) => (
+                            <button key={i} className="admin-tag-suggestion" onClick={() => {
+                              const cats = form.category.split(',').map(c => c.trim()).filter(c => c);
+                              if (!cats.includes(cat)) update('category', [...cats, cat].join(', '));
+                              setCategorySearch('');
+                            }}>{cat}</button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="form-group mb-0">
+                <label className="admin-label">Tags</label>
+                <div className="admin-tags-container">
+                  {form.tags.split(',').map((tag, i) => tag.trim() && (
+                    <span key={i} className="admin-tag-chip">
+                      {tag.trim()}
+                      <button className="admin-tag-remove" onClick={() => {
+                        const currentTags = form.tags.split(',').map(t => t.trim()).filter(t => t);
+                        currentTags.splice(i, 1);
+                        update('tags', currentTags.join(', '));
+                      }}>×</button>
+                    </span>
+                  ))}
+                  <div className="admin-tag-input-wrapper">
+                    <input className="admin-input admin-input-sm admin-tag-input"
+                      value={tagSearch}
+                      onChange={(e) => setTagSearch(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && tagSearch.trim()) {
+                          e.preventDefault();
+                          const currentTags = form.tags.split(',').map(t => t.trim()).filter(t => t);
+                          if (!currentTags.includes(tagSearch.trim())) {
+                            update('tags', [...currentTags, tagSearch.trim()].join(', '));
+                          }
+                          setTagSearch('');
+                        }
+                      }}
+                      placeholder="Type and press Enter..."
+                    />
+                    {tagSearch && existingTags.filter(t => t.toLowerCase().includes(tagSearch.toLowerCase())).length > 0 && (
+                      <div className="admin-tag-suggestions">
+                        {existingTags.filter(t => t.toLowerCase().includes(tagSearch.toLowerCase())).slice(0, 5).map((tag, i) => (
+                          <button key={i} className="admin-tag-suggestion" onClick={() => {
+                            const currentTags = form.tags.split(',').map(t => t.trim()).filter(t => t);
+                            if (!currentTags.includes(tag)) update('tags', [...currentTags, tag].join(', '));
+                            setTagSearch('');
+                          }}>{tag}</button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* SEO & Meta */}
+            <div className="admin-light-card admin-sidebar-card mt-4">
+              <h3 className="admin-sidebar-title"><i className="fa-solid fa-magnifying-glass me-2" style={{ color: '#FFC81A' }}></i>SEO &amp; Meta</h3>
+              <div className="form-group" style={{ marginTop: 16 }}>
+                <label className="admin-label">Meta Title <span className="char-count">{form.metaTitleFr?.length || 0}/60</span></label>
+                <input className={`admin-input ${form.metaTitleFr?.length > 60 ? 'input-error' : ''}`} value={form.metaTitleFr} onChange={e => update('metaTitleFr', e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label className="admin-label">Meta Description <span className="char-count">{form.metaDescFr?.length || 0}/160</span></label>
+                <textarea className={`admin-textarea ${form.metaDescFr?.length > 160 ? 'input-error' : ''}`} rows={3} value={form.metaDescFr} onChange={e => update('metaDescFr', e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label className="admin-label">Focus Keyword</label>
+                <input className="admin-input" value={form.focusKeywordFr} onChange={e => update('focusKeywordFr', e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label className="admin-label">Canonical URL</label>
+                <input className="admin-input" value={form.canonicalUrl} onChange={e => update('canonicalUrl', e.target.value)} placeholder="https://example.com/canonical-url" />
+              </div>
+              <div className="form-group">
+                <label className="admin-label">OG Image URL</label>
+                <input className="admin-input" value={form.ogImageUrl} onChange={e => update('ogImageUrl', e.target.value)} placeholder="https://..." />
+              </div>
+              <div className="checkbox-group">
+                <input className="admin-checkbox" type="checkbox" checked={form.noIndex} onChange={e => update('noIndex', e.target.checked)} id="noIndex" />
+                <label className="admin-checkbox-label" htmlFor="noIndex">No Index (hide from search engines)</label>
+              </div>
+            </div>
+
+            {/* Schema / JSON-LD */}
+            <div className="admin-light-card admin-sidebar-card mt-4">
+              <h3 className="admin-sidebar-title"><i className="fa-solid fa-code me-2" style={{ color: '#6366f1' }}></i>Schema / JSON-LD</h3>
+              <div className="form-group" style={{ marginTop: 12 }}>
+                <label className="admin-label">JSON-LD
+                  <span className="admin-schema-hint"> — paste your full structured data</span>
+                </label>
+                <textarea className="admin-textarea admin-textarea-code" rows={10} value={form.schemaOverridesRaw} onChange={e => update('schemaOverridesRaw', e.target.value)} placeholder={`{\n  "@context": "https://schema.org",\n  "@type": "Article",\n  "headline": "Your Post Title",\n  "author": { "@type": "Person", "name": "Author Name" },\n  "datePublished": "2024-01-01",\n  "description": "Post description"\n}`} />
+              </div>
+              <div className="schema-preview-wrapper">
+                <h4 className="admin-schema-title">Preview</h4>
+                <SchemaPreview />
+              </div>
+            </div>
+
+
           </div>
         </div>
 
@@ -448,14 +405,6 @@ export default function AdminPostNew() {
               <div className="wp-modal-header">
                 <h3><i className="fa-solid fa-eye me-2"></i>Post Preview</h3>
                 <div className="wp-modal-header-actions">
-                  <div className="wp-preview-lang-tabs">
-                    <button className={`wp-preview-lang-tab ${previewLang === 'fr' ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setPreviewLang('fr'); }}>
-                      🇫 FR
-                    </button>
-                    <button className={`wp-preview-lang-tab ${previewLang === 'en' ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setPreviewLang('en'); }}>
-                      🇬 EN
-                    </button>
-                  </div>
                   <span className="wp-preview-badge">{form.status === 'PUBLISHED' ? (scheduleMode ? 'Scheduled' : 'Published') : 'Draft'}</span>
                   <button className="wp-modal-close" onClick={() => setShowPreview(false)}>×</button>
                 </div>
@@ -474,14 +423,14 @@ export default function AdminPostNew() {
                        form.status === 'PUBLISHED' ? 'Published' : 'Draft'}
                     </span>
                   </div>
-                  <h1 className="wp-preview-title">{previewLang === 'fr' ? form.titleFr : form.titleEn}</h1>
-                  <p className="wp-preview-excerpt">{previewLang === 'fr' ? form.excerptFr : form.excerptEn}</p>
+                  <h1 className="wp-preview-title">{form.titleFr}</h1>
+                  <p className="wp-preview-excerpt">{form.excerptFr}</p>
                   <div className="wp-preview-tags">
                     {form.tags.split(',').map((tag, i) => tag.trim() && (
                       <span key={i} className="wp-preview-tag">{tag.trim()}</span>
                     ))}
                   </div>
-                  <div className="wp-preview-content" dangerouslySetInnerHTML={{ __html: previewLang === 'fr' ? form.contentFr : form.contentEn }} />
+                  <div className="wp-preview-content" dangerouslySetInnerHTML={{ __html: form.contentFr }} />
                 </div>
               </div>
               <div className="wp-modal-footer">
@@ -608,60 +557,79 @@ export default function AdminPostNew() {
           to { transform: rotate(360deg); }
         }
 
-        .admin-tabs {
+        /* Lock page scroll — only the two columns scroll */
+        body, html { overflow: hidden; height: 100%; }
+        .admin-main {
+          height: 100vh;
+          overflow: hidden;
           display: flex;
-          gap: 4px;
-          margin-bottom: 24px;
-          background: #ffffff;
-          border-radius: 12px;
-          padding: 6px;
-          border: 1px solid #e8e8e8;
+          flex-direction: column;
         }
-
-        .admin-tab {
-          padding: 12px 24px;
-          background: none;
-          border: none;
-          color: #6c757d;
-          font-size: 14px;
-          font-weight: 500;
-          cursor: pointer;
-          border-radius: 8px;
-          transition: all 0.2s;
+        .admin-content {
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
           display: flex;
-          align-items: center;
+          flex-direction: column;
+          padding: 24px 32px;
         }
+        .admin-editor-header { flex-shrink: 0; }
 
-        .admin-tab:hover {
-          color: #1a1d21;
-          background: #f8f9fa;
-        }
-
-        .admin-tab.active {
-          background: #FFC81A;
-          color: #1a1d21;
-        }
-
-        .admin-editor-layout {
-          display: grid;
-          grid-template-columns: 1fr 340px;
+        .admin-editor-2col {
+          flex: 1;
+          min-height: 0;
+          display: flex;
           gap: 24px;
+          overflow: hidden;
         }
 
         @media (max-width: 1199px) {
-          .admin-editor-layout {
-            grid-template-columns: 1fr;
+          body, html { overflow: auto; height: auto; }
+          .admin-main { height: auto; overflow: visible; display: block; }
+          .admin-content { overflow: visible; flex: none; display: block; padding: 16px; }
+          .admin-editor-2col { flex-direction: column; overflow: visible; height: auto; }
+        }
+
+        .admin-col-left {
+          flex: 1;
+          min-width: 0;
+          height: 100%;
+          overflow-y: auto;
+          padding-bottom: 40px;
+          scrollbar-width: thin;
+          scrollbar-color: #cbd5e1 transparent;
+        }
+        .admin-col-left::-webkit-scrollbar { width: 5px; }
+        .admin-col-left::-webkit-scrollbar-track { background: transparent; }
+        .admin-col-left::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+
+        .admin-col-right {
+          width: 360px;
+          min-width: 360px;
+          max-width: 360px;
+          height: 100%;
+          overflow-y: auto;
+          padding-bottom: 40px;
+          display: flex;
+          flex-direction: column;
+          scrollbar-width: thin;
+          scrollbar-color: #cbd5e1 transparent;
+        }
+        .admin-col-right::-webkit-scrollbar { width: 5px; }
+        .admin-col-right::-webkit-scrollbar-track { background: transparent; }
+        .admin-col-right::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+
+        @media (max-width: 1199px) {
+          .admin-col-right {
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
           }
         }
 
-        .admin-editor-main {
-          min-width: 0;
-        }
-
-        .admin-editor-sidebar {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
+        .admin-sidebar-card {
+          padding: 20px;
+          flex-shrink: 0;
         }
 
         .admin-light-card {

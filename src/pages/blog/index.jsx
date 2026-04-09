@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import RootLayout from '@/components/common/layout/RootLayout';
 import BlogIndex from '@/components/blog/BlogIndex';
+import { blogStore } from '@/lib/blog-store';
 
 const SITE_URL = "https://novaimpact.io";
 
@@ -54,39 +55,31 @@ export default function Blog({ posts, categories, pagination }) {
   );
 }
 
-export async function getStaticProps() {
-  const { PrismaClient } = await import('@prisma/client');
-  const prisma = new PrismaClient();
+export async function getServerSideProps(context) {
+  const { page = 1, category } = context.query;
+  const pageNum = parseInt(page) || 1;
+  const limit = 9;
+  const offset = (pageNum - 1) * limit;
+
   try {
-    const where = { status: 'PUBLISHED' };
-    const [posts, total, categories] = await Promise.all([
-      prisma.post.findMany({
-        where,
-        orderBy: { publishedAt: 'desc' },
-        take: 9,
-        select: {
-          id: true, slug: true, titleFr: true, titleEn: true,
-          excerptFr: true, excerptEn: true, coverImage: true,
-          category: true, tags: true, publishedAt: true,
-        },
-      }),
-      prisma.post.count({ where }),
-      prisma.post.findMany({
-        where,
-        select: { category: true },
-        distinct: ['category'],
-      }),
-    ]);
+    const { posts, total } = await blogStore.getPosts({ category, limit, offset });
+    const categories = await blogStore.getCategories();
 
     return {
       props: {
         posts: JSON.parse(JSON.stringify(posts)),
-        categories: categories.map(c => c.category).filter(Boolean),
-        pagination: { page: 1, limit: 9, total, pages: Math.ceil(total / 9) },
+        categories,
+        pagination: { page: pageNum, limit, total, pages: Math.ceil(total / limit) },
       },
-      revalidate: 60,
     };
-  } finally {
-    await prisma.$disconnect();
+  } catch (error) {
+    console.error('Blog index error:', error);
+    return {
+      props: {
+        posts: [],
+        categories: [],
+        pagination: { page: 1, limit, total: 0, pages: 0 },
+      },
+    };
   }
 }

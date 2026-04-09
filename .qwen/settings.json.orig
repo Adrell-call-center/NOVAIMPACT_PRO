@@ -3,6 +3,5 @@
     "allow": [
       "WebFetch(axtra.crowdytheme-demo.com)"
     ]
-  },
-  "$version": 3
+  }
 }

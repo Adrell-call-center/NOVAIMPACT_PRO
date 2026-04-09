@@ -31,3 +31,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# uploaded files (local uploads directory)
+/public/uploads/

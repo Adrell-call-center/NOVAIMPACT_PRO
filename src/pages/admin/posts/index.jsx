@@ -70,6 +70,7 @@ export default function AdminPosts() {
                 <table className="admin-table">
                   <thead>
                     <tr>
+                      <th style={{ width: 64 }}></th>
                       <th>Title</th>
                       <th>Category</th>
                       <th>Status</th>
@@ -78,11 +79,22 @@ export default function AdminPosts() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedPosts.map(p => (
+                    {paginatedPosts.map(p => {
+                      const isScheduled = p.status === 'PUBLISHED' && p.publishedAt && new Date(p.publishedAt) > new Date();
+                      const badgeClass = isScheduled ? 'admin-badge-scheduled' : p.status === 'PUBLISHED' ? 'admin-badge-success' : 'admin-badge-secondary';
+                      const badgeLabel = isScheduled ? 'Scheduled' : p.status === 'PUBLISHED' ? 'Published' : 'Draft';
+                      return (
                       <tr key={p.id}>
+                        <td style={{ padding: '10px 12px 10px 20px' }}>
+                          {p.coverImage ? (
+                            <img src={p.coverImage} alt="" className="admin-table-thumb" />
+                          ) : (
+                            <div className="admin-table-thumb-empty"><i className="fa-solid fa-image"></i></div>
+                          )}
+                        </td>
                         <td><Link href={`/admin/posts/${p.id}`} className="admin-table-link">{p.titleFr}</Link></td>
                         <td>{p.category || '—'}</td>
-                        <td><span className={`admin-badge ${p.status === 'PUBLISHED' ? 'admin-badge-success' : 'admin-badge-secondary'}`}>{p.status}</span></td>
+                        <td><span className={`admin-badge ${badgeClass}`}>{badgeLabel}</span></td>
                         <td>{p.publishedAt ? new Date(p.publishedAt).toLocaleDateString() : '—'}</td>
                         <td>
                           <div className="admin-table-actions">
@@ -94,7 +106,8 @@ export default function AdminPosts() {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                      );
+                    })}
                   </tbody>
                 </table>
                 {paginatedPosts.length === 0 && <p className="text-muted text-center py-5">No posts found. <Link href="/admin/posts/new">Create your first post</Link></p>}
@@ -249,6 +262,29 @@ export default function AdminPosts() {
 
         .admin-badge-success { background: rgba(25, 135, 84, 0.15); color: #198754; }
         .admin-badge-secondary { background: rgba(108, 117, 125, 0.15); color: #6c757d; }
+        .admin-badge-scheduled { background: rgba(13, 110, 253, 0.12); color: #0d6efd; }
+
+        .admin-table-thumb {
+          width: 44px;
+          height: 44px;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 1px solid #e8e8e8;
+          display: block;
+        }
+
+        .admin-table-thumb-empty {
+          width: 44px;
+          height: 44px;
+          border-radius: 8px;
+          border: 1px dashed #d0d0d0;
+          background: #f8f9fa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #c0c0c0;
+          font-size: 16px;
+        }
 
         .admin-table-actions {
           display: flex;

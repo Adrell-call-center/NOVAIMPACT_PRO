@@ -28,12 +28,12 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { titleFr, titleEn, excerptFr, excerptEn, contentFr, contentEn, category, tags, status, publishedAt, metaTitleFr, metaTitleEn, metaDescFr, metaDescEn, focusKeywordFr, focusKeywordEn, canonicalUrl, noIndex, coverImage, ogImageUrl, schemaType, schemaOverrides } = req.body;
+    const { titleFr, titleEn, excerptFr, excerptEn, contentFr, contentEn, category, tags, status, publishedAt, metaTitleFr, metaTitleEn, metaDescFr, metaDescEn, focusKeywordFr, focusKeywordEn, canonicalUrl, noIndex, coverImage, ogImageUrl, schemaType, schemaOverrides, slug: slugFromBody } = req.body;
 
     if (!titleFr) return res.status(400).json({ error: 'titleFr is required' });
 
     const existingSlugs = await prisma.post.findMany({ select: { slug: true } });
-    const slug = generateSlug(titleFr, existingSlugs.map(p => p.slug));
+    const slug = slugFromBody ? slugFromBody : generateSlug(titleFr, existingSlugs.map(p => p.slug));
 
     const post = await prisma.post.create({
       data: {

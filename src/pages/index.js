@@ -7,8 +7,6 @@ import DigitalAgencyService from "@/components/service/DigitalAgencyService";
 import DigitalAgencyCounter from "@/components/counter/DigitalAgencyCounter";
 import DigitalAgencyWorkflow from "@/components/workflow/DigitalAgencyWorkflow";
 import StartupAgencyPortfolio from "@/components/portfolio/StartupAgencyPortfolio";
-import DigitalAgencyBrand from "@/components/brand/DigitalAgencyBrand";
-import StartupAgencyTestimonial from "@/components/testimonial/StartupAgencyTestimonial";
 import DigitalMarketingWorkflow from "@/components/workflow/DigitalMarketingWorkflow";
 import DigitalAgencyBlog from "@/components/blog/DigitalAgencyBlog";
 import DigitalAgencyCTA from "@/components/cta/DigitalAgencyCTA";
@@ -187,8 +185,6 @@ const Home = ({ latestPosts }) => {
           <DigitalAgencyWorkflow />
           <HomeResults />
           <DigitalMarketingWorkflow />
-          <DigitalAgencyBrand />
-          <StartupAgencyTestimonial />
           <DigitalAgencyBlog posts={latestPosts} />
           <Team1 />
           <Faq1 limit={4} showLink />

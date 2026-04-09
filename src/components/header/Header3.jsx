@@ -80,6 +80,17 @@ export default function Header3() {
             </button>
           </div>
           <div className="header__support">
+            <div className="header__social-links" style={{ display: "flex", gap: "16px", alignItems: "center", marginRight: "20px" }}>
+              <a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontSize: "16px", transition: "color 0.2s" }}>
+                <i className="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://x.com/ImpactNova_io" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontSize: "16px", transition: "color 0.2s" }}>
+                <i className="fa-brands fa-x-twitter"></i>
+              </a>
+              <a href="https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontSize: "16px", transition: "color 0.2s" }}>
+                <i className="fa-brands fa-linkedin"></i>
+              </a>
+            </div>
             <p>
               Contact us <a href="tel:+447477884817">+44 7477 884817</a>
             </p>

@@ -890,6 +890,77 @@
     }
   }
 
+  // Home Process Section
+  .home-process {
+    background-color: var(--black-2);
+
+    &-intro {
+      color: var(--gray-2);
+    }
+
+    .process-step {
+      border-top-color: var(--secondary);
+
+      .step-number {
+        color: var(--gray-2);
+      }
+
+      .step-title {
+        color: var(--white);
+      }
+
+      .step-desc {
+        color: var(--gray-2);
+      }
+    }
+
+    &-link {
+      color: var(--white) !important;
+    }
+  }
+
+  // Home Results Section
+  .home-results {
+    background-color: var(--d-black-2);
+
+    .sec-sub-title {
+      color: var(--secondary) !important;
+    }
+
+    .sec-title {
+      color: var(--white) !important;
+    }
+
+    &-intro {
+      color: var(--gray-2);
+    }
+
+    .result-card {
+      background-color: #1a1a1a;
+
+      &:hover {
+        transform: translateY(-6px);
+      }
+    }
+
+    .result-badge {
+      background-color: var(--secondary);
+      color: var(--black-2);
+    }
+
+    .result-stat {
+      color: var(--white);
+    }
+
+    .result-label {
+      color: var(--secondary);
+    }
+
+    .result-desc {
+      color: var(--gray-2);
+    }
+  }
+
   .team {
     &__area {
       background-color: var(--d-black-2);
