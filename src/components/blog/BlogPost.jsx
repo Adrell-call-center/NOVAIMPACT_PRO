@@ -19,7 +19,13 @@ export default function BlogPost({ post, related, recent }) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackTop, setShowBackTop] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [pageUrl, setPageUrl] = useState('');
   const articleRef = useRef(null);
+
+  // Set page URL after mount to avoid hydration mismatch
+  useEffect(() => {
+    setPageUrl(window.location.href);
+  }, []);
 
   // Read language from localStorage on mount
   useEffect(() => {
@@ -199,92 +205,22 @@ export default function BlogPost({ post, related, recent }) {
                   </div>
                 </div>
 
-                {/* Latest Posts Card */}
-                {related?.length > 0 && (
-                  <div className="sidebar-card latest-posts-card">
-                    <h4 className="sidebar-section-title">
-                      <i className="fa-solid fa-newspaper me-2" style={{ color: '#FFC81A' }}></i>
-                      Latest Articles
-                    </h4>
-                    <div className="latest-posts-list">
-                      {related.slice(0, 3).map(r => (
-                        <Link href={`/blog/${r.slug}`} key={r.slug} className="latest-post-item">
-                          {r.coverImage && (
-                            <div className="latest-post-thumb">
-                              <Image
-                                width={80}
-                                height={60}
-                                quality={80}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                src={r.coverImage}
-                                alt={r.titleFr || r.titleEn}
-                              />
-                            </div>
-                          )}
-                          <div className="latest-post-info">
-                            <h5 className="latest-post-title">{r.titleFr || r.titleEn}</h5>
-                            {r.publishedAt && (
-                              <span className="latest-post-date">
-                                <i className="fa-regular fa-calendar"></i>
-                                {new Date(r.publishedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-                              </span>
-                            )}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
                 {/* Share Card */}
                 <div className="sidebar-card share-card">
                   <h4 className="share-title">Share this article</h4>
                   <div className="share-buttons">
-                    <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${typeof window !== 'undefined' ? window.location.href : ''}`} target="_blank" rel="noopener noreferrer" className="share-btn linkedin">
+                    <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer" className="share-btn linkedin">
                       <i className="fa-brands fa-linkedin"></i>
                     </a>
-                    <a href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? window.location.href : ''}&text=${title}`} target="_blank" rel="noopener noreferrer" className="share-btn twitter">
+                    <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(title)}`} target="_blank" rel="noopener noreferrer" className="share-btn twitter">
                       <i className="fa-brands fa-x-twitter"></i>
                     </a>
-                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.href : ''}`} target="_blank" rel="noopener noreferrer" className="share-btn facebook">
+                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer" className="share-btn facebook">
                       <i className="fa-brands fa-facebook-f"></i>
                     </a>
                   </div>
                 </div>
 
-                {/* Recent Posts */}
-                {recent && recent.length > 0 && (
-                  <div className="sidebar-card recent-posts-card">
-                    <h4 className="recent-posts-title">Recent Posts</h4>
-                    <div className="recent-posts-list">
-                      {recent.slice(0, 3).map(r => (
-                        <Link key={r.slug} href={`/blog/${r.slug}`} className="recent-post-item">
-                          {r.coverImage && (
-                            <div className="recent-post-thumb">
-                              <Image
-                                width={80}
-                                height={60}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                src={r.coverImage}
-                                alt={activeLang === 'fr' ? r.titleFr : r.titleEn}
-                              />
-                            </div>
-                          )}
-                          <div className="recent-post-info">
-                            <h5 className="recent-post-title-text">
-                              {activeLang === 'fr' ? r.titleFr : r.titleEn}
-                            </h5>
-                            {r.publishedAt && (
-                              <span className="recent-post-date">
-                                {new Date(r.publishedAt).toLocaleDateString(activeLang === 'fr' ? 'fr-FR' : 'en-US', { month: 'short', day: 'numeric' })}
-                              </span>
-                            )}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </aside>
             </div>
           </div>
