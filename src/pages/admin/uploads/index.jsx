@@ -34,29 +34,29 @@ export default function AdminUploads() {
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
-          
+
           // Calculate new dimensions (max 1920x1080)
           let width = img.width;
           let height = img.height;
           const maxWidth = 1920;
           const maxHeight = 1080;
-          
+
           if (width > maxWidth || height > maxHeight) {
             const ratio = Math.min(maxWidth / width, maxHeight / height);
             width *= ratio;
             height *= ratio;
           }
-          
+
           canvas.width = width;
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
-          
+
           // Convert to compressed blob
           canvas.toBlob(
             (blob) => {
               if (blob) {
                 console.log(`Compressed: ${(file.size / 1024).toFixed(0)}KB → ${(blob.size / 1024).toFixed(0)}KB (${((1 - blob.size / file.size) * 100).toFixed(0)}% reduction)`);
-                resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+                resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg', lastModified: Date.now() }));
               } else {
                 reject(new Error('Compression failed'));
               }
@@ -73,6 +73,47 @@ export default function AdminUploads() {
     });
   };
 
+  // Compress PDF before upload (client-side optimization)
+  const compressPdf = async (file) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Dynamically import pdf-lib
+        const { PDFDocument } = await import('pdf-lib');
+        const arrayBuffer = await file.arrayBuffer();
+        
+        // Load the PDF
+        const pdfDoc = await PDFDocument.load(arrayBuffer, {
+          ignoreEncryption: true,
+          updateMetadata: false,
+        });
+
+        // Remove unnecessary metadata and optimize
+        pdfDoc.setTitle('');
+        pdfDoc.setAuthor('');
+        pdfDoc.setSubject('');
+        pdfDoc.setKeywords([]);
+        pdfDoc.setProducer('');
+        pdfDoc.setCreator('');
+
+        // Save with compression
+        const compressedBytes = await pdfDoc.save({
+          useObjectStreams: true,
+          addDefaultPage: false,
+          objectsPerTick: 50,
+        });
+
+        const compressedBlob = new Blob([compressedBytes], { type: 'application/pdf' });
+        const compressedFile = new File([compressedBlob], file.name, { type: 'application/pdf', lastModified: Date.now() });
+        
+        console.log(`PDF Compressed: ${(file.size / 1024).toFixed(0)}KB → ${(compressedFile.size / 1024).toFixed(0)}KB (${((1 - compressedFile.size / file.size) * 100).toFixed(0)}% reduction)`);
+        resolve(compressedFile);
+      } catch (err) {
+        console.warn('PDF compression failed, uploading original:', err);
+        resolve(file); // Fallback to original
+      }
+    });
+  };
+
   const handleUpload = async (e) => {
     const files = Array.from(e.target.files);
     setUploading(true);
@@ -80,18 +121,29 @@ export default function AdminUploads() {
     for (const file of files) {
       try {
         let fileToUpload = file;
-        
+
         // Compress images if enabled
         if (compressionEnabled && file.type.startsWith('image/')) {
           setCompressing(true);
           try {
             fileToUpload = await compressImage(file, compressionQuality);
           } catch (err) {
-            console.warn('Compression failed, uploading original:', err);
+            console.warn('Image compression failed, uploading original:', err);
           }
           setCompressing(false);
         }
-        
+
+        // Compress PDFs if enabled
+        if (compressionEnabled && file.type === 'application/pdf') {
+          setCompressing(true);
+          try {
+            fileToUpload = await compressPdf(file);
+          } catch (err) {
+            console.warn('PDF compression failed, uploading original:', err);
+          }
+          setCompressing(false);
+        }
+
         const fd = new FormData();
         fd.append('file', fileToUpload);
         await fetch('/api/admin/uploads', { method: 'POST', body: fd });
@@ -172,66 +224,88 @@ export default function AdminUploads() {
     });
   };
 
-  // Bulk compress selected images
+  // Bulk compress selected files (images + PDFs)
   const bulkCompress = async () => {
     const selectedFiles = uploads.filter(u => selected.includes(u.id));
-    const imageFiles = selectedFiles.filter(u => u.mimeType?.startsWith('image') || /\.(jpe?g|png|webp|gif)$/i.test(u.filename));
-    
-    if (imageFiles.length === 0) {
-      alert('⚠️ No images selected for compression. Please select image files only.');
+    const compressibleFiles = selectedFiles.filter(u =>
+      u.mimeType?.startsWith('image') ||
+      u.mimeType === 'application/pdf' ||
+      /\.(jpe?g|png|webp|gif|pdf)$/i.test(u.filename)
+    );
+
+    if (compressibleFiles.length === 0) {
+      alert('⚠️ No compressible files selected. Please select images or PDFs.');
       return;
     }
-    
-    // Calculate estimated savings
-    const estimatedOriginalSize = imageFiles.reduce((acc, f) => acc + (f.size || 0), 0);
-    const estimatedCompressedSize = estimatedOriginalSize * compressionQuality * 0.6; // Rough estimate
-    const estimatedSavings = ((1 - estimatedCompressedSize / estimatedOriginalSize) * 100).toFixed(0);
-    
-    if (!confirm(`Compress ${imageFiles.length} image(s) at ${Math.round(compressionQuality * 100)}% quality?
 
-📊 Estimated Results:
-• Original size: ${(estimatedOriginalSize / 1024 / 1024).toFixed(2)} MB
-• Compressed size: ~${(estimatedCompressedSize / 1024 / 1024).toFixed(2)} MB
-• Space saved: ~${estimatedSavings}%
+    const imageCount = compressibleFiles.filter(f => f.mimeType?.startsWith('image')).length;
+    const pdfCount = compressibleFiles.filter(f => f.mimeType === 'application/pdf').length;
+
+    // Calculate estimated savings
+    const estimatedOriginalSize = compressibleFiles.reduce((acc, f) => acc + (f.size || 0), 0);
+    const estimatedCompressedSize = estimatedOriginalSize * compressionQuality * 0.6;
+    const estimatedSavings = ((1 - estimatedCompressedSize / estimatedOriginalSize) * 100).toFixed(0);
+
+    if (!confirm(`Compress ${compressibleFiles.length} file(s)?
+
+📊 ${imageCount} image(s), ${pdfCount} PDF(s)
+📊 Quality: ${Math.round(compressionQuality * 100)}%
+📊 Original size: ${(estimatedOriginalSize / 1024 / 1024).toFixed(2)} MB
+📊 Estimated size: ~${(estimatedCompressedSize / 1024 / 1024).toFixed(2)} MB
+📊 Space saved: ~${estimatedSavings}%
 
 This will replace the originals and cannot be undone.`)) {
       return;
     }
-    
+
     setCompressing(true);
     let successCount = 0;
     let failCount = 0;
     let totalSaved = 0;
-    
-    for (const file of imageFiles) {
+
+    for (const file of compressibleFiles) {
       try {
         console.log(`Compressing: ${file.filename} (${(file.size / 1024).toFixed(0)}KB)`);
-        
-        // Fetch the original image
+
+        // Fetch the original file
         const response = await fetch(file.path);
         const blob = await response.blob();
         const originalSize = blob.size;
         const originalFile = new File([blob], file.filename, { type: file.mimeType });
-        
-        // Compress it
-        const compressedFile = await compressImage(originalFile, compressionQuality);
-        const compressedSize = compressedFile.size;
-        const saved = ((1 - compressedSize / originalSize) * 100).toFixed(0);
+
+        let compressedFile;
+        let compressedSize;
+        let saved;
+
+        // Compress based on file type
+        if (file.mimeType?.startsWith('image')) {
+          compressedFile = await compressImage(originalFile, compressionQuality);
+          compressedSize = compressedFile.size;
+          saved = ((1 - compressedSize / originalSize) * 100).toFixed(0);
+        } else if (file.mimeType === 'application/pdf') {
+          compressedFile = await compressPdf(originalFile);
+          compressedSize = compressedFile.size;
+          saved = ((1 - compressedSize / originalSize) * 100).toFixed(0);
+        } else {
+          console.warn(`Skipping ${file.filename} - unsupported type`);
+          failCount++;
+          continue;
+        }
+
         totalSaved += originalSize - compressedSize;
-        
         console.log(`✅ ${file.filename}: ${saved}% reduction (${(originalSize / 1024).toFixed(0)}KB → ${(compressedSize / 1024).toFixed(0)}KB)`);
-        
+
         // Upload compressed version
         const fd = new FormData();
         fd.append('file', compressedFile);
         fd.append('replaceId', file.id);
         fd.append('deleteOriginal', 'true');
-        
+
         await fetch('/api/admin/uploads', { method: 'POST', body: fd });
-        
+
         // Delete original
         await fetch(`/api/admin/uploads/${file.id}`, { method: 'DELETE' });
-        
+
         successCount++;
       } catch (error) {
         console.error(`❌ Failed to compress ${file.filename}:`, error);
@@ -356,7 +430,7 @@ This will replace the originals and cannot be undone.`)) {
                   checked={compressionEnabled} 
                   onChange={(e) => setCompressionEnabled(e.target.checked)} 
                 />
-                <span>Auto-compress images</span>
+                <span>Auto-compress images & PDFs</span>
               </label>
               {compressionEnabled && (
                 <div className="compression-quality">
@@ -377,7 +451,7 @@ This will replace the originals and cannot be undone.`)) {
           <label className="btn-gold btn-upload">
             <i className="fa-solid fa-upload me-2"></i>
             {uploading ? (compressing ? 'Compressing & Uploading...' : 'Uploading...') : 'Upload Files'}
-            <input type="file" accept="image/*,application/pdf,.json,.mp4,.webm" multiple onChange={handleUpload} style={{ display: 'none' }} disabled={uploading} />
+            <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} disabled={uploading} />
           </label>
         </div>
 
@@ -480,7 +554,7 @@ This will replace the originals and cannot be undone.`)) {
               <p>Upload your first files to get started</p>
               <label className="btn-gold">
                 <i className="fa-solid fa-upload me-2"></i>Upload Files
-                <input type="file" accept="image/*,application/pdf,.json,.mp4,.webm" multiple onChange={handleUpload} style={{ display: 'none' }} />
+                <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} />
               </label>
             </div>
           </div>
