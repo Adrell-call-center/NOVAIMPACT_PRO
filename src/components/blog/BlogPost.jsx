@@ -207,7 +207,7 @@ export default function BlogPost({ post, related, recent }) {
                       Latest Articles
                     </h4>
                     <div className="latest-posts-list">
-                      {related.map(r => (
+                      {related.slice(0, 3).map(r => (
                         <Link href={`/blog/${r.slug}`} key={r.slug} className="latest-post-item">
                           {r.coverImage && (
                             <div className="latest-post-thumb">
@@ -257,7 +257,7 @@ export default function BlogPost({ post, related, recent }) {
                   <div className="sidebar-card recent-posts-card">
                     <h4 className="recent-posts-title">Recent Posts</h4>
                     <div className="recent-posts-list">
-                      {recent.map(r => (
+                      {recent.slice(0, 3).map(r => (
                         <Link key={r.slug} href={`/blog/${r.slug}`} className="recent-post-item">
                           {r.coverImage && (
                             <div className="recent-post-thumb">
