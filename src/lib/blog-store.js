@@ -62,6 +62,10 @@ export const blogStore = {
         metaDescEn: true,
         focusKeywordFr: true,
         focusKeywordEn: true,
+        schemaType: true,
+        schemaOverrides: true,
+        updatedAt: true,
+        ogImageUrl: true,
         ...(lang === 'fr'
           ? { titleFr: true, excerptFr: true, contentFr: true }
           : { titleEn: true, excerptEn: true, contentEn: true }),

@@ -1732,8 +1732,11 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
 
-/* Sidebar — scrolls naturally with content */
+/* Sidebar — Sticky on scroll */
 .post-sidebar {
+  position: sticky;
+  top: 100px;
+  align-self: start;
   display: flex;
   flex-direction: column;
   gap: 20px;

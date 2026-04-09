@@ -16,8 +16,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma client
-RUN npx prisma generate
+# Generate Prisma client (pin version to match package.json)
+RUN npx prisma@6.3.1 generate
 
 # Build Next.js (standalone output for smallest image)
 ENV NEXT_TELEMETRY_DISABLED=1
