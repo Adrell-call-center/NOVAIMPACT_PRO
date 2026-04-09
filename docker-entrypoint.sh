@@ -2,7 +2,7 @@
 set -e
 
 echo "▶ Running Prisma migrations..."
-npx prisma@6.3.1 migrate deploy
+node node_modules/prisma/build/index.js migrate deploy --skip-generate
 
 echo "▶ Starting Next.js..."
 exec node server.js
