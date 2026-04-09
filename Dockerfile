@@ -40,6 +40,10 @@ RUN addgroup --system --gid 1001 nodejs \
 
 # Copy only what's needed at runtime
 COPY --from=builder /app/public      ./public
+
+# Create uploads directory and set permissions
+RUN mkdir -p ./public/uploads && chown nextjs:nodejs ./public/uploads
+
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/package.json  ./package.json
