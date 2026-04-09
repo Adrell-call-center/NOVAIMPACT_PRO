@@ -21,6 +21,7 @@ COPY . .
 # Dummy DATABASE_URL so Next.js build doesn't fail
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 RUN npm run build
 
