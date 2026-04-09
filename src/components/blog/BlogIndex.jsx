@@ -59,7 +59,7 @@ export default function BlogIndex({ initialPosts, initialCategories, pagination 
         <div className="row g-4">
           {posts.map(p => (
             <div className="col-lg-4 col-md-6" key={p.id}>
-              <BlogCard post={p} lang={lang} />
+              <BlogCard post={p} />
             </div>
           ))}
         </div>

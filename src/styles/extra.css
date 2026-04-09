@@ -1839,14 +1839,6 @@
   color: #999999;
 }
 
-.dark .post-sidebar::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-.dark .post-sidebar::-webkit-scrollbar-thumb {
-  background: #FFC81A;
-}
-
 /* Sidebar section title */
 .sidebar-section-title {
   font-size: 15px;

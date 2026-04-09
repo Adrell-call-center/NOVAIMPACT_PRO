@@ -15,7 +15,7 @@ export function buildSchema(post, lang = 'fr') {
       logo: { '@type': 'ImageObject', url: '/assets/imgs/logo/site-logo-white-2.png' },
     },
     inLanguage: isFr ? 'fr-FR' : 'en-US',
-    url: `https://novaimpact.io/blog/${lang}/${post.slug}`,
+    url: `https://novaimpact.io/blog/${post.slug}`,
   };
 
   if (post.schemaOverrides) {

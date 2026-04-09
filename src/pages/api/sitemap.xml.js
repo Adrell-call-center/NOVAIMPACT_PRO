@@ -53,17 +53,16 @@ export default async function handler(req, res) {
   }
 
   for (const post of posts) {
-    const frUrl = `${SITE_URL}/blog/fr/${post.slug}`;
-    const enUrl = `${SITE_URL}/blog/en/${post.slug}`;
+    const postUrl = `${SITE_URL}/blog/${post.slug}`;
     const lastmod = new Date(post.updatedAt).toISOString();
     xml += `<url>`;
-    xml += `<loc>${frUrl}</loc>`;
+    xml += `<loc>${postUrl}</loc>`;
     xml += `<lastmod>${lastmod}</lastmod>`;
     xml += `<changefreq>monthly</changefreq>`;
     xml += `<priority>0.7</priority>`;
-    xml += `<xhtml:link rel="alternate" hreflang="fr" href="${frUrl}"/>`;
-    xml += `<xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>`;
-    xml += `<xhtml:link rel="alternate" hreflang="x-default" href="${frUrl}"/>`;
+    xml += `<xhtml:link rel="alternate" hreflang="fr" href="${SITE_URL}/blog/${post.slug}?lang=fr"/>`;
+    xml += `<xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}/blog/${post.slug}?lang=en"/>`;
+    xml += `<xhtml:link rel="alternate" hreflang="x-default" href="${postUrl}"/>`;
     xml += `</url>`;
   }
 
