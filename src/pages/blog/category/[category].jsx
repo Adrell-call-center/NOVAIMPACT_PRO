@@ -17,21 +17,12 @@ export default function BlogCategory({ posts, categories, category, pagination }
 }
 
 export async function getStaticPaths() {
-  const { PrismaClient } = await import('@prisma/client');
-  const prisma = new PrismaClient();
-  try {
-    const rows = await prisma.post.findMany({
-      where: { status: 'PUBLISHED' },
-      select: { category: true },
-      distinct: ['category'],
-    });
-    return {
-      paths: rows.filter(r => r.category).map(r => ({ params: { category: r.category } })),
-      fallback: 'blocking',
-    };
-  } finally {
-    await prisma.$disconnect();
-  }
+  // Return empty paths - all category pages will be generated on-demand at runtime
+  // This avoids database queries during Docker build
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
 }
 
 export async function getStaticProps({ params }) {

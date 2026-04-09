@@ -1732,7 +1732,7 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
 
-/* Sidebar — Fixed position, full page height, no internal scroll */
+/* Sidebar — Sticky position, stays fixed while scrolling */
 .post-sidebar {
   position: sticky;
   top: 100px;
@@ -1740,6 +1740,24 @@
   flex-direction: column;
   gap: 20px;
   align-self: start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #FFC81A transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+.post-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.post-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post-sidebar::-webkit-scrollbar-thumb {
+  background-color: #FFC81A;
+  border-radius: 3px;
 }
 
 /* Recent Posts Card */
