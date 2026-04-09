@@ -973,7 +973,7 @@
 
 /* Home Results Section */
 .home-results {
-  background-color: #0d0d0d;
+  background-color: #f8f9fa;
   padding: 120px 0;
 }
 
@@ -987,7 +987,7 @@
 }
 
 .home-results-intro {
-  color: #888888;
+  color: #555555;
   line-height: 1.8;
   margin-bottom: 0;
 }
@@ -998,14 +998,17 @@
 }
 
 .result-card {
-  background: #1a1a1a;
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid #e8e8e8;
 }
 
 .result-card:hover {
   transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  border-color: #FFC81A;
 }
 
 .result-card-image {
@@ -1046,7 +1049,7 @@
 .result-stat {
   font-size: 48px;
   font-weight: 700;
-  color: #ffffff;
+  color: #1a1a1a;
   font-family: "Kanit", sans-serif;
   line-height: 1;
 }
@@ -1058,7 +1061,7 @@
 }
 
 .result-desc {
-  color: #888888;
+  color: #666666;
   line-height: 1.7;
   font-size: 14px;
   margin: 0;

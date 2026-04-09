@@ -937,9 +937,12 @@
 
     .result-card {
       background-color: #1a1a1a;
+      border-color: #333333;
 
       &:hover {
         transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+        border-color: var(--secondary);
       }
     }
 
