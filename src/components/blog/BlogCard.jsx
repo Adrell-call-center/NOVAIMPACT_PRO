@@ -7,7 +7,7 @@ export default function BlogCard({ post, lang = 'fr' }) {
     <div className="blog__card">
       <div className="blog__thumb">
         {post.coverImage ? (
-          <Link href={`/blog/${post.slug}?lang=${lang}`}>
+          <Link href={`/blog/${lang}/${post.slug}`}>
             <Image priority width={400} height={250} style={{ width: '100%', height: 'auto' }} src={post.coverImage} alt={isFr ? post.titleFr : post.titleEn} />
           </Link>
         ) : (
@@ -17,7 +17,7 @@ export default function BlogCard({ post, lang = 'fr' }) {
       <div className="blog__content">
         <span className="blog__cat">{post.category}</span>
         <h4 className="blog__title">
-          <Link href={`/blog/${post.slug}?lang=${lang}`}>{isFr ? post.titleFr : post.titleEn}</Link>
+          <Link href={`/blog/${lang}/${post.slug}`}>{isFr ? post.titleFr : post.titleEn}</Link>
         </h4>
         <p>{isFr ? post.excerptFr : post.excerptEn}</p>
         <div className="blog__meta">

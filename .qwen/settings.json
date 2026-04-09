@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(axtra.crowdytheme-demo.com)"
+      "WebFetch(axtra.crowdytheme-demo.com)",
+      "Bash(mkdir *)"
     ]
   },
   "$version": 3

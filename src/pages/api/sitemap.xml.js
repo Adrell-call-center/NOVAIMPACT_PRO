@@ -53,8 +53,8 @@ export default async function handler(req, res) {
   }
 
   for (const post of posts) {
-    const frUrl = `${SITE_URL}/blog/${post.slug}?lang=fr`;
-    const enUrl = `${SITE_URL}/blog/${post.slug}?lang=en`;
+    const frUrl = `${SITE_URL}/blog/fr/${post.slug}`;
+    const enUrl = `${SITE_URL}/blog/en/${post.slug}`;
     const lastmod = new Date(post.updatedAt).toISOString();
     xml += `<url>`;
     xml += `<loc>${frUrl}</loc>`;

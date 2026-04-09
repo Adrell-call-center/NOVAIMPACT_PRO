@@ -66,7 +66,7 @@ const DigitalAgencyBlog = ({ posts = [] }) => {
             <div key={post.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-4">
               <article className="blog__item">
                 <div className="blog__img-wrapper">
-                  <Link href={`/blog/${post.slug}?lang=fr`}>
+                  <Link href={`/blog/fr/${post.slug}`}>
                     <div className="img-box">
                       {post.coverImage ? (
                         <>
@@ -105,11 +105,11 @@ const DigitalAgencyBlog = ({ posts = [] }) => {
                   )}
                 </h4>
                 <h5>
-                  <Link href={`/blog/${post.slug}?lang=fr`} className="blog__title">
+                  <Link href={`/blog/fr/${post.slug}`} className="blog__title">
                     {post.titleFr}
                   </Link>
                 </h5>
-                <Link href={`/blog/${post.slug}?lang=fr`} className="blog__btn">
+                <Link href={`/blog/fr/${post.slug}`} className="blog__btn">
                   Lire la suite <span><i className="fa-solid fa-arrow-right"></i></span>
                 </Link>
               </article>
