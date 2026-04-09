@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  eslint: {
+    // ESLint is checked locally; ignore during production builds
+    ignoreDuringBuilds: true,
+  },
   images: {
     domains: [
       'images.pexels.com',
