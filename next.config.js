@@ -18,14 +18,18 @@ const nextConfig = {
     minimumCacheTTL: 604800, // 1 week
   },
   async redirects() {
-    // Redirect old ?lang= query URLs to new path-based /blog/[lang]/[slug]
     return [
+      // Redirect old /blog/fr/slug and /blog/en/slug → clean /blog/slug
       {
-        source: '/blog/:slug',
-        has: [
-          { type: 'query', key: 'lang', value: '(?<lang>fr|en)' },
-        ],
-        destination: '/blog/:lang/:slug',
+        source: '/blog/:lang(fr|en)/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
+      // Redirect old /blog/slug?lang=fr → clean /blog/slug
+      {
+        source: '/blog/:slug*',
+        has: [{ type: 'query', key: 'lang' }],
+        destination: '/blog/:slug*',
         permanent: true,
       },
     ];

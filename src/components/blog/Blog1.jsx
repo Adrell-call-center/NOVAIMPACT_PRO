@@ -87,7 +87,7 @@ const Blog1 = ({ posts = [], lang = "fr" }) => {
                     { day: "2-digit", month: "long", year: "numeric" }
                   )
                 : "";
-              const href = `/blog/${post.slug}?lang=${lang}`;
+              const href = `/blog/${post.slug}`;
               const imgSrc = post.coverImage || "/assets/imgs/blog/1.jpg";
 
               return (

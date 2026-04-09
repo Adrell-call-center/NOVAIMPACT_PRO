@@ -8,9 +8,9 @@ export default function BlogSeo({ post, lang = 'fr' }) {
   const desc = post.metaDescFr || post.excerptFr;
   const descEn = post.metaDescEn || post.excerptEn;
   const baseUrl = `https://novaimpact.io`;
-  const urlFr = `${baseUrl}/blog/fr/${post.slug}`;
-  const urlEn = `${baseUrl}/blog/en/${post.slug}`;
-  const canonicalUrl = isFr ? urlFr : urlEn;
+  const urlFr = `${baseUrl}/blog/${post.slug}?lang=fr`;
+  const urlEn = `${baseUrl}/blog/${post.slug}?lang=en`;
+  const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
   const ogImage = post.ogImageUrl || post.coverImage || '/assets/imgs/thumb/og-default.jpg';
   const schema = buildSchema(post, lang);
 

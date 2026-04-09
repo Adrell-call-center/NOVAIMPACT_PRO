@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "WebFetch(axtra.crowdytheme-demo.com)",
-      "Bash(mkdir *)"
+      "Bash(mkdir *)",
+      "Bash(del *)",
+      "Bash(rmdir *)"
     ]
   },
   "$version": 3

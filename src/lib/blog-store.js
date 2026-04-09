@@ -45,8 +45,8 @@ export const blogStore = {
    * Get a single post by slug and language.
    */
   async getPost(slug, lang = 'fr') {
-    const post = await prisma.post.findUnique({
-      where: { slug },
+    const post = await prisma.post.findFirst({
+      where: { slug, status: 'PUBLISHED', publishedAt: { lte: new Date() } },
       select: {
         id: true,
         slug: true,
@@ -110,6 +110,33 @@ export const blogStore = {
         slug: true,
         coverImage: true,
         publishedAt: true,
+        ...(lang === 'fr' ? { titleFr: true } : { titleEn: true }),
+      },
+    });
+
+    return posts.map((p) => ({
+      ...p,
+      title: lang === 'fr' ? p.titleFr : p.titleEn,
+    }));
+  },
+
+  /**
+   * Get all published posts (recent), limited and ordered by date.
+   */
+  async getAllPosts(lang = 'fr', limit = 4) {
+    const posts = await prisma.post.findMany({
+      where: {
+        status: 'PUBLISHED',
+        publishedAt: { lte: new Date() },
+      },
+      orderBy: { publishedAt: 'desc' },
+      take: limit,
+      select: {
+        id: true,
+        slug: true,
+        coverImage: true,
+        publishedAt: true,
+        category: true,
         ...(lang === 'fr' ? { titleFr: true } : { titleEn: true }),
       },
     });
