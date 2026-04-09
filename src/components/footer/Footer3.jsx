@@ -1,5 +1,5 @@
 import Link from "next/link";
-const ThumbFooter = "/images/footer-background.webp";
+const ThumbFooter = "/images/nova-impact-ltd-office-agency-london-marketing-agency-london-2.jpg.jpeg";
 import FooterLogoWhite from "../../../public/assets/imgs/logo/footer-logo-white.png";
 import Image from "next/image";
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const img1 = "/images/about-values-workspace.webp";
-const img2 = "/images/about-values-brainstorm.webp";
+const img2 = "/images/nova-impact-ltd-office-agency-london-marketing-agency-london-1.jpg.webp";
 
 const values = [
   {

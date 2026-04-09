@@ -4,7 +4,7 @@ import { ScrollTrigger, ScrollSmoother } from "@/plugins";
 import Link from "next/link";
 import Image from "next/image";
 const About11 = "/images/about-team-meeting.webp";
-const About12 = "/images/about-team-collaboration.webp";
+const About12 = "/images/nova-impact-ltd-office-agency-london-marketing-agency-london-1.jpg.webp";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
