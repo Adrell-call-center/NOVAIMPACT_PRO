@@ -28,7 +28,7 @@ export default async function handler(req, res) {
           const uploadRecord = await prisma.upload.create({
             data: {
               filename: req.file.originalname,
-              path: `/uploads/${req.file.filename}`,
+              path: `/api/uploads/${req.file.filename}`,
               size: req.file.size,
               mimeType: req.file.mimetype,
             },
