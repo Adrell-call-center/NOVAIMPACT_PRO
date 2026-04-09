@@ -1,12 +1,13 @@
 import nodemailer from "nodemailer";
 import prisma from "@/lib/prisma";
 
-const companyEmail = process.env.SMTP_FROM_EMAIL;
+const companyEmail = "assurancezoom@gmail.com";
 const companyName = process.env.SMTP_FROM_NAME || "Nova Impact";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nova-impact.com";
 
 // Social Links
 const socialLinks = {
+  youtube: "https://www.youtube.com/@novaimpactagency",
   instagram: "https://www.instagram.com/novaimpact.io/",
   twitter: "https://x.com/ImpactNova_io",
   linkedin: "https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all",
@@ -47,6 +48,9 @@ export default async function handler(req, res) {
   });
 
   const socialIconsHTML = `
+    <a href="${socialLinks.youtube}" style="display:inline-block; margin:0 6px; text-decoration:none;">
+      <img src="https://cdn-icons-png.flaticon.com/32/1384/1384060.png" alt="YouTube" width="28" height="28" style="display:inline-block; border:0;" />
+    </a>
     <a href="${socialLinks.linkedin}" style="display:inline-block; margin:0 6px; text-decoration:none;">
       <img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="LinkedIn" width="28" height="28" style="display:inline-block; border:0;" />
     </a>

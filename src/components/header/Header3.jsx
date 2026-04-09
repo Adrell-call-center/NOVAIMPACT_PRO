@@ -81,6 +81,9 @@ export default function Header3() {
           </div>
           <div className="header__support">
             <div className="header__social-links" style={{ display: "flex", gap: "16px", alignItems: "center", marginRight: "20px" }}>
+              <a href="https://www.youtube.com/@novaimpactagency" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontSize: "16px", transition: "color 0.2s" }}>
+                <i className="fa-brands fa-youtube"></i>
+              </a>
               <a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontSize: "16px", transition: "color 0.2s" }}>
                 <i className="fa-brands fa-instagram"></i>
               </a>

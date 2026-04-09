@@ -1112,6 +1112,68 @@
   flex-shrink: 0;
 }
 
+/* ==========================================
+   RELATED POSTS - Single Post Page
+   ========================================== */
+
+.related-posts-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #FFC81A;
+}
+
+.related-post-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.4;
+  margin: 12px 0 0;
+  transition: color 0.2s;
+  text-decoration: none;
+  display: block;
+}
+
+.related-post-title:hover {
+  color: #FFC81A;
+}
+
+.dark .related-posts-title {
+  color: #ffffff;
+}
+
+.dark .related-post-title {
+  color: #e2e8f0;
+}
+
+.dark .related-post-title:hover {
+  color: #FFC81A;
+}
+
+/* ==========================================
+   BLOG PAGE - Card Titles Black Not Blue
+   ========================================== */
+
+.blog__card .blog__title a {
+  color: #1a1a1a !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+
+.blog__card .blog__title a:hover {
+  color: #FFC81A !important;
+}
+
+.dark .blog__card .blog__title a {
+  color: #ffffff !important;
+}
+
+.dark .blog__card .blog__title a:hover {
+  color: #FFC81A !important;
+}
+
 .offcanvas__menu {
   padding-top: 142px;
 }

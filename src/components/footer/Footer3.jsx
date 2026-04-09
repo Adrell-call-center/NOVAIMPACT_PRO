@@ -41,6 +41,11 @@ export default function Footer3() {
                     </p>
                     <ul className="footer__social">
                       <li>
+                        <a href="https://www.youtube.com/@novaimpactagency" target="_blank" rel="noopener noreferrer">
+                          <span><i className="fa-brands fa-youtube"></i></span>
+                        </a>
+                      </li>
+                      <li>
                         <a href="https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
                           <span><i className="fa-brands fa-linkedin"></i></span>
                         </a>

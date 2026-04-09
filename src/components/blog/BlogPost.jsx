@@ -79,7 +79,7 @@ export default function BlogPost({ post, related, forceLang }) {
               {/* Related posts */}
               {related?.length > 0 && (
                 <div className="mt-5 pt-5 border-top">
-                  <h4 className="mb-4 blog__detail-title">Related Articles</h4>
+                  <h4 className="mb-4 related-posts-title">Related Articles</h4>
                   <div className="row g-4">
                     {related.map(r => (
                       <div className="col-md-4" key={r.slug}>
@@ -89,9 +89,9 @@ export default function BlogPost({ post, related, forceLang }) {
                               width={400}
                               height={225}
                               quality={90}
-                              style={{ 
-                                width: '100%', 
-                                height: 'auto', 
+                              style={{
+                                width: '100%',
+                                height: 'auto',
                                 borderRadius: 8,
                                 objectFit: 'cover'
                               }}
@@ -99,9 +99,9 @@ export default function BlogPost({ post, related, forceLang }) {
                               alt={activeLang === 'fr' ? r.titleFr : r.titleEn}
                             />
                           )}
-                          <h6 className="mt-2 blog__detail-title">
+                          <h5 className="related-post-title mt-2">
                             {activeLang === 'fr' ? r.titleFr : r.titleEn}
-                          </h6>
+                          </h5>
                         </Link>
                       </div>
                     ))}
