@@ -27,7 +27,8 @@ RUN npm run build
 
 # ── Stage 3: runner ──────────────────────────────────────────────
 FROM node:20-alpine AS runner
-RUN apk add --no-cache libc6-compat openssl
+# Add su-exec to allow dropping privileges safely
+RUN apk add --no-cache libc6-compat openssl su-exec
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -41,8 +42,8 @@ RUN addgroup --system --gid 1001 nodejs \
 # Copy only what's needed at runtime
 COPY --from=builder /app/public      ./public
 
-# Create uploads directory and set permissions
-RUN mkdir -p ./public/uploads && chown nextjs:nodejs ./public/uploads
+# Create uploads directory (base layer)
+RUN mkdir -p ./public/uploads
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
@@ -56,8 +57,6 @@ COPY --from=builder /app/prisma                           ./prisma
 # Entrypoint script (runs migrations then starts app)
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
 RUN chmod +x docker-entrypoint.sh
-
-USER nextjs
 
 EXPOSE 3000
 ENV PORT=3000
