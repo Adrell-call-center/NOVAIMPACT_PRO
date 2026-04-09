@@ -17,6 +17,22 @@ export default function AdminUploads() {
   const [compressionEnabled, setCompressionEnabled] = useState(true);
   const [compressionQuality, setCompressionQuality] = useState(0.7); // 70% quality
 
+  // Modal States
+  const [confirmModal, setConfirmModal] = useState(null); // { title, message, onConfirm, type }
+  const [notificationModal, setNotificationModal] = useState(null); // { title, message, type }
+
+  // Modal Helpers
+  const showConfirm = (title, message, onConfirm, type = 'warning') => {
+    setConfirmModal({ title, message, onConfirm, type });
+  };
+  const showNotification = (title, message, type = 'success') => {
+    setNotificationModal({ title, message, type });
+  };
+  const closeModals = () => {
+    setConfirmModal(null);
+    setNotificationModal(null);
+  };
+
   useEffect(() => { fetchUploads(); }, []);
 
   const fetchUploads = async () => {
@@ -158,11 +174,12 @@ export default function AdminUploads() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this file?')) return;
-    await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
-    fetchUploads();
-    // Remove from selection if present
-    setSelected(prev => prev.filter(s => s !== id));
+    showConfirm('Delete File', 'Are you sure you want to delete this file?', async () => {
+      await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
+      fetchUploads();
+      setSelected(prev => prev.filter(s => s !== id));
+      closeModals();
+    });
   };
 
   // Selection handlers
@@ -183,15 +200,15 @@ export default function AdminUploads() {
 
   // Bulk actions
   const bulkDelete = async () => {
-    if (!confirm(`Delete ${selected.length} selected files?`)) return;
-    
-    for (const id of selected) {
-      await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
-    }
-    
-    setSelected([]);
-    setSelectAll(false);
-    fetchUploads();
+    showConfirm('Delete Files', `Are you sure you want to delete ${selected.length} selected files? This cannot be undone.`, async () => {
+      for (const id of selected) {
+        await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
+      }
+      setSelected([]);
+      setSelectAll(false);
+      fetchUploads();
+      closeModals();
+    }, 'danger');
   };
 
   const downloadSelected = () => {
@@ -218,9 +235,9 @@ export default function AdminUploads() {
     const urls = selectedFiles.map(f => window.location.origin + f.path).join('\n');
     
     navigator.clipboard.writeText(urls).then(() => {
-      alert(`✅ Copied ${selected.length} URLs to clipboard!`);
+      showNotification('URLs Copied', `✅ ${selected.length} URLs copied to clipboard!`);
     }).catch(() => {
-      alert('Failed to copy URLs');
+      showNotification('Failed', 'Failed to copy URLs', 'error');
     });
   };
 
@@ -234,7 +251,7 @@ export default function AdminUploads() {
     );
 
     if (compressibleFiles.length === 0) {
-      alert('⚠️ No compressible files selected. Please select images or PDFs.');
+      showNotification('No Files', '⚠️ No compressible files selected. Please select images or PDFs.', 'warning');
       return;
     }
 
@@ -246,7 +263,7 @@ export default function AdminUploads() {
     const estimatedCompressedSize = estimatedOriginalSize * compressionQuality * 0.6;
     const estimatedSavings = ((1 - estimatedCompressedSize / estimatedOriginalSize) * 100).toFixed(0);
 
-    if (!confirm(`Compress ${compressibleFiles.length} file(s)?
+    showConfirm('Compress Files', `Compress ${compressibleFiles.length} file(s)?
 
 📊 ${imageCount} image(s), ${pdfCount} PDF(s)
 📊 Quality: ${Math.round(compressionQuality * 100)}%
@@ -254,14 +271,11 @@ export default function AdminUploads() {
 📊 Estimated size: ~${(estimatedCompressedSize / 1024 / 1024).toFixed(2)} MB
 📊 Space saved: ~${estimatedSavings}%
 
-This will replace the originals and cannot be undone.`)) {
-      return;
-    }
-
-    setCompressing(true);
-    let successCount = 0;
-    let failCount = 0;
-    let totalSaved = 0;
+This will replace the originals and cannot be undone.`, async () => {
+      setCompressing(true);
+      let successCount = 0;
+      let failCount = 0;
+      let totalSaved = 0;
 
     for (const file of compressibleFiles) {
       try {
@@ -317,18 +331,20 @@ This will replace the originals and cannot be undone.`)) {
     setSelected([]);
     setSelectAll(false);
     fetchUploads();
-    
+    closeModals();
+
     const totalSavedMB = (totalSaved / 1024 / 1024).toFixed(2);
     if (failCount === 0) {
-      alert(`✅ Successfully compressed ${successCount} image(s)!
-      
-📊 Total space saved: ${totalSavedMB} MB`);
-    } else {
-      alert(`✅ ${successCount} compressed
-❌ ${failCount} failed
+      showNotification('Compression Complete', `✅ Successfully compressed ${successCount} file(s)!
 
 📊 Total space saved: ${totalSavedMB} MB`);
+    } else {
+      showNotification('Compression Partially Failed', `✅ ${successCount} compressed
+❌ ${failCount} failed
+
+📊 Total space saved: ${totalSavedMB} MB`, 'warning');
     }
+  });
   };
 
   // Helper to determine file type icon
@@ -556,6 +572,41 @@ This will replace the originals and cannot be undone.`)) {
                 <i className="fa-solid fa-upload me-2"></i>Upload Files
                 <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} />
               </label>
+            </div>
+          </div>
+        )}
+
+        {/* Confirm Modal */}
+        {confirmModal && (
+          <div className="modal-overlay" onClick={closeModals}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className={`modal-icon ${confirmModal.type}`}>
+                {confirmModal.type === 'warning' ? '⚠️' : confirmModal.type === 'danger' ? '🗑️' : 'ℹ️'}
+              </div>
+              <h3 className="modal-title">{confirmModal.title}</h3>
+              <p className="modal-message">{confirmModal.message}</p>
+              <div className="modal-actions">
+                <button className="modal-btn modal-btn-cancel" onClick={closeModals}>Cancel</button>
+                <button className={`modal-btn modal-btn-confirm ${confirmModal.type}`} onClick={confirmModal.onConfirm}>
+                  {confirmModal.type === 'danger' ? 'Delete' : 'Confirm'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Notification Modal */}
+        {notificationModal && (
+          <div className="modal-overlay" onClick={closeModals}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className={`modal-icon ${notificationModal.type}`}>
+                {notificationModal.type === 'success' ? '✅' : notificationModal.type === 'error' ? '❌' : '⚠️'}
+              </div>
+              <h3 className="modal-title">{notificationModal.title}</h3>
+              <p className="modal-message">{notificationModal.message}</p>
+              <div className="modal-actions">
+                <button className="modal-btn modal-btn-confirm primary" onClick={closeModals}>OK</button>
+              </div>
             </div>
           </div>
         )}
@@ -984,6 +1035,136 @@ This will replace the originals and cannot be undone.`)) {
         .admin-empty-state p {
           color: #6c757d;
           margin: 0 0 24px 0;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(4px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
+          animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content {
+          background: #ffffff;
+          border-radius: 16px;
+          padding: 32px;
+          max-width: 480px;
+          width: 90%;
+          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+          animation: slideUp 0.3s ease;
+        }
+
+        .modal-icon {
+          font-size: 48px;
+          text-align: center;
+          margin-bottom: 16px;
+        }
+
+        .modal-icon.warning { filter: drop-shadow(0 4px 8px rgba(255, 193, 7, 0.3)); }
+        .modal-icon.danger { filter: drop-shadow(0 4px 8px rgba(220, 53, 69, 0.3)); }
+        .modal-icon.success { filter: drop-shadow(0 4px 8px rgba(40, 167, 69, 0.3)); }
+        .modal-icon.error { filter: drop-shadow(0 4px 8px rgba(220, 53, 69, 0.3)); }
+
+        .modal-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin: 0 0 12px;
+          text-align: center;
+        }
+
+        .modal-message {
+          font-size: 14px;
+          color: #666;
+          line-height: 1.6;
+          margin: 0 0 24px;
+          white-space: pre-line;
+          text-align: center;
+        }
+
+        .modal-actions {
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+        }
+
+        .modal-btn {
+          padding: 12px 24px;
+          border-radius: 10px;
+          border: none;
+          font-weight: 600;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .modal-btn-cancel {
+          background: #f8f9fa;
+          color: #666;
+        }
+
+        .modal-btn-cancel:hover {
+          background: #e9ecef;
+        }
+
+        .modal-btn-confirm {
+          background: #FFC81A;
+          color: #1a1a1a;
+        }
+
+        .modal-btn-confirm:hover {
+          background: #e6b517;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(255, 200, 26, 0.3);
+        }
+
+        .modal-btn-confirm.danger {
+          background: #dc3545;
+          color: #fff;
+        }
+
+        .modal-btn-confirm.danger:hover {
+          background: #c82333;
+          box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Dark mode modals */
+        :global(.dark) .modal-content {
+          background: #1a1a1a;
+          border: 1px solid #333;
+        }
+
+        :global(.dark) .modal-title {
+          color: #ffffff;
+        }
+
+        :global(.dark) .modal-message {
+          color: #999;
+        }
+
+        :global(.dark) .modal-btn-cancel {
+          background: #2a2a2a;
+          color: #ccc;
+        }
+
+        :global(.dark) .modal-btn-cancel:hover {
+          background: #333;
         }
       `}</style>
     </>
