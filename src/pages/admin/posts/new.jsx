@@ -896,8 +896,8 @@ export default function AdminPostNew() {
           align-items: center;
           gap: 6px;
           padding: 4px 10px;
-          background: #1a1a1a;
-          color: #1a1d21;
+          background: #e0f2fe;
+          color: #0369a1;
           border-radius: 20px;
           font-size: 12px;
           font-weight: 500;
@@ -906,7 +906,7 @@ export default function AdminPostNew() {
         .admin-tag-remove {
           background: none;
           border: none;
-          color: #1a1d21;
+          color: #0369a1;
           cursor: pointer;
           font-size: 16px;
           line-height: 1;
