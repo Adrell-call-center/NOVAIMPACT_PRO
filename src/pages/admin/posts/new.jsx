@@ -565,13 +565,15 @@ export default function AdminPostNew() {
 
         /* Lock page scroll — only the two columns scroll */
         body, html { overflow: hidden; height: 100%; }
-        .admin-main {
-          height: 100vh;
+        .stripe-layout { height: 100vh; overflow: hidden; display: flex; }
+        .stripe-main {
+          flex: 1;
+          min-height: 0;
           overflow: hidden;
           display: flex;
           flex-direction: column;
         }
-        .admin-content {
+        .stripe-content {
           flex: 1;
           min-height: 0;
           overflow: hidden;
@@ -591,8 +593,9 @@ export default function AdminPostNew() {
 
         @media (max-width: 1199px) {
           body, html { overflow: auto; height: auto; }
-          .admin-main { height: auto; overflow: visible; display: block; }
-          .admin-content { overflow: visible; flex: none; display: block; padding: 16px; }
+          .stripe-layout { height: auto; overflow: visible; display: block; }
+          .stripe-main { height: auto; overflow: visible; display: block; }
+          .stripe-content { overflow: visible; flex: none; display: block; padding: 16px; }
           .admin-editor-2col { flex-direction: column; overflow: visible; height: auto; }
         }
 
