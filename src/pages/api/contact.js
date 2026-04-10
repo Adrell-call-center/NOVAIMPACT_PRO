@@ -17,6 +17,11 @@ const socialLinks = {
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
+  console.log("SMTP_USER:", process.env.SMTP_USER);
+  console.log("SMTP_PASS:", process.env.SMTP_PASS ? "*****" : "undefined");
+  console.log("SMTP_HOST:", process.env.SMTP_HOST);
+  console.log("SMTP_PORT:", process.env.SMTP_PORT);
+
   const { name, email, phone, subject, message } = req.body;
 
   if (!name || !email || !subject || !message) {
@@ -34,11 +39,11 @@ export default async function handler(req, res) {
     port: Number(process.env.SMTP_PORT),
     secure: process.env.SMTP_SECURE === "ssl",
     auth: {
-      user: process.env.SMTP_USERNAME,
-      pass: process.env.SMTP_PASSWORD,
+      user: process.env.SMTP_USER || process.env.SMTP_USERNAME,
+      pass: process.env.SMTP_PASS || process.env.SMTP_PASSWORD,
     },
     tls: {
-      rejectUnauthorized: false, // Skip hostname/cert mismatch
+      rejectUnauthorized: false,
     },
   });
 
