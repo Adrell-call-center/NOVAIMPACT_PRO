@@ -1,346 +1,345 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
-import Pagination from '@/components/admin/Pagination';
+import '@/styles/admin-stripe.css';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 12;
 
 export default function AdminPosts() {
   const [posts, setPosts] = useState([]);
-  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   useEffect(() => { fetchPosts(); }, []);
 
-  const fetchPosts = async (q = '') => {
-    setLoading(true);
-    const url = q ? `/api/admin/posts?search=${q}` : '/api/admin/posts';
-    const res = await fetch(url);
+  const fetchPosts = async () => {
+    const res = await fetch('/api/admin/posts');
     const data = await res.json();
     setPosts(data.posts || []);
     setLoading(false);
-    setCurrentPage(1);
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this post?')) return;
     await fetch(`/api/admin/posts/${id}`, { method: 'DELETE' });
-    fetchPosts(search);
+    setConfirmDelete(null);
+    fetchPosts();
   };
 
-  const handlePublish = async (id, currentStatus) => {
-    const post = posts.find(p => p.id === id);
-    await fetch(`/api/admin/posts/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...post, status: currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED', publishedAt: currentStatus === 'DRAFT' ? new Date().toISOString() : null }),
-    });
-    fetchPosts(search);
-  };
+  // Filter posts
+  const filteredPosts = posts.filter(p => {
+    if (statusFilter !== 'all' && p.status.toLowerCase() !== statusFilter) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      return (p.titleFr || '').toLowerCase().includes(q) || (p.category || '').toLowerCase().includes(q);
+    }
+    return true;
+  });
 
-  // Pagination logic
-  const filteredPosts = posts.filter(p => 
-    !search || p.titleFr.toLowerCase().includes(search.toLowerCase()) || p.category.toLowerCase().includes(search.toLowerCase())
-  );
+  // Pagination
   const totalPages = Math.ceil(filteredPosts.length / ITEMS_PER_PAGE);
   const paginatedPosts = filteredPosts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
+  const publishedCount = posts.filter(p => p.status === 'PUBLISHED').length;
+  const draftsCount = posts.filter(p => p.status === 'DRAFT').length;
+
   return (
     <>
-      <Head><title>Posts — Nova Impact Admin</title></Head>
+      <Head><title>Posts — Nova Impact</title></Head>
       <AdminLayout title="Posts">
-        <div className="admin-page-header">
-          <div className="admin-search-box">
-            <i className="fa-solid fa-search"></i>
-            <input className="admin-search-input" placeholder="Search posts..." value={search} onChange={e => { setSearch(e.target.value); fetchPosts(e.target.value); }} />
+        <div className="stripe-page">
+          {/* Page Header */}
+          <div className="stripe-page-header">
+            <div>
+              <h1 className="stripe-page-title">Posts</h1>
+              <p className="stripe-page-subtitle">Manage your blog posts and articles</p>
+            </div>
+            <Link href="/admin/posts/new" className="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+              New Post
+            </Link>
           </div>
-          <Link href="/admin/posts/new" className="btn-primary">
-            <i className="fa-solid fa-plus me-2"></i>New Post
-          </Link>
-        </div>
 
-        {loading ? (
-          <div className="admin-loading"><div className="admin-spinner"></div></div>
-        ) : (
-          <>
-            <div className="admin-light-card">
-              <div className="admin-table-wrapper">
-                <table className="admin-table">
+          {/* Stats */}
+          <div className="stats-grid">
+            <div className="stat-card" style={{ '--stat-bg': 'var(--slate-bg)', '--stat-color': 'var(--slate)' }}>
+              <div className="stat-card-header">
+                <div className="stat-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="stat-card-value">{posts.length}</div>
+              <p className="stat-card-label">Total Posts</p>
+            </div>
+            <div className="stat-card" style={{ '--stat-bg': 'var(--success-bg)', '--stat-color': 'var(--success)' }}>
+              <div className="stat-card-header">
+                <div className="stat-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="stat-card-value">{publishedCount}</div>
+              <p className="stat-card-label">Published</p>
+            </div>
+            <div className="stat-card" style={{ '--stat-bg': 'var(--warning-bg)', '--stat-color': 'var(--warning)' }}>
+              <div className="stat-card-header">
+                <div className="stat-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="stat-card-value">{draftsCount}</div>
+              <p className="stat-card-label">Drafts</p>
+            </div>
+          </div>
+
+          {/* Posts Table Card */}
+          <div className="stripe-card">
+            <div className="stripe-card-header">
+              <h3 className="stripe-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                All Posts
+              </h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="search-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                  </svg>
+                  <input 
+                    className="form-input" 
+                    style={{ width: '200px', padding: '7px 14px 7px 34px', fontSize: '13px' }}
+                    placeholder="Search posts..." 
+                    value={searchQuery}
+                    onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                  />
+                </div>
+                <div className="filter-tabs">
+                  <button className={`filter-tab ${statusFilter === 'all' ? 'active' : ''}`} onClick={() => { setStatusFilter('all'); setCurrentPage(1); }}>All</button>
+                  <button className={`filter-tab ${statusFilter === 'published' ? 'active' : ''}`} onClick={() => { setStatusFilter('published'); setCurrentPage(1); }}>Published</button>
+                  <button className={`filter-tab ${statusFilter === 'draft' ? 'active' : ''}`} onClick={() => { setStatusFilter('draft'); setCurrentPage(1); }}>Drafts</button>
+                </div>
+              </div>
+            </div>
+
+            {loading ? (
+              <div style={{ padding: '48px 24px', textAlign: 'center' }}>
+                <div className="skeleton" style={{ width: '40px', height: '40px', margin: '0 auto 16px', borderRadius: '50%' }}></div>
+                <p style={{ color: 'var(--text-tertiary)', fontSize: '13px', margin: 0 }}>Loading posts...</p>
+              </div>
+            ) : paginatedPosts.length > 0 ? (
+              <>
+                <table className="table">
                   <thead>
                     <tr>
-                      <th style={{ width: 64 }}></th>
                       <th>Title</th>
                       <th>Category</th>
                       <th>Status</th>
                       <th>Date</th>
-                      <th>Actions</th>
+                      <th className="table-action"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedPosts.map(p => {
-                      const isScheduled = p.status === 'PUBLISHED' && p.publishedAt && new Date(p.publishedAt) > new Date();
-                      const badgeClass = isScheduled ? 'admin-badge-scheduled' : p.status === 'PUBLISHED' ? 'admin-badge-success' : 'admin-badge-secondary';
-                      const badgeLabel = isScheduled ? 'Scheduled' : p.status === 'PUBLISHED' ? 'Published' : 'Draft';
-                      return (
-                      <tr key={p.id}>
-                        <td style={{ padding: '10px 12px 10px 20px' }}>
-                          {p.coverImage ? (
-                            <img src={p.coverImage} alt="" className="admin-table-thumb" />
-                          ) : (
-                            <div className="admin-table-thumb-empty"><i className="fa-solid fa-image"></i></div>
-                          )}
+                    {paginatedPosts.map(post => (
+                      <tr key={post.id}>
+                        <td className="table-cell-title">
+                          <Link href={`/admin/posts/${post.id}`}>{post.titleFr || 'Untitled'}</Link>
                         </td>
-                        <td><Link href={`/admin/posts/${p.id}`} className="admin-table-link">{p.titleFr}</Link></td>
-                        <td>{p.category || '—'}</td>
-                        <td><span className={`admin-badge ${badgeClass}`}>{badgeLabel}</span></td>
-                        <td>{p.publishedAt ? new Date(p.publishedAt).toLocaleDateString() : '—'}</td>
                         <td>
-                          <div className="admin-table-actions">
-                            <Link href={`/admin/posts/${p.id}`} className="admin-btn-icon" title="Edit"><i className="fa-solid fa-pen"></i></Link>
-                            <button className="admin-btn-icon" onClick={() => handlePublish(p.id, p.status)} title={p.status === 'PUBLISHED' ? 'Unpublish' : 'Publish'}>
-                              <i className={`fa-solid ${p.status === 'PUBLISHED' ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                          <span className="table-cell-text">{post.category || '—'}</span>
+                        </td>
+                        <td>
+                          <Badge variant={post.status === 'PUBLISHED' ? 'success' : 'warning'}>
+                            {post.status}
+                          </Badge>
+                        </td>
+                        <td className="table-cell-date">
+                          {post.publishedAt ? formatDate(post.publishedAt) : '—'}
+                        </td>
+                        <td className="table-action">
+                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
+                            <Link href={`/admin/posts/${post.id}`} className="btn-icon" title="Edit">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                              </svg>
+                            </Link>
+                            <button className="btn-icon danger" onClick={() => setConfirmDelete(post.id)} title="Delete">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                              </svg>
                             </button>
-                            <button className="admin-btn-icon admin-btn-danger" onClick={() => handleDelete(p.id)} title="Delete"><i className="fa-solid fa-trash"></i></button>
                           </div>
                         </td>
                       </tr>
-                      );
-                    })}
+                    ))}
                   </tbody>
                 </table>
-                {paginatedPosts.length === 0 && <p className="text-muted text-center py-5">No posts found. <Link href="/admin/posts/new">Create your first post</Link></p>}
+                {totalPages > 1 && (
+                  <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                )}
+              </>
+            ) : (
+              <EmptyState
+                icon={
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                }
+                title={searchQuery || statusFilter !== 'all' ? 'No matching posts' : 'No posts yet'}
+                description={searchQuery || statusFilter !== 'all' ? 'Try adjusting your search or filter' : 'Create your first post to get started'}
+                action={!searchQuery && statusFilter === 'all' ? { label: 'Create Post', href: '/admin/posts/new' } : null}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Delete Confirmation Modal */}
+        {confirmDelete && (
+          <Modal onClose={() => setConfirmDelete(null)}>
+            <div className="modal-content">
+              <div className="modal-icon danger">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <h3 className="modal-title">Delete Post</h3>
+              <p className="modal-desc">This action cannot be undone. The post will be permanently removed.</p>
+              <div className="modal-actions">
+                <button className="btn btn-secondary" onClick={() => setConfirmDelete(null)}>Cancel</button>
+                <button className="btn btn-danger" onClick={() => handleDelete(confirmDelete)}>Delete</button>
               </div>
             </div>
-
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} itemsPerPage={ITEMS_PER_PAGE} totalItems={filteredPosts.length} />
-          </>
+          </Modal>
         )}
+
+        <style jsx global>{`
+          .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 400px;
+            text-align: center;
+          }
+          .modal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+          }
+          .modal-icon.danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+          }
+          .modal-title {
+            margin: 0 0 8px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+          }
+          .modal-desc {
+            margin: 0 0 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+          }
+          .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+          }
+          .modal-actions .btn {
+            flex: 1;
+          }
+        `}</style>
       </AdminLayout>
-
-      <style jsx global>{`
-        .admin-page-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 24px;
-          gap: 16px;
-        }
-
-        .admin-search-box {
-          position: relative;
-          flex: 1;
-          max-width: 400px;
-        }
-
-        .admin-search-box i {
-          position: absolute;
-          left: 14px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #6c757d;
-        }
-
-        .admin-search-input {
-          width: 100%;
-          padding: 12px 16px 12px 42px;
-          background: #ffffff;
-          border: 1px solid #e8e8e8;
-          border-radius: 10px;
-          color: #1a1d21;
-          font-size: 14px;
-        }
-
-        .admin-search-input:focus {
-          outline: none;
-          border-color: #1a1a1a;
-          box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
-        }
-
-        .btn-primary {
-          background: #1a1a1a;
-          color: #1a1d21;
-          border: none;
-          padding: 12px 24px;
-          border-radius: 10px;
-          font-weight: 600;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          transition: all 0.2s;
-          white-space: nowrap;
-        }
-
-        .btn-primary:hover {
-          background: #333333;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(255,200,26,0.3);
-        }
-
-        .admin-loading {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 300px;
-        }
-
-        .admin-spinner {
-          width: 32px;
-          height: 32px;
-          border: 3px solid #e8e8e8;
-          border-top-color: #1a1a1a;
-          border-radius: 50%;
-          animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-
-        .admin-light-card {
-          background: #ffffff;
-          border-radius: 16px;
-          border: 1px solid #e8e8e8;
-          overflow: hidden;
-          transition: box-shadow 0.3s ease;
-        }
-
-        .admin-light-card:hover {
-          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        }
-
-        .admin-table-wrapper {
-          overflow: hidden;
-        }
-
-        .admin-table {
-          width: 100%;
-          border-collapse: collapse;
-        }
-
-        .admin-table th {
-          background: #f8f9fa;
-          padding: 14px 20px;
-          text-align: left;
-          font-size: 12px;
-          font-weight: 600;
-          color: #6c757d;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          border-bottom: 1px solid #e8e8e8;
-        }
-
-        .admin-table td {
-          padding: 16px 20px;
-          border-top: 1px solid #f0f0f0;
-          font-size: 14px;
-        }
-
-        .admin-table tbody tr:hover {
-          background: #fafafa;
-        }
-
-        .admin-table-link {
-          color: #1a1d21;
-          text-decoration: none;
-          font-weight: 500;
-        }
-
-        .admin-table-link:hover {
-          color: #1a1a1a;
-        }
-
-        .admin-badge {
-          display: inline-block;
-          padding: 4px 12px;
-          border-radius: 20px;
-          font-size: 12px;
-          font-weight: 500;
-        }
-
-        .admin-badge-success { background: rgba(25, 135, 84, 0.15); color: #198754; }
-        .admin-badge-secondary { background: rgba(108, 117, 125, 0.15); color: #6c757d; }
-        .admin-badge-scheduled { background: rgba(13, 110, 253, 0.12); color: #0d6efd; }
-
-        .admin-table-thumb {
-          width: 44px;
-          height: 44px;
-          object-fit: cover;
-          border-radius: 8px;
-          border: 1px solid #e8e8e8;
-          display: block;
-        }
-
-        .admin-table-thumb-empty {
-          width: 44px;
-          height: 44px;
-          border-radius: 8px;
-          border: 1px dashed #d0d0d0;
-          background: #f8f9fa;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #c0c0c0;
-          font-size: 16px;
-        }
-
-        .admin-table-actions {
-          display: flex;
-          gap: 8px;
-        }
-
-        .admin-btn-icon {
-          width: 32px;
-          height: 32px;
-          border: 1px solid #e8e8e8;
-          background: #ffffff;
-          border-radius: 6px;
-          color: #6c757d;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s;
-        }
-
-        .admin-btn-icon:hover {
-          background: #1a1a1a;
-          color: #1a1d21;
-          border-color: #1a1a1a;
-        }
-
-        .admin-btn-danger:hover {
-          background: #dc3545;
-          color: #fff;
-          border-color: #dc3545;
-        }
-
-        .text-muted {
-          color: #6c757d;
-        }
-
-        .text-center {
-          text-align: center;
-        }
-
-        .py-5 {
-          padding-top: 48px;
-          padding-bottom: 48px;
-        }
-      `}</style>
     </>
   );
+}
+
+/* Badge Component */
+function Badge({ variant, children }) {
+  return <span className={`badge badge-${variant}`}>{children}</span>;
+}
+
+/* Empty State Component */
+function EmptyState({ icon, title, description, action }) {
+  return (
+    <div className="empty-state">
+      {icon}
+      <h4 className="empty-state-title">{title}</h4>
+      <p className="empty-state-desc">{description}</p>
+      {action && (
+        <Link href={action.href} className="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          {action.label}
+        </Link>
+      )}
+    </div>
+  );
+}
+
+/* Modal Component */
+function Modal({ children, onClose }) {
+  return (
+    <div className="modal-overlay" onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000 }}>
+      <div onClick={e => e.stopPropagation()}>{children}</div>
+    </div>
+  );
+}
+
+/* Pagination Component */
+function Pagination({ currentPage, totalPages, onPageChange }) {
+  return (
+    <div className="pagination">
+      <span className="pagination-info">Page {currentPage} of {totalPages}</span>
+      <div className="pagination-controls">
+        <button className="pagination-btn" disabled={currentPage <= 1} onClick={() => onPageChange(currentPage - 1)}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+          let page;
+          if (totalPages <= 5) page = i + 1;
+          else if (currentPage <= 3) page = i + 1;
+          else if (currentPage >= totalPages - 2) page = totalPages - 4 + i;
+          else page = currentPage - 2 + i;
+          return (
+            <button key={page} className={`pagination-btn ${currentPage === page ? 'active' : ''}`} onClick={() => onPageChange(page)}>
+              {page}
+            </button>
+          );
+        })}
+        <button className="pagination-btn" disabled={currentPage >= totalPages} onClick={() => onPageChange(currentPage + 1)}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* Utility */
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 export async function getServerSideProps(ctx) {
   const { getServerSession } = await import("next-auth/next");
   const { authOptions } = await import("@/lib/auth");
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
-
-  if (!session) {
-    return { redirect: { destination: '/admin/login', permanent: false } };
-  }
+  if (!session) return { redirect: { destination: '/admin/login', permanent: false } };
   return { props: {} };
 }
