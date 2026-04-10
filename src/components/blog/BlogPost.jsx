@@ -10,37 +10,51 @@ gsap.registerPlugin(ScrollSmoother);
 
 const SimoAvatar = '/images/Simo-Adrif.webp';
 
-function readingTime(html = '') {
+function readingTime(html) {
   if (!html || typeof html !== 'string') return 1;
   const text = html.replace(/<[^>]+>/g, '');
   const words = text.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 
-export default function BlogPost({ post, related, recent }) {
+function getContent(post, lang) {
+  if (!post) return { title: '', content: '' };
+  if (lang === 'fr') {
+    return {
+      title: post.titleFr || post.title || 'Untitled',
+      content: post.contentFr || post.content || '',
+    };
+  }
+  return {
+    title: post.titleEn || post.title || 'Untitled',
+    content: post.contentEn || post.content || '',
+  };
+}
+
+export default function BlogPost({ post, related, recent, initialLang }) {
   const router = useRouter();
-  const [activeLang, setActiveLang] = useState('fr');
+  const [activeLang, setActiveLang] = useState(initialLang || 'fr');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackTop, setShowBackTop] = useState(false);
   const [copied, setCopied] = useState(false);
   const [pageUrl, setPageUrl] = useState('');
 
-  const articleRef     = useRef(null); // .post-main (for reading progress)
-  const wrapperRef     = useRef(null); // .post-content-wrapper (sticky anchor)
-  const sidebarRef     = useRef(null); // .post-sidebar (gets translateY)
+  const articleRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const sidebarRef = useRef(null);
 
-  // Page URL after mount
   useEffect(() => { setPageUrl(window.location.href); }, []);
 
-  // Language from localStorage
   useEffect(() => {
-    const stored = typeof window !== 'undefined' ? localStorage.getItem('nova-lang') : null;
-    setActiveLang(stored || 'fr');
+    if (typeof window !== 'undefined' && localStorage.getItem('nova-lang')) {
+      setActiveLang(localStorage.getItem('nova-lang'));
+    }
   }, []);
 
   const isFr = activeLang === 'fr';
+  const { title, content } = getContent(post, activeLang);
+  const minRead = readingTime(content);
 
-  // ── Reading progress bar ──────────────────────────────────────────────────
   useEffect(() => {
     const tick = () => {
       const article = articleRef.current;
@@ -59,16 +73,14 @@ export default function BlogPost({ post, related, recent }) {
     return () => gsap.ticker.remove(tick);
   }, []);
 
-  // ── JS sticky sidebar (works with GSAP ScrollSmoother) ───────────────────
   useEffect(() => {
     const sidebar = sidebarRef.current;
     const wrapper = wrapperRef.current;
     if (!sidebar || !wrapper) return;
 
-    const TOP_OFFSET = 110; // px from viewport top where sidebar sticks
+    const TOP_OFFSET = 110;
 
     const tick = () => {
-      // Disable sticky on mobile — CSS handles layout instead
       if (window.innerWidth <= 1024) {
         sidebar.style.transform = '';
         return;
@@ -96,26 +108,16 @@ export default function BlogPost({ post, related, recent }) {
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
-  const switchLang = (newLang) => {
-    localStorage.setItem('nova-lang', newLang);
-    setActiveLang(newLang);
-    window.location.reload();
-  };
-
-  if (!post) return <div className="container py-5"><h2>Post not found</h2></div>;
-
-  const title   = isFr ? (post.titleFr || post.title || 'Untitled')   : (post.titleEn || post.title || 'Untitled');
-  const content = isFr ? (post.contentFr || post.content || '') : (post.contentEn || post.content || '');
-  const minRead  = readingTime(content);
+  if (!post) {
+    return <div className="container py-5" style={{ textAlign: 'center', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><h2>Post not found</h2></div>;
+  }
 
   return (
     <>
       <BlogSeo post={post} lang={activeLang} />
 
-      {/* Reading progress bar */}
       <div className="post-progress-bar" style={{ width: `${scrollProgress}%` }} />
 
-      {/* ── HERO ───────────────────────────────────────────────────────────── */}
       <div className="post-hero">
         <div className="container">
           <div className="post-hero-content">
@@ -151,7 +153,7 @@ export default function BlogPost({ post, related, recent }) {
                 <i className="fa-regular fa-clock"></i>
                 {minRead} min read
               </span>
-              {post.tags?.slice(0, 3).map(t => (
+              {post.tags && post.tags.slice(0, 3).map(t => (
                 <span key={t} className="post-tag">{t}</span>
               ))}
             </div>
@@ -159,12 +161,10 @@ export default function BlogPost({ post, related, recent }) {
         </div>
       </div>
 
-      {/* ── CONTENT + SIDEBAR ──────────────────────────────────────────────── */}
       <div className="post-content-wrapper" ref={wrapperRef}>
         <div className="container">
           <div className="post-layout">
 
-            {/* Main column */}
             <article className="post-main" ref={articleRef}>
               {post.coverImage && (
                 <div className="post-cover-inline">
@@ -188,9 +188,8 @@ export default function BlogPost({ post, related, recent }) {
                 dangerouslySetInnerHTML={{ __html: content || '' }}
               />
 
-              {/* Article footer */}
               <div className="post-article-footer">
-                {post.tags?.length > 0 && (
+                {post.tags && post.tags.length > 0 && (
                   <div className="post-footer-tags">
                     <span className="post-footer-tags-label">
                       <i className="fa-solid fa-tags"></i> Tags
@@ -223,11 +222,9 @@ export default function BlogPost({ post, related, recent }) {
               </div>
             </article>
 
-            {/* Sidebar column — JS sticky applied to inner div */}
             <div className="post-sidebar-col">
               <div className="post-sidebar" ref={sidebarRef}>
 
-                {/* Author */}
                 <div className="sidebar-card author-card">
                   <div className="author-avatar">
                     <Image
@@ -254,7 +251,6 @@ export default function BlogPost({ post, related, recent }) {
                   </div>
                 </div>
 
-                {/* Share */}
                 <div className="sidebar-card share-card">
                   <h4 className="share-title">Share this article</h4>
                   <div className="share-buttons">
@@ -270,8 +266,7 @@ export default function BlogPost({ post, related, recent }) {
                   </div>
                 </div>
 
-                {/* Latest Articles */}
-                {recent?.length > 0 && (
+                {recent && recent.length > 0 && (
                   <div className="sidebar-card recent-posts-card">
                     <h4 className="recent-posts-title">Latest Articles</h4>
                     <div className="recent-posts-list">
@@ -307,15 +302,14 @@ export default function BlogPost({ post, related, recent }) {
                   </div>
                 )}
 
-              </div>{/* end .post-sidebar */}
-            </div>{/* end .post-sidebar-col */}
+              </div>
+            </div>
 
           </div>
         </div>
       </div>
 
-      {/* ── RELATED POSTS ──────────────────────────────────────────────────── */}
-      {related?.length > 0 && (
+      {related && related.length > 0 && (
         <div className="related-posts-section">
           <div className="container">
             <h2 className="related-posts-heading">Related Articles</h2>
@@ -347,7 +341,6 @@ export default function BlogPost({ post, related, recent }) {
         </div>
       )}
 
-      {/* ── CTA ────────────────────────────────────────────────────────────── */}
       <div className="post-cta">
         <div className="container">
           <div className="post-cta-content">
@@ -360,7 +353,6 @@ export default function BlogPost({ post, related, recent }) {
         </div>
       </div>
 
-      {/* Back to top */}
       {showBackTop && (
         <button
           className="back-to-top"

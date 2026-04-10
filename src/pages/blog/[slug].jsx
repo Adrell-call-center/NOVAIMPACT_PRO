@@ -36,12 +36,12 @@ class BlogErrorBoundary extends Component {
   }
 }
 
-export default function BlogSlugPage({ post, related, recent }) {
+export default function BlogSlugPage({ post, related, recent, initialLang }) {
   if (!post) return <div className="container py-5"><h2>Post not found</h2></div>;
   return (
     <BlogErrorBoundary>
       <RootLayout header="header3" footer="footer3">
-        <BlogPost post={post} related={related} recent={recent} />
+        <BlogPost post={post} related={related} recent={recent} initialLang={initialLang} />
       </RootLayout>
     </BlogErrorBoundary>
   );
@@ -89,6 +89,7 @@ export async function getServerSideProps({ params }) {
         post: JSON.parse(JSON.stringify(safePost)),
         related: JSON.parse(JSON.stringify(related)),
         recent,
+        initialLang: lang,
       },
     };
   } catch (error) {
