@@ -55,789 +55,713 @@ export default function AdminIndex() {
     }
   };
 
-  if (loading) return <LoadingSkeleton />;
-
   return (
     <>
-      <Head><title>Dashboard — Nova Impact</title></Head>
-      <AdminLayout title="Overview">
-        <div className="dashboard">
-          {/* Page Header */}
-          <div className="dashboard-header">
-            <div>
-              <h1 className="dashboard-title">Good morning</h1>
-              <p className="dashboard-subtitle">Here's what's happening with your content today.</p>
+      <Head><title>Dashboard — Nova Impact Admin</title></Head>
+      <AdminLayout title="Dashboard">
+        {loading ? (
+          <div className="admin-loading"><div className="admin-spinner"></div></div>
+        ) : (
+          <>
+            {/* Welcome Banner */}
+            <div className="admin-welcome-banner">
+              <div className="admin-welcome-content">
+                <h2>Welcome back, Admin! 👋</h2>
+                <p>Here's what's happening with your website today.</p>
+              </div>
+              <div className="admin-welcome-date">
+                {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+              </div>
             </div>
-            <Link href="/admin/posts/new" className="btn btn-primary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-              New Post
-            </Link>
-          </div>
 
-          {/* Metrics Grid */}
-          <div className="metrics-grid">
-            <MetricCard
-              title="Total Posts"
-              value={stats.posts}
-              icon={
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-                </svg>
-              }
-              trend={`${stats.published} published`}
-              href="/admin/posts"
-              color="slate"
-            />
-            <MetricCard
-              title="Published"
-              value={stats.published}
-              icon={
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-                </svg>
-              }
-              trend="Live on site"
-              href="/admin/posts"
-              color="green"
-            />
-            <MetricCard
-              title="Drafts"
-              value={stats.drafts}
-              icon={
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                </svg>
-              }
-              trend="Awaiting review"
-              href="/admin/posts"
-              color="amber"
-            />
-            <MetricCard
-              title="Media Files"
-              value={stats.uploads}
-              icon={
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                </svg>
-              }
-              trend="Uploaded assets"
-              href="/admin/uploads"
-              color="purple"
-            />
-            <MetricCard
-              title="Messages"
-              value={stats.contacts}
-              icon={
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-                </svg>
-              }
-              trend="Contact inquiries"
-              href="/admin/contacts"
-              color="blue"
-            />
-            <MetricCard
-              title="Subscribers"
-              value={stats.subscribers}
-              icon={
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              }
-              trend="Newsletter list"
-              href="/admin/newsletter"
-              color="pink"
-            />
-          </div>
+            {/* Stats Cards */}
+            <div className="admin-stats-grid">
+              <StatCard title="Total Posts" value={stats.posts} icon="fa-file-lines" color="black" link="/admin/posts" />
+              <StatCard title="Published" value={stats.published} icon="fa-check-circle" color="dark-gray" link="/admin/posts" />
+              <StatCard title="Drafts" value={stats.drafts} icon="fa-pen-to-square" color="medium-gray" link="/admin/posts" />
+              <StatCard title="Media Files" value={stats.uploads} icon="fa-image" color="light-gray" link="/admin/uploads" />
+              <StatCard title="Messages" value={stats.contacts} icon="fa-envelope" color="darker-gray" link="/admin/contacts" />
+              <StatCard title="Subscribers" value={stats.subscribers} icon="fa-users" color="darkest-gray" link="/admin/newsletter" />
+            </div>
 
-          {/* Content Grid */}
-          <div className="content-grid">
-            {/* Recent Posts Table */}
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Recent Posts</h3>
-                <div className="card-actions">
-                  <Link href="/admin/posts" className="link">
-                    View all <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
+            {/* Main Content Grid */}
+            <div className="admin-main-grid">
+              {/* Left Column */}
+              <div className="admin-col-main">
+                {/* Recent Posts */}
+                <div className="admin-light-card">
+                  <div className="admin-card-header">
+                    <h3 className="admin-card-title">
+                      <span className="admin-card-icon black"><i className="fa-solid fa-clock-rotate-left"></i></span>
+                      Recent Posts
+                    </h3>
+                    <div className="admin-card-actions">
+                      <Link href="/admin/posts/new" className="dash-btn-sm">
+                        <i className="fa-solid fa-plus"></i> New Post
+                      </Link>
+                      <Link href="/admin/posts" className="admin-card-link">View All <i className="fa-solid fa-arrow-right ms-1"></i></Link>
+                    </div>
+                  </div>
+                  <div className="admin-card-body no-padding">
+                    {recentPosts.length > 0 ? (
+                      <div className="admin-recent-list">
+                        {recentPosts.map(post => (
+                          <div key={post.id} className="admin-recent-item">
+                            <div className="admin-recent-content">
+                              <h4><Link href={`/admin/posts/${post.id}`}>{post.titleFr}</Link></h4>
+                              <p>{post.category || 'No category'}</p>
+                            </div>
+                            <div className="admin-recent-meta">
+                              <span className={`admin-badge ${post.status === 'PUBLISHED' ? 'admin-badge-success' : 'admin-badge-secondary'}`}>{post.status}</span>
+                              <small>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : 'Draft'}</small>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="admin-empty-state">
+                        <i className="fa-solid fa-file-lines"></i>
+                        <p>No posts yet</p>
+                        <Link href="/admin/posts/new" className="dash-btn">Create Your First Post</Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Recent Messages */}
+                <div className="admin-light-card mt-4">
+                  <div className="admin-card-header">
+                    <h3 className="admin-card-title">
+                      <span className="admin-card-icon darker-gray"><i className="fa-solid fa-envelope"></i></span>
+                      Recent Messages
+                    </h3>
+                    <Link href="/admin/contacts" className="admin-card-link">View All</Link>
+                  </div>
+                  <div className="admin-card-body">
+                    {recentContacts.length > 0 ? (
+                      <div className="admin-message-list">
+                        {recentContacts.map(contact => (
+                          <div key={contact.id} className="admin-message-item">
+                            <div className="admin-message-avatar">{contact.name.charAt(0)}</div>
+                            <div className="admin-message-content">
+                              <strong>{contact.name}</strong>
+                              <p>{contact.message.substring(0, 60)}...</p>
+                            </div>
+                            <small>{new Date(contact.createdAt).toLocaleDateString()}</small>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-muted text-center">No messages yet</p>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="card-body no-padding">
-                {recentPosts.length > 0 ? (
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th className="table-action"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {recentPosts.map(post => (
-                        <tr key={post.id}>
-                          <td className="table-cell-title">
-                            <Link href={`/admin/posts/${post.id}`}>{post.titleFr}</Link>
-                          </td>
-                          <td>
-                            <Badge variant={post.status === 'PUBLISHED' ? 'success' : 'warning'}>
-                              {post.status}
-                            </Badge>
-                          </td>
-                          <td className="table-cell-date">
-                            {post.publishedAt 
-                              ? formatDate(post.publishedAt)
-                              : '—'}
-                          </td>
-                          <td className="table-action">
-                            <Link href={`/admin/posts/${post.id}`} className="btn-icon" title="View">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-                              </svg>
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <EmptyState
-                    icon={
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-                      </svg>
-                    }
-                    title="No posts yet"
-                    description="Create your first post to get started"
-                    action={{ label: 'Create Post', href: '/admin/posts/new' }}
-                  />
-                )}
-              </div>
-            </div>
 
-            {/* Recent Messages */}
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Recent Messages</h3>
-                <Link href="/admin/contacts" className="link">
-                  View all <i className="fa-solid fa-arrow-right"></i>
-                </Link>
-              </div>
-              <div className="card-body no-padding">
-                {recentContacts.length > 0 ? (
-                  <div className="list">
-                    {recentContacts.map(contact => (
-                      <Link href="/admin/contacts" key={contact.id} className="list-item">
-                        <div className="list-item-avatar">
-                          {contact.name.charAt(0)}
-                        </div>
-                        <div className="list-item-content">
-                          <div className="list-item-header">
-                            <span className="list-item-name">{contact.name}</span>
-                            <span className="list-item-time">
-                              {formatDate(contact.createdAt)}
-                            </span>
-                          </div>
-                          <p className="list-item-preview">{contact.email}</p>
-                        </div>
-                      </Link>
-                    ))}
+              {/* Right Column */}
+              <div className="admin-col-sidebar">
+                {/* Quick Actions */}
+                <div className="admin-light-card">
+                  <div className="admin-card-header">
+                    <h3 className="admin-card-title">
+                      <span className="admin-card-icon black"><i className="fa-solid fa-bolt"></i></span>
+                      Quick Actions
+                    </h3>
                   </div>
-                ) : (
-                  <EmptyState
-                    icon={
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-                      </svg>
-                    }
-                    title="No messages yet"
-                    description="Contact form submissions will appear here"
-                  />
-                )}
+                  <div className="admin-card-body">
+                    <div className="admin-quick-actions">
+                      <Link href="/admin/posts/new" className="admin-quick-btn">
+                        <span className="admin-quick-number">1</span>
+                        <span>New Post</span>
+                      </Link>
+                      <Link href="/admin/uploads" className="admin-quick-btn">
+                        <span className="admin-quick-number">2</span>
+                        <span>Upload Media</span>
+                      </Link>
+                      <Link href="/admin/newsletter" className="admin-quick-btn">
+                        <span className="admin-quick-number">3</span>
+                        <span>Newsletter</span>
+                      </Link>
+                      <Link href="/admin/contacts" className="admin-quick-btn">
+                        <span className="admin-quick-number">4</span>
+                        <span>Messages</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Site Stats */}
+                <div className="admin-light-card mt-4">
+                  <div className="admin-card-header">
+                    <h3 className="admin-card-title">
+                      <span className="admin-card-icon dark-gray"><i className="fa-solid fa-chart-line"></i></span>
+                      Overview
+                    </h3>
+                  </div>
+                  <div className="admin-card-body">
+                    <div className="admin-overview-item">
+                      <span>Published Posts</span>
+                      <strong>{stats.published}</strong>
+                    </div>
+                    <div className="admin-overview-item">
+                      <span>Draft Posts</span>
+                      <strong>{stats.drafts}</strong>
+                    </div>
+                    <div className="admin-overview-item">
+                      <span>Media Files</span>
+                      <strong>{stats.uploads}</strong>
+                    </div>
+                    <div className="admin-overview-item">
+                      <span>Newsletter Subscribers</span>
+                      <strong>{stats.subscribers}</strong>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <style jsx global>{`
-          /* ==========================================
-             STRIPE DASHBOARD STYLES
-             ========================================== */
-          
-          :root {
-            --bg-primary: #f6f9fc;
-            --bg-white: #ffffff;
-            --border: #e3e8ee;
-            --border-light: #f6f9fc;
-            --text-primary: #0a2540;
-            --text-secondary: #425466;
-            --text-tertiary: #8898aa;
-            --primary: #635bff;
-            --primary-hover: #7a73ff;
-            --primary-subtle: rgba(99, 91, 255, 0.08);
-            --green: #3ecf8e;
-            --green-bg: rgba(62, 207, 142, 0.1);
-            --amber: #ff991f;
-            --amber-bg: rgba(255, 153, 31, 0.1);
-            --purple: #7c3aed;
-            --purple-bg: rgba(124, 58, 237, 0.08);
-            --blue: #00d4ff;
-            --blue-bg: rgba(0, 212, 255, 0.08);
-            --pink: #f43f5e;
-            --pink-bg: rgba(244, 63, 94, 0.08);
-            --slate: #64748b;
-            --slate-bg: rgba(100, 116, 139, 0.08);
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-            --radius: 8px;
-            --radius-lg: 12px;
-          }
-
-          /* Dashboard Container */
-          .dashboard {
-            max-width: 1280px;
-          }
-
-          /* Page Header */
-          .dashboard-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 32px;
-          }
-
-          .dashboard-title {
-            margin: 0 0 6px;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-          }
-
-          .dashboard-subtitle {
-            margin: 0;
-            font-size: 15px;
-            color: var(--text-secondary);
-          }
-
-          /* Metrics Grid */
-          .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-          }
-
-          .metric-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            transition: all 0.15s ease;
-          }
-
-          .metric-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-          }
-
-          .metric-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-          }
-
-          .metric-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--metric-bg);
-            color: var(--metric-color);
-          }
-
-          .metric-link {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.1s;
-          }
-
-          .metric-link:hover {
-            color: var(--primary);
-          }
-
-          .metric-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1;
-            margin-bottom: 6px;
-            letter-spacing: -0.02em;
-          }
-
-          .metric-label {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin: 0 0 4px;
-          }
-
-          .metric-trend {
-            font-size: 12px;
-            color: var(--text-tertiary);
-          }
-
-          /* Content Grid */
-          .content-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 20px;
-          }
-
-          @media (max-width: 1023px) {
-            .content-grid {
-              grid-template-columns: 1fr;
-            }
-          }
-
-          /* Card */
-          .card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-          }
-
-          .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-          }
-
-          .card-title {
-            margin: 0;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-          }
-
-          .card-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-          }
-
-          .card-body.no-padding {
-            padding: 0;
-          }
-
-          /* Table */
-          .table {
-            width: 100%;
-            border-collapse: collapse;
-          }
-
-          .table th {
-            text-align: left;
-            padding: 12px 20px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-          }
-
-          .table td {
-            padding: 14px 20px;
-            border-bottom: 1px solid var(--border-light);
-            vertical-align: middle;
-          }
-
-          .table tr:last-child td {
-            border-bottom: none;
-          }
-
-          .table tbody tr {
-            transition: background 0.1s;
-          }
-
-          .table tbody tr:hover {
-            background: var(--bg-primary);
-          }
-
-          .table-cell-title a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            transition: color 0.1s;
-          }
-
-          .table-cell-title a:hover {
-            color: var(--primary);
-          }
-
-          .table-cell-date {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            white-space: nowrap;
-          }
-
-          .table-action {
-            width: 40px;
-            text-align: center;
-          }
-
-          /* Badge */
-          .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 10px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-          }
-
-          .badge-success {
-            background: var(--green-bg);
-            color: #059669;
-          }
-
-          .badge-warning {
-            background: var(--amber-bg);
-            color: #92400e;
-          }
-
-          /* List */
-          .list {
-            display: flex;
-            flex-direction: column;
-          }
-
-          .list-item {
-            display: flex;
-            gap: 12px;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-light);
-            text-decoration: none;
-            transition: background 0.1s;
-          }
-
-          .list-item:last-child {
-            border-bottom: none;
-          }
-
-          .list-item:hover {
-            background: var(--bg-primary);
-          }
-
-          .list-item-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius);
-            background: var(--text-primary);
-            color: var(--bg-white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 14px;
-            flex-shrink: 0;
-          }
-
-          .list-item-content {
-            flex: 1;
-            min-width: 0;
-          }
-
-          .list-item-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 4px;
-          }
-
-          .list-item-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-          }
-
-          .list-item-time {
-            font-size: 12px;
-            color: var(--text-tertiary);
-          }
-
-          .list-item-preview {
-            margin: 0;
-            font-size: 13px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          /* Empty State */
-          .empty-state {
-            text-align: center;
-            padding: 48px 24px;
-          }
-
-          .empty-state svg {
-            color: var(--text-tertiary);
-            margin-bottom: 16px;
-            opacity: 0.5;
-          }
-
-          .empty-state-title {
-            margin: 0 0 6px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-          }
-
-          .empty-state-desc {
-            margin: 0 0 20px;
-            font-size: 13px;
-            color: var(--text-tertiary);
-          }
-
-          /* Buttons */
-          .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 16px;
-            border-radius: var(--radius);
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.1s;
-          }
-
-          .btn-primary {
-            background: var(--primary);
-            color: white;
-          }
-
-          .btn-primary:hover {
-            background: var(--primary-hover);
-          }
-
-          .btn-icon {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            background: var(--bg-white);
-            border-radius: var(--radius);
-            color: var(--text-tertiary);
-            text-decoration: none;
-            transition: all 0.1s;
-          }
-
-          .btn-icon:hover {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            border-color: var(--border);
-          }
-
-          .link {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.1s;
-          }
-
-          .link:hover {
-            color: var(--primary);
-          }
-
-          /* Responsive */
-          @media (max-width: 768px) {
-            .dashboard-header {
-              flex-direction: column;
-              gap: 16px;
-            }
-            .metrics-grid {
-              grid-template-columns: repeat(2, 1fr);
-            }
-            .metric-value {
-              font-size: 24px;
-            }
-            .table th, .table td {
-              padding: 12px 16px;
-            }
-            .table th:nth-child(3), .table td:nth-child(3) {
-              display: none;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .metrics-grid {
-              grid-template-columns: 1fr;
-            }
-          }
-        `}</style>
+          </>
+        )}
       </AdminLayout>
+
+      <style jsx global>{`
+        .admin-loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 400px;
+        }
+
+        .admin-spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid #e8e8e8;
+          border-top-color: #1a1a1a;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        /* Welcome Banner */
+        .admin-welcome-banner {
+          background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+          border-radius: 16px;
+          padding: 28px 32px;
+          margin-bottom: 28px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #ffffff;
+        }
+
+        .admin-welcome-content h2 {
+          margin: 0 0 6px 0;
+          font-size: 24px;
+          font-weight: 700;
+        }
+
+        .admin-welcome-content p {
+          margin: 0;
+          font-size: 14px;
+          opacity: 0.8;
+        }
+
+        .admin-welcome-date {
+          font-size: 14px;
+          font-weight: 500;
+          opacity: 0.7;
+        }
+
+        /* Stats Grid */
+        .admin-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 20px;
+          margin-bottom: 28px;
+        }
+
+        .admin-stat-card {
+          background: #ffffff;
+          border-radius: 16px;
+          padding: 24px;
+          border: 1px solid #e8e8e8;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .admin-stat-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: var(--card-color);
+        }
+
+        .admin-stat-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+          border-color: var(--card-color);
+        }
+
+        .admin-stat-card-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+        }
+
+        .admin-stat-card-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          color: #fff;
+          background: var(--card-color);
+        }
+
+        .admin-stat-card-link {
+          color: #6c757d;
+          text-decoration: none;
+          font-size: 13px;
+          transition: color 0.2s;
+        }
+
+        .admin-stat-card-link:hover {
+          color: #1a1a1a;
+        }
+
+        .admin-stat-card-value {
+          font-size: 32px;
+          font-weight: 700;
+          color: #1a1d21;
+          margin-bottom: 4px;
+        }
+
+        .admin-stat-card-title {
+          font-size: 13px;
+          color: #6c757d;
+          margin: 0;
+        }
+
+        /* Main Grid Layout */
+        .admin-main-grid {
+          display: grid;
+          grid-template-columns: 1fr 340px;
+          gap: 24px;
+        }
+
+        @media (max-width: 1199px) {
+          .admin-main-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .admin-col-sidebar {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        /* Light Cards */
+        .admin-light-card {
+          background: #ffffff;
+          border-radius: 16px;
+          border: 1px solid #e8e8e8;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .admin-light-card:hover {
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .admin-card-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 20px 24px;
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        .admin-card-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .admin-card-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: #1a1d21;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .admin-card-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          color: #fff;
+        }
+
+        .admin-card-icon.black { background: #1a1a1a; }
+        .admin-card-icon.dark-gray { background: #333333; }
+        .admin-card-icon.medium-gray { background: #6c757d; }
+        .admin-card-icon.light-gray { background: #adb5bd; }
+        .admin-card-icon.darker-gray { background: #495057; }
+        .admin-card-icon.darkest-gray { background: #212529; }
+
+        .admin-card-link {
+          color: #1a1a1a;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 500;
+        }
+
+        .admin-card-link:hover {
+          color: #6c757d;
+        }
+
+        .admin-card-body {
+          padding: 20px 24px;
+        }
+
+        .admin-card-body.no-padding {
+          padding: 0;
+        }
+
+        /* Recent List */
+        .admin-recent-list {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .admin-recent-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 16px 24px;
+          border-bottom: 1px solid #f0f0f0;
+          transition: background 0.2s;
+        }
+
+        .admin-recent-item:last-child {
+          border-bottom: none;
+        }
+
+        .admin-recent-item:hover {
+          background: #fafafa;
+        }
+
+        .admin-recent-content h4 {
+          margin: 0 0 4px 0;
+          font-size: 15px;
+        }
+
+        .admin-recent-content h4 a {
+          color: #1a1d21;
+          text-decoration: none;
+        }
+
+        .admin-recent-content h4 a:hover {
+          color: #6c757d;
+        }
+
+        .admin-recent-content p {
+          margin: 0;
+          font-size: 13px;
+          color: #6c757d;
+        }
+
+        .admin-recent-meta {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 6px;
+        }
+
+        .admin-recent-meta small {
+          color: #6c757d;
+          font-size: 12px;
+        }
+
+        /* Quick Actions */
+        .admin-quick-actions {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+
+        .admin-quick-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          padding: 20px 16px;
+          background: #f8f9fa;
+          border-radius: 12px;
+          text-decoration: none;
+          color: #495057;
+          transition: all 0.2s;
+          border: 1px solid transparent;
+        }
+
+        .admin-quick-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .admin-quick-number {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          font-weight: 700;
+          color: #ffffff;
+          background: #1a1a1a;
+        }
+
+        .admin-quick-btn span:last-child {
+          font-size: 13px;
+          font-weight: 500;
+        }
+
+        /* Message List */
+        .admin-message-list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .admin-message-item {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          padding: 12px;
+          background: #f8f9fa;
+          border-radius: 10px;
+          transition: background 0.2s;
+        }
+
+        .admin-message-item:hover {
+          background: #f0f0f0;
+        }
+
+        .admin-message-avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          background: linear-gradient(135deg, #1a1a1a, #333333);
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+
+        .admin-message-content {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .admin-message-content strong {
+          display: block;
+          font-size: 14px;
+          color: #1a1d21;
+        }
+
+        .admin-message-content p {
+          margin: 2px 0 0 0;
+          font-size: 12px;
+          color: #6c757d;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .admin-message-item small {
+          color: #6c757d;
+          font-size: 11px;
+          flex-shrink: 0;
+        }
+
+        /* Overview */
+        .admin-overview-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px 0;
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        .admin-overview-item:last-child {
+          border-bottom: none;
+        }
+
+        .admin-overview-item span {
+          color: #6c757d;
+          font-size: 14px;
+        }
+
+        .admin-overview-item strong {
+          color: #1a1d21;
+          font-size: 16px;
+        }
+
+        /* Badges */
+        .admin-badge {
+          display: inline-block;
+          padding: 4px 12px;
+          border-radius: 20px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        .admin-badge-success { background: rgba(25, 135, 84, 0.15); color: #198754; }
+        .admin-badge-secondary { background: rgba(108, 117, 125, 0.15); color: #6c757d; }
+
+        /* Dashboard Unique Buttons */
+        .dash-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+          color: #ffffff;
+          border: none;
+          padding: 14px 32px;
+          border-radius: 50px;
+          font-weight: 700;
+          font-size: 15px;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 15px rgba(26, 26, 26, 0.25);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .dash-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+          transition: left 0.5s;
+        }
+
+        .dash-btn:hover::before {
+          left: 100%;
+        }
+
+        .dash-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(26, 26, 26, 0.4);
+        }
+
+        /* Dashboard Small Button (Black Text) */
+        .dash-btn-sm {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #ffffff;
+          color: #1a1a1a;
+          border: 2px solid #1a1a1a;
+          padding: 8px 18px;
+          border-radius: 50px;
+          font-weight: 600;
+          font-size: 13px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .dash-btn-sm:hover {
+          background: #1a1a1a;
+          color: #ffffff;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2);
+        }
+
+        /* Empty State */
+        .admin-empty-state {
+          text-align: center;
+          padding: 40px 20px;
+        }
+
+        .admin-empty-state i {
+          font-size: 48px;
+          color: #e8e8e8;
+          margin-bottom: 16px;
+        }
+
+        .admin-empty-state p {
+          color: #6c757d;
+          margin-bottom: 20px;
+        }
+
+        /* Utilities */
+        .text-muted { color: #6c757d; }
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 24px; }
+
+        @media (max-width: 768px) {
+          .admin-welcome-banner {
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+          }
+          
+          .admin-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+      `}</style>
     </>
   );
 }
 
-/* ==========================================
-   METRIC CARD COMPONENT
-   ========================================== */
-
-function MetricCard({ title, value, icon, trend, href, color }) {
-  const colors = {
-    slate: { bg: 'var(--slate-bg)', color: 'var(--slate)' },
-    green: { bg: 'var(--green-bg)', color: 'var(--green)' },
-    amber: { bg: 'var(--amber-bg)', color: 'var(--amber)' },
-    purple: { bg: 'var(--purple-bg)', color: 'var(--purple)' },
-    blue: { bg: 'var(--blue-bg)', color: 'var(--blue)' },
-    pink: { bg: 'var(--pink-bg)', color: 'var(--pink)' },
+function StatCard({ title, value, icon, color, link }) {
+  const colorMap = {
+    black: { bg: '#1a1a1a', accent: '#1a1a1a' },
+    'dark-gray': { bg: '#333333', accent: '#333333' },
+    'medium-gray': { bg: '#6c757d', accent: '#6c757d' },
+    'light-gray': { bg: '#adb5bd', accent: '#adb5bd' },
+    'darker-gray': { bg: '#495057', accent: '#495057' },
+    'darkest-gray': { bg: '#212529', accent: '#212529' },
   };
 
-  const c = colors[color] || colors.slate;
+  const colors = colorMap[color] || colorMap.black;
 
   return (
-    <div className="metric-card" style={{ '--metric-bg': c.bg, '--metric-color': c.color }}>
-      <div className="metric-card-header">
-        <div className="metric-icon">{icon}</div>
-        <Link href={href} className="metric-link">View</Link>
-      </div>
-      <div className="metric-value">{value}</div>
-      <p className="metric-label">{title}</p>
-      <div className="metric-trend">{trend}</div>
-    </div>
-  );
-}
-
-/* ==========================================
-   BADGE COMPONENT
-   ========================================== */
-
-function Badge({ variant, children }) {
-  return (
-    <span className={`badge badge-${variant}`}>
-      {children}
-    </span>
-  );
-}
-
-/* ==========================================
-   EMPTY STATE COMPONENT
-   ========================================== */
-
-function EmptyState({ icon, title, description, action }) {
-  return (
-    <div className="empty-state">
-      {icon}
-      <h4 className="empty-state-title">{title}</h4>
-      <p className="empty-state-desc">{description}</p>
-      {action && (
-        <Link href={action.href} className="btn btn-primary">
-          {action.label}
-        </Link>
-      )}
-    </div>
-  );
-}
-
-/* ==========================================
-   LOADING SKELETON
-   ========================================== */
-
-function LoadingSkeleton() {
-  return (
-    <>
-      <Head><title>Dashboard — Nova Impact</title></Head>
-      <AdminLayout title="Overview">
-        <div className="skeleton-page">
-          <div className="skeleton-header">
-            <div className="skeleton-title"></div>
-            <div className="skeleton-subtitle"></div>
-          </div>
-          <div className="skeleton-metrics">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="skeleton-metric">
-                <div className="skeleton-icon"></div>
-                <div className="skeleton-value"></div>
-                <div className="skeleton-label"></div>
-              </div>
-            ))}
-          </div>
-          <div className="skeleton-cards">
-            <div className="skeleton-card">
-              <div className="skeleton-card-header"></div>
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="skeleton-row"></div>
-              ))}
-            </div>
-            <div className="skeleton-card">
-              <div className="skeleton-card-header"></div>
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="skeleton-list-item"></div>
-              ))}
-            </div>
-          </div>
+    <div className="admin-stat-card" style={{ '--card-color': colors.accent }}>
+      <div className="admin-stat-card-header">
+        <div className="admin-stat-card-icon" style={{ background: colors.bg }}>
+          <i className={`fa-solid ${icon}`}></i>
         </div>
-        <style jsx global>{`
-          .skeleton-page { max-width: 1280px; }
-          .skeleton-header { margin-bottom: 32px; }
-          .skeleton-title { width: 200px; height: 28px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; margin-bottom: 8px; }
-          .skeleton-subtitle { width: 300px; height: 16px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
-          .skeleton-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
-          .skeleton-metric { background: #fff; border: 1px solid #e3e8ee; border-radius: 12px; padding: 20px; }
-          .skeleton-icon { width: 36px; height: 36px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; margin-bottom: 12px; }
-          .skeleton-value { width: 60%; height: 24px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; margin-bottom: 6px; }
-          .skeleton-label { width: 40%; height: 14px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
-          .skeleton-cards { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; }
-          .skeleton-card { background: #fff; border: 1px solid #e3e8ee; border-radius: 12px; overflow: hidden; }
-          .skeleton-card-header { height: 53px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-bottom: 1px solid #e3e8ee; }
-          .skeleton-row { height: 48px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-bottom: 1px solid #f6f9fc; }
-          .skeleton-list-item { height: 68px; background: linear-gradient(90deg, #e3e8ee 25%, #f6f9fc 50%, #e3e8ee 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-bottom: 1px solid #f6f9fc; }
-          @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-          @media (max-width: 1023px) { .skeleton-cards { grid-template-columns: 1fr; } }
-        `}</style>
-      </AdminLayout>
-    </>
+        <Link href={link} className="admin-stat-card-link">View all <i className="fa-solid fa-arrow-right ms-1"></i></Link>
+      </div>
+      <div className="admin-stat-card-value">{value}</div>
+      <p className="admin-stat-card-title">{title}</p>
+    </div>
   );
-}
-
-/* ==========================================
-   UTILITIES
-   ========================================== */
-
-function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  const now = new Date();
-  const diff = now - date;
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  
-  if (days === 0) return 'Today';
-  if (days === 1) return 'Yesterday';
-  if (days < 7) return `${days}d ago`;
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
 export async function getServerSideProps(ctx) {
