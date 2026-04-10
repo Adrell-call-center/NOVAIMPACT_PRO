@@ -1,7 +1,8 @@
 import nodemailer from "nodemailer";
 import prisma from "@/lib/prisma";
 
-const companyEmail = "assurancezoom@gmail.com";
+const marketingEmail = "assurancezoom@gmail.com";
+const fromEmail = "contact@novaimpact.io";
 const companyName = process.env.SMTP_FROM_NAME || "Nova Impact";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nova-impact.com";
 
@@ -249,7 +250,7 @@ export default async function handler(req, res) {
                 <h3 style="margin: 0 0 8px; color: #1a1a1a; font-size: 15px;">Need Immediate Assistance?</h3>
                 <p style="margin: 0 0 12px; color: #666; font-size: 14px;">If your inquiry is urgent, you can also reach us directly:</p>
                 <p style="margin: 0; font-size: 15px;">
-                  <a href="mailto:${companyEmail}" style="color: #FFC81A; text-decoration: none; font-weight: 600;">${companyEmail}</a>
+                  <a href="mailto:${marketingEmail}" style="color: #FFC81A; text-decoration: none; font-weight: 600;">${marketingEmail}</a>
                 </p>
               </div>
             </td>
@@ -282,10 +283,10 @@ export default async function handler(req, res) {
     // Verify transporter configuration
     await transporter.verify();
     
-    // Email to company
+    // Email to marketing team (assurancezoom@gmail.com)
     await transporter.sendMail({
-      from: `"${companyName}" <${companyEmail}>`,
-      to: companyEmail,
+      from: `"${companyName}" <${fromEmail}>`,
+      to: marketingEmail,
       replyTo: email,
       subject: `[Contact] ${subject}`,
       html: companyEmailHTML,
@@ -293,7 +294,7 @@ export default async function handler(req, res) {
 
     // Email to client (confirmation)
     await transporter.sendMail({
-      from: `"${companyName}" <${companyEmail}>`,
+      from: `"${companyName}" <${fromEmail}>`,
       to: email,
       subject: `We received your message - ${companyName}`,
       html: clientEmailHTML,

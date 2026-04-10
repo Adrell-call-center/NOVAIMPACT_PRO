@@ -3,10 +3,10 @@ import { buildSchema } from '@/lib/schema-builder';
 
 export default function BlogSeo({ post, lang = 'fr' }) {
   const isFr = lang === 'fr';
-  const title = post.metaTitleFr || post.titleFr;
-  const titleEn = post.metaTitleEn || post.titleEn;
-  const desc = post.metaDescFr || post.excerptFr;
-  const descEn = post.metaDescEn || post.excerptEn;
+  const title = post.metaTitleFr || post.titleFr || '';
+  const titleEn = post.metaTitleEn || post.titleEn || '';
+  const desc = post.metaDescFr || post.excerptFr || '';
+  const descEn = post.metaDescEn || post.excerptEn || '';
   const baseUrl = `https://novaimpact.io`;
   const urlFr = `${baseUrl}/blog/${post.slug}?lang=fr`;
   const urlEn = `${baseUrl}/blog/${post.slug}?lang=en`;
@@ -35,7 +35,7 @@ export default function BlogSeo({ post, lang = 'fr' }) {
       <link rel="alternate" hrefLang="en" href={urlEn} />
       <link rel="alternate" hrefLang="x-default" href={urlFr} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      {post.focusKeywordFr && <meta name="keywords" content={isFr ? post.focusKeywordFr : post.focusKeywordEn} />}
+      {post.focusKeywordFr && <meta name="keywords" content={isFr ? (post.focusKeywordFr || '') : (post.focusKeywordEn || '')} />}
     </Head>
   );
 }
