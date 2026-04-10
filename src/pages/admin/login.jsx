@@ -60,7 +60,7 @@ export default function AdminLogin() {
                 <input type="password" className="admin-input" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" />
               </div>
             </div>
-            <button type="submit" className="btn-gold w-100 py-3" disabled={loading}>
+            <button type="submit" className="btn-primary w-100 py-3" disabled={loading}>
               {loading ? <><span className="spinner me-2"></span>Signing in...</> : 'Sign In'}
             </button>
           </form>
@@ -95,7 +95,7 @@ export default function AdminLogin() {
         .admin-login-logo {
           width: 64px;
           height: 64px;
-          background: linear-gradient(135deg, #FFC81A, #e6b517);
+          background: linear-gradient(135deg, #1a1a1a, #333333);
           color: #1a1d21;
           border-radius: 16px;
           display: flex;
@@ -161,7 +161,7 @@ export default function AdminLogin() {
 
         .admin-input:focus {
           outline: none;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
@@ -169,8 +169,8 @@ export default function AdminLogin() {
           color: #adb5bd;
         }
 
-        .btn-gold {
-          background: #FFC81A;
+        .btn-primary {
+          background: #1a1a1a;
           color: #1a1d21;
           border: none;
           border-radius: 10px;
@@ -183,13 +183,13 @@ export default function AdminLogin() {
           transition: all 0.2s;
         }
 
-        .btn-gold:hover {
-          background: #e6b517;
+        .btn-primary:hover {
+          background: #333333;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(255,200,26,0.3);
         }
 
-        .btn-gold:disabled {
+        .btn-primary:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }

@@ -9,7 +9,7 @@ export default function AdminSettings() {
         <div className="row g-4">
           <div className="col-lg-8">
             <div className="admin-light-card admin-settings-card">
-              <h3 className="admin-section-title"><i className="fa-solid fa-globe me-2" style={{ color: '#FFC81A' }}></i>Site Configuration</h3>
+              <h3 className="admin-section-title"><i className="fa-solid fa-globe me-2" style={{ color: '#1a1a1a' }}></i>Site Configuration</h3>
               <p className="admin-section-desc">Configure your site name, logo URL, and default OG image. These values are used in auto-generated Schema.org JSON-LD and Open Graph tags.</p>
               <div className="form-group">
                 <label>Organization Name</label>
@@ -23,7 +23,7 @@ export default function AdminSettings() {
                 <label>Default OG Image</label>
                 <input className="admin-input" placeholder="/uploads/default-og.jpg" />
               </div>
-              <button className="btn-gold">Save Settings</button>
+              <button className="btn-primary">Save Settings</button>
               <p className="admin-note">Note: Settings persistence requires a SiteSettings model. For now, update these values directly in your Schema builder component.</p>
             </div>
           </div>
@@ -106,12 +106,12 @@ export default function AdminSettings() {
 
         .admin-input:focus {
           outline: none;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
-        .btn-gold {
-          background: #FFC81A;
+        .btn-primary {
+          background: #1a1a1a;
           color: #1a1d21;
           border: none;
           padding: 12px 24px;
@@ -121,8 +121,8 @@ export default function AdminSettings() {
           transition: all 0.2s;
         }
 
-        .btn-gold:hover {
-          background: #e6b517;
+        .btn-primary:hover {
+          background: #333333;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(255,200,26,0.3);
         }
@@ -145,7 +145,7 @@ export default function AdminSettings() {
           width: 56px;
           height: 56px;
           border-radius: 14px;
-          background: linear-gradient(135deg, #FFC81A, #e6b517);
+          background: linear-gradient(135deg, #1a1a1a, #333333);
           color: #1a1d21;
           display: flex;
           align-items: center;
