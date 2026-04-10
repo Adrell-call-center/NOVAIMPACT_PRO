@@ -25,6 +25,9 @@ export default async function handler(req, res) {
       port: parseInt(process.env.SMTP_PORT),
       secure: process.env.SMTP_SECURE === 'tls',
       auth: { user: process.env.SMTP_USERNAME, pass: process.env.SMTP_PASSWORD },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
     const emails = activeSubscribers.map(s => s.email);

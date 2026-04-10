@@ -37,6 +37,9 @@ export default async function handler(req, res) {
       user: process.env.SMTP_USERNAME,
       pass: process.env.SMTP_PASSWORD,
     },
+    tls: {
+      rejectUnauthorized: false, // Skip hostname/cert mismatch
+    },
   });
 
   const now = new Date().toLocaleString("en-US", {
