@@ -279,6 +279,9 @@ export default async function handler(req, res) {
 
   // Send both emails
   try {
+    // Verify transporter configuration
+    await transporter.verify();
+    
     // Email to company
     await transporter.sendMail({
       from: `"${companyName}" <${companyEmail}>`,
@@ -298,7 +301,18 @@ export default async function handler(req, res) {
 
     res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Email error:", error);
-    res.status(500).json({ error: "Failed to send emails" });
+    console.error("Email error details:", {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      smtpHost: process.env.SMTP_HOST,
+      smtpPort: process.env.SMTP_PORT,
+      smtpSecure: process.env.SMTP_SECURE,
+      smtpUsername: process.env.SMTP_USERNAME,
+    });
+    res.status(500).json({ 
+      error: "Failed to send emails",
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 }
