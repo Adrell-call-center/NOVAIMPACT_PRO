@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 const navItems = [
-  { href: '/admin', label: 'Dashboard', icon: 'fa-solid fa-gauge-high' },
+  { href: '/admin', label: 'Dashboard', icon: 'fa-solid fa-grid-2' },
   { href: '/admin/posts', label: 'Posts', icon: 'fa-solid fa-file-lines' },
-  { href: '/admin/uploads', label: 'Uploads', icon: 'fa-solid fa-image' },
-  { href: '/admin/contacts', label: 'Contacts', icon: 'fa-solid fa-envelope' },
+  { href: '/admin/uploads', label: 'Media', icon: 'fa-solid fa-image' },
+  { href: '/admin/contacts', label: 'Messages', icon: 'fa-solid fa-envelope' },
   { href: '/admin/newsletter', label: 'Newsletter', icon: 'fa-solid fa-paper-plane' },
   { href: '/admin/settings', label: 'Settings', icon: 'fa-solid fa-gear' },
 ];
@@ -15,6 +15,18 @@ const navItems = [
 export default function AdminLayout({ children, title = 'Dashboard' }) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+      if (window.innerWidth < 1024) setSidebarOpen(false);
+      else setSidebarOpen(true);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const isActive = (href) => {
     if (href === '/admin') return router.pathname === '/admin';
@@ -26,25 +38,27 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
   };
 
   return (
-    <div className="admin-layout">
+    <div className="admin-v2-layout">
+      {/* Mobile Overlay */}
+      {isMobile && sidebarOpen && (
+        <div className="admin-v2-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* Sidebar */}
-      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
-        <div className="admin-sidebar-header">
-          <h2 className="admin-logo">
-            <i className="fa-solid fa-bolt me-2"></i>
-            <span>Nova Impact</span>
-          </h2>
-          <button className="admin-sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            <i className={`fa-solid ${sidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'}`}></i>
-          </button>
+      <aside className={`admin-v2-sidebar ${sidebarOpen ? 'open' : 'closed'} ${isMobile ? 'mobile' : ''}`}>
+        {/* Logo */}
+        <div className="admin-v2-logo">
+          <div className="admin-v2-logo-icon">N</div>
+          <span className="admin-v2-logo-text">Nova Impact</span>
         </div>
 
-        <nav className="admin-nav">
+        {/* Navigation */}
+        <nav className="admin-v2-nav">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`admin-nav-item ${isActive(item.href) ? 'active' : ''}`}
+              className={`admin-v2-nav-item ${isActive(item.href) ? 'active' : ''}`}
             >
               <i className={item.icon}></i>
               <span>{item.label}</span>
@@ -52,333 +66,366 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
           ))}
         </nav>
 
-        <div className="admin-sidebar-footer">
-          <button className="admin-logout-btn" onClick={handleLogout}>
+        {/* User Profile */}
+        <div className="admin-v2-user">
+          <div className="admin-v2-user-avatar">A</div>
+          <div className="admin-v2-user-info">
+            <span className="admin-v2-user-name">Admin</span>
+            <span className="admin-v2-user-email">admin@novaimpact.io</span>
+          </div>
+          <button className="admin-v2-logout" onClick={handleLogout} title="Logout">
             <i className="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="admin-main">
-        {/* Top Header */}
-        <header className="admin-header">
-          <div className="admin-header-left">
-            <button className="admin-mobile-toggle d-md-none" onClick={() => setSidebarOpen(!sidebarOpen)}>
-              <i className="fa-solid fa-bars"></i>
+      <div className="admin-v2-main">
+        {/* Top Navbar */}
+        <header className="admin-v2-header">
+          <div className="admin-v2-header-left">
+            <button 
+              className="admin-v2-menu-btn" 
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              aria-label="Toggle sidebar"
+            >
+              <i className={`fa-solid ${sidebarOpen ? 'fa-bars-staggered' : 'fa-bars'}`}></i>
             </button>
-            <h1 className="admin-page-title">{title}</h1>
+            <h1 className="admin-v2-page-title">{title}</h1>
           </div>
-          <div className="admin-header-right">
-            <span className="admin-user-email">admin@novaimpact.fr</span>
+          <div className="admin-v2-header-right">
+            <span className="admin-v2-date">
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+            </span>
           </div>
         </header>
 
-        {/* Content Area */}
-        <main className="admin-content">
+        {/* Content */}
+        <main className="admin-v2-content">
           {children}
         </main>
       </div>
 
-      {/* Styles */}
       <style jsx global>{`
-        .admin-layout {
+        /* ==========================================
+           ADMIN V2 - PREMIUM SAAS DESIGN SYSTEM
+           ========================================== */
+        
+        .admin-v2-layout {
           display: flex;
           min-height: 100vh;
-          background: #f8f9fa;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: #f8fafc;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+          color: #0f172a;
         }
 
-        /* Sidebar */
-        .admin-sidebar {
-          width: 260px;
-          background: #1a1d21;
-          color: #fff;
+        /* Overlay for mobile */
+        .admin-v2-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 999;
+          backdrop-filter: blur(4px);
+        }
+
+        /* ==========================================
+           SIDEBAR
+           ========================================== */
+        
+        .admin-v2-sidebar {
+          width: 280px;
+          background: #ffffff;
+          border-right: 1px solid #e2e8f0;
           display: flex;
           flex-direction: column;
-          transition: width 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           position: fixed;
           top: 0;
           left: 0;
           bottom: 0;
           z-index: 1000;
-          overflow: hidden;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        .admin-sidebar.closed {
-          width: 70px;
+        .admin-v2-sidebar.closed {
+          width: 80px;
         }
 
-        .admin-sidebar-header {
+        .admin-v2-sidebar.mobile {
+          transform: translateX(-100%);
+        }
+
+        .admin-v2-sidebar.mobile.open {
+          transform: translateX(0);
+        }
+
+        /* Logo */
+        .admin-v2-logo {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          padding: 20px 16px;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          gap: 12px;
+          padding: 20px 24px;
+          border-bottom: 1px solid #f1f5f9;
         }
 
-        .admin-logo {
-          font-size: 18px;
-          font-weight: 600;
-          margin: 0;
-          white-space: nowrap;
-          overflow: hidden;
-          transition: opacity 0.2s;
-        }
-
-        .admin-sidebar.closed .admin-logo span {
-          display: none;
-        }
-
-        .admin-sidebar-toggle {
-          background: rgba(255,255,255,0.1);
-          border: none;
-          color: #fff;
-          width: 32px;
-          height: 32px;
-          border-radius: 6px;
-          cursor: pointer;
+        .admin-v2-logo-icon {
+          width: 40px;
+          height: 40px;
+          background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+          color: #ffffff;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: background 0.2s;
+          font-weight: 700;
+          font-size: 18px;
+          flex-shrink: 0;
         }
 
-        .admin-sidebar-toggle:hover {
-          background: rgba(255,255,255,0.2);
+        .admin-v2-logo-text {
+          font-size: 16px;
+          font-weight: 700;
+          color: #0f172a;
+          white-space: nowrap;
+          transition: opacity 0.2s;
+        }
+
+        .admin-v2-sidebar.closed .admin-v2-logo-text {
+          opacity: 0;
+          width: 0;
+          overflow: hidden;
         }
 
         /* Navigation */
-        .admin-nav {
+        .admin-v2-nav {
           flex: 1;
           padding: 16px 12px;
           overflow-y: auto;
         }
 
-        .admin-nav-item {
+        .admin-v2-nav-item {
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 12px 16px;
-          color: #a0a4a8;
+          padding: 10px 14px;
+          color: #64748b;
           text-decoration: none;
           border-radius: 8px;
           margin-bottom: 4px;
-          transition: all 0.2s;
+          transition: all 0.15s ease;
+          font-size: 14px;
+          font-weight: 500;
           white-space: nowrap;
         }
 
-        .admin-nav-item:hover {
-          background: rgba(255,255,255,0.06);
-          color: #fff;
+        .admin-v2-nav-item:hover {
+          background: #f8fafc;
+          color: #0f172a;
         }
 
-        .admin-nav-item.active {
-          background: #ffffff;
-          color: #1a1d21;
-          font-weight: 500;
+        .admin-v2-nav-item.active {
+          background: #0f172a;
+          color: #ffffff;
+          font-weight: 600;
         }
 
-        .admin-nav-item i {
+        .admin-v2-nav-item.active:hover {
+          color: #ffffff;
+          background: #0f172a;
+        }
+
+        .admin-v2-nav-item i {
           font-size: 18px;
           width: 20px;
           text-align: center;
+          flex-shrink: 0;
         }
 
-        .admin-nav-item span {
-          transition: opacity 0.2s;
-        }
-
-        .admin-sidebar.closed .admin-nav-item span {
+        .admin-v2-sidebar.closed .admin-v2-nav-item span {
           opacity: 0;
           width: 0;
+          overflow: hidden;
         }
 
-        /* Sidebar Footer */
-        .admin-sidebar-footer {
-          padding: 16px 12px;
-          border-top: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .admin-logout-btn {
+        /* User Profile */
+        .admin-v2-user {
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 12px 16px;
-          background: rgba(255,77,77,0.1);
-          border: none;
-          color: #ff4d4d;
+          padding: 16px 20px;
+          border-top: 1px solid #f1f5f9;
+        }
+
+        .admin-v2-user-avatar {
+          width: 36px;
+          height: 36px;
+          background: #f1f5f9;
+          color: #0f172a;
           border-radius: 8px;
-          cursor: pointer;
-          width: 100%;
-          text-align: left;
-          transition: background 0.2s;
-          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 14px;
+          flex-shrink: 0;
         }
 
-        .admin-logout-btn:hover {
-          background: rgba(255,77,77,0.2);
-        }
-
-        .admin-logout-btn i {
-          font-size: 18px;
-          width: 20px;
-          text-align: center;
-        }
-
-        .admin-sidebar.closed .admin-logout-btn span {
-          opacity: 0;
-          width: 0;
-        }
-
-        /* Main Content */
-        .admin-main {
+        .admin-v2-user-info {
           flex: 1;
-          margin-left: 260px;
-          transition: margin-left 0.3s ease;
-          min-height: 100vh;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
         }
 
-        .admin-sidebar.closed ~ .admin-main {
-          margin-left: 70px;
+        .admin-v2-user-name {
+          font-size: 13px;
+          font-weight: 600;
+          color: #0f172a;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .admin-v2-user-email {
+          font-size: 11px;
+          color: #64748b;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .admin-v2-sidebar.closed .admin-v2-user-info {
+          display: none;
+        }
+
+        .admin-v2-logout {
+          width: 32px;
+          height: 32px;
+          border: none;
+          background: transparent;
+          color: #64748b;
+          border-radius: 6px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.15s;
+          flex-shrink: 0;
+        }
+
+        .admin-v2-logout:hover {
+          background: #fee2e2;
+          color: #dc2626;
+        }
+
+        /* ==========================================
+           MAIN CONTENT
+           ========================================== */
+        
+        .admin-v2-main {
+          flex: 1;
+          margin-left: 280px;
+          transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .admin-v2-sidebar.closed ~ .admin-v2-main {
+          margin-left: 80px;
+        }
+
+        @media (max-width: 1023px) {
+          .admin-v2-main {
+            margin-left: 0 !important;
+          }
         }
 
         /* Header */
-        .admin-header {
+        .admin-v2-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 16px 32px;
-          background: #fff;
-          border-bottom: 1px solid #e9ecef;
+          background: #ffffff;
+          border-bottom: 1px solid #e2e8f0;
           position: sticky;
           top: 0;
           z-index: 100;
         }
 
-        .admin-header-left {
+        .admin-v2-header-left {
           display: flex;
           align-items: center;
           gap: 16px;
         }
 
-        .admin-mobile-toggle {
-          background: none;
-          border: none;
-          font-size: 20px;
-          color: #333;
-          cursor: pointer;
-        }
-
-        .admin-page-title {
-          font-size: 22px;
-          font-weight: 600;
-          color: #1a1d21;
-          margin: 0;
-        }
-
-        .admin-header-right {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .admin-user-email {
-          font-size: 14px;
-          color: #6c757d;
-          background: #f8f9fa;
-          padding: 8px 16px;
-          border-radius: 20px;
-        }
-
-        /* Content */
-        .admin-content {
-          padding: 32px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-          .admin-sidebar {
-            transform: translateX(-100%);
-            width: 260px !important;
-          }
-
-          .admin-sidebar.open {
-            transform: translateX(0);
-          }
-
-          .admin-main {
-            margin-left: 0 !important;
-          }
-
-          .admin-content {
-            padding: 16px;
-          }
-
-          .admin-header {
-            padding: 16px;
-          }
-        }
-
-        /* Pagination Styles */
-        .admin-pagination {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 24px;
-          padding: 16px 0;
-        }
-
-        .admin-pagination-info {
-          font-size: 13px;
-          color: #6c757d;
-        }
-
-        .admin-pagination-controls {
-          display: flex;
-          gap: 4px;
-        }
-
-        .admin-page-btn {
-          min-width: 36px;
+        .admin-v2-menu-btn {
+          width: 36px;
           height: 36px;
-          border: 1px solid #2d3036;
-          background: #1a1d21;
-          color: #a0a4a8;
+          border: 1px solid #e2e8f0;
+          background: #ffffff;
+          color: #64748b;
           border-radius: 8px;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 14px;
-          transition: all 0.2s;
+          transition: all 0.15s;
+          font-size: 16px;
         }
 
-        .admin-page-btn:hover:not(:disabled) {
-          background: #2d3036;
-          color: #fff;
+        .admin-v2-menu-btn:hover {
+          background: #f8fafc;
+          color: #0f172a;
+          border-color: #cbd5e1;
         }
 
-        .admin-page-btn.active {
-          background: #1a1a1a;
-          color: #ffffff;
-          border-color: #1a1a1a;
-          font-weight: 600;
+        .admin-v2-page-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: #0f172a;
+          margin: 0;
         }
 
-        .admin-page-btn:disabled {
-          opacity: 0.4;
-          cursor: not-allowed;
+        @media (max-width: 768px) {
+          .admin-v2-page-title {
+            font-size: 18px;
+          }
         }
 
-        .admin-page-ellipsis {
+        .admin-v2-header-right {
           display: flex;
           align-items: center;
-          justify-content: center;
-          min-width: 36px;
-          height: 36px;
-          color: #6c757d;
+          gap: 16px;
+        }
+
+        .admin-v2-date {
+          font-size: 13px;
+          color: #64748b;
+          background: #f8fafc;
+          padding: 8px 14px;
+          border-radius: 8px;
+          font-weight: 500;
+        }
+
+        /* Content Area */
+        .admin-v2-content {
+          padding: 32px;
+          flex: 1;
+        }
+
+        @media (max-width: 768px) {
+          .admin-v2-content {
+            padding: 20px;
+          }
+        }
+
+        @media (max-width: 1023px) {
+          .admin-v2-sidebar.mobile {
+            transform: translateX(0);
+          }
         }
       `}</style>
     </div>
