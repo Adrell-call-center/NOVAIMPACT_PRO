@@ -132,7 +132,7 @@ export default function AdminPostNew() {
                 <input type="datetime-local" className="admin-input admin-input-sm admin-schedule-date" value={form.publishedAt ? new Date(form.publishedAt).toISOString().slice(0, 16) : ''} onChange={(e) => update('publishedAt', e.target.value)} />
               )}
             </div>
-            <button className="btn-gold" onClick={() => handleSubmit('PUBLISHED')} disabled={saving}>
+            <button className="btn-primary" onClick={() => handleSubmit('PUBLISHED')} disabled={saving}>
               {saving ? <><span className="spinner me-2"></span>Saving...</> : (
                 scheduleMode && form.publishedAt ? (
                   <><i className="fa-solid fa-calendar me-2"></i>Schedule</>
@@ -188,7 +188,7 @@ export default function AdminPostNew() {
 
             {/* Featured Image */}
             <div className="admin-light-card admin-sidebar-card">
-              <h3 className="admin-sidebar-title"><i className="fa-solid fa-image me-2" style={{ color: '#FFC81A' }}></i>Featured Image</h3>
+              <h3 className="admin-sidebar-title"><i className="fa-solid fa-image me-2" style={{ color: '#1a1a1a' }}></i>Featured Image</h3>
               <div className="admin-featured-image">
                 {form.coverImage ? (
                   <div className="admin-image-preview">
@@ -352,7 +352,7 @@ export default function AdminPostNew() {
 
             {/* SEO & Meta */}
             <div className="admin-light-card admin-sidebar-card mt-4">
-              <h3 className="admin-sidebar-title"><i className="fa-solid fa-magnifying-glass me-2" style={{ color: '#FFC81A' }}></i>SEO &amp; Meta</h3>
+              <h3 className="admin-sidebar-title"><i className="fa-solid fa-magnifying-glass me-2" style={{ color: '#1a1a1a' }}></i>SEO &amp; Meta</h3>
               <div className="form-group" style={{ marginTop: 16 }}>
                 <label className="admin-label">Meta Title <span className="char-count">{form.metaTitleFr?.length || 0}/60</span></label>
                 <input className={`admin-input ${form.metaTitleFr?.length > 60 ? 'input-error' : ''}`} value={form.metaTitleFr} onChange={e => update('metaTitleFr', e.target.value)} />
@@ -485,7 +485,7 @@ export default function AdminPostNew() {
         }
 
         .admin-schedule-toggle input {
-          accent-color: #FFC81A;
+          accent-color: #1a1a1a;
           width: 16px;
           height: 16px;
         }
@@ -519,8 +519,8 @@ export default function AdminPostNew() {
           color: #1a1d21;
         }
 
-        .btn-gold {
-          background: #FFC81A;
+        .btn-primary {
+          background: #1a1a1a;
           color: #1a1d21;
           border: none;
           padding: 12px 24px;
@@ -533,13 +533,13 @@ export default function AdminPostNew() {
           transition: all 0.2s;
         }
 
-        .btn-gold:hover {
-          background: #e6b517;
+        .btn-primary:hover {
+          background: #333333;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(255,200,26,0.3);
         }
 
-        .btn-gold:disabled, .btn-outline:disabled {
+        .btn-primary:disabled, .btn-outline:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }
@@ -679,9 +679,9 @@ export default function AdminPostNew() {
         }
 
         .admin-lang-tab.active {
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         .admin-lang-flag {
@@ -758,7 +758,7 @@ export default function AdminPostNew() {
 
         .admin-input:focus {
           outline: none;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
@@ -780,7 +780,7 @@ export default function AdminPostNew() {
 
         .admin-textarea:focus {
           outline: none;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
@@ -805,7 +805,7 @@ export default function AdminPostNew() {
 
         .admin-select:focus {
           outline: none;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
@@ -843,13 +843,13 @@ export default function AdminPostNew() {
         }
 
         .admin-btn-primary {
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         .admin-btn-primary:hover {
-          background: #e6b517;
+          background: #333333;
         }
 
         .admin-btn-secondary {
@@ -875,7 +875,7 @@ export default function AdminPostNew() {
         }
 
         .admin-tags-container:focus-within {
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
@@ -884,7 +884,7 @@ export default function AdminPostNew() {
           align-items: center;
           gap: 6px;
           padding: 4px 10px;
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
           border-radius: 20px;
           font-size: 12px;
@@ -962,7 +962,7 @@ export default function AdminPostNew() {
         .admin-checkbox {
           width: 18px;
           height: 18px;
-          accent-color: #FFC81A;
+          accent-color: #1a1a1a;
         }
 
         .admin-checkbox-label {
@@ -1076,8 +1076,8 @@ export default function AdminPostNew() {
         }
 
         .admin-upload-btn:hover {
-          border-color: #FFC81A;
-          color: #FFC81A;
+          border-color: #1a1a1a;
+          color: #1a1a1a;
           background: rgba(255,200,26,0.05);
         }
 
@@ -1111,11 +1111,11 @@ export default function AdminPostNew() {
         }
 
         .admin-library-item:hover {
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         .admin-library-item.selected {
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         .admin-library-item img {
@@ -1130,7 +1130,7 @@ export default function AdminPostNew() {
           right: 4px;
           width: 20px;
           height: 20px;
-          background: #FFC81A;
+          background: #1a1a1a;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -1168,7 +1168,7 @@ export default function AdminPostNew() {
 
         .wp-preview-badge {
           padding: 4px 12px;
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
           border-radius: 20px;
           font-size: 12px;
@@ -1208,7 +1208,7 @@ export default function AdminPostNew() {
 
         .wp-preview-category {
           padding: 4px 12px;
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
           border-radius: 20px;
           font-size: 12px;
@@ -1277,7 +1277,7 @@ export default function AdminPostNew() {
         }
 
         .wp-preview-content blockquote {
-          border-left: 4px solid #FFC81A;
+          border-left: 4px solid #1a1a1a;
           padding-left: 16px;
           margin: 16px 0;
           color: #6c757d;
@@ -1337,9 +1337,9 @@ export default function AdminPostNew() {
         }
 
         .wp-preview-lang-tab.active {
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         /* Status Info */

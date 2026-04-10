@@ -56,7 +56,7 @@ export default function AdminPosts() {
             <i className="fa-solid fa-search"></i>
             <input className="admin-search-input" placeholder="Search posts..." value={search} onChange={e => { setSearch(e.target.value); fetchPosts(e.target.value); }} />
           </div>
-          <Link href="/admin/posts/new" className="btn-gold">
+          <Link href="/admin/posts/new" className="btn-primary">
             <i className="fa-solid fa-plus me-2"></i>New Post
           </Link>
         </div>
@@ -154,12 +154,12 @@ export default function AdminPosts() {
 
         .admin-search-input:focus {
           outline: none;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
         }
 
-        .btn-gold {
-          background: #FFC81A;
+        .btn-primary {
+          background: #1a1a1a;
           color: #1a1d21;
           border: none;
           padding: 12px 24px;
@@ -173,8 +173,8 @@ export default function AdminPosts() {
           white-space: nowrap;
         }
 
-        .btn-gold:hover {
-          background: #e6b517;
+        .btn-primary:hover {
+          background: #333333;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(255,200,26,0.3);
         }
@@ -190,7 +190,7 @@ export default function AdminPosts() {
           width: 32px;
           height: 32px;
           border: 3px solid #e8e8e8;
-          border-top-color: #FFC81A;
+          border-top-color: #1a1a1a;
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
         }
@@ -249,7 +249,7 @@ export default function AdminPosts() {
         }
 
         .admin-table-link:hover {
-          color: #FFC81A;
+          color: #1a1a1a;
         }
 
         .admin-badge {
@@ -306,9 +306,9 @@ export default function AdminPosts() {
         }
 
         .admin-btn-icon:hover {
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1d21;
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         .admin-btn-danger:hover {

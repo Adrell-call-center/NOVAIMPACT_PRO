@@ -5,7 +5,8 @@
       "Bash(mkdir *)",
       "Bash(del *)",
       "Bash(rmdir *)",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(@powershell *)"
     ]
   },
   "$version": 3
