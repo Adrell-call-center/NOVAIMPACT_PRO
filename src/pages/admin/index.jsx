@@ -510,11 +510,11 @@ export default function AdminIndex() {
         }
 
         .admin-quick-btn:hover {
-          background: #1a1a1a;
-          color: #ffffff;
+          background: #f0f0f0;
+          color: #1a1a1a;
           border-color: #1a1a1a;
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .admin-quick-number {
@@ -632,9 +632,9 @@ export default function AdminIndex() {
 
         /* Buttons */
         .btn-gold {
-          background: #1a1a1a;
-          color: #ffffff;
-          border: none;
+          background: #ffffff;
+          color: #1a1a1a;
+          border: 2px solid #1a1a1a;
           padding: 10px 20px;
           border-radius: 8px;
           font-weight: 600;
@@ -644,7 +644,8 @@ export default function AdminIndex() {
         }
 
         .btn-gold:hover {
-          background: #333333;
+          background: #1a1a1a;
+          color: #ffffff;
         }
 
         /* Empty State */
