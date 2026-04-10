@@ -117,7 +117,7 @@ export default function AdminIndex() {
                       <div className="admin-empty-state">
                         <i className="fa-solid fa-file-lines"></i>
                         <p>No posts yet</p>
-                        <Link href="/admin/posts/new" className="btn-gold">Create Your First Post</Link>
+                        <Link href="/admin/posts/new" className="dash-btn">Create Your First Post</Link>
                       </div>
                     )}
                   </div>
@@ -510,9 +510,6 @@ export default function AdminIndex() {
         }
 
         .admin-quick-btn:hover {
-          background: #f0f0f0;
-          color: #1a1a1a;
-          border-color: #1a1a1a;
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
@@ -630,22 +627,43 @@ export default function AdminIndex() {
         .admin-badge-success { background: rgba(25, 135, 84, 0.15); color: #198754; }
         .admin-badge-secondary { background: rgba(108, 117, 125, 0.15); color: #6c757d; }
 
-        /* Buttons */
-        .btn-gold {
-          background: #ffffff;
-          color: #1a1a1a;
-          border: 2px solid #1a1a1a;
-          padding: 10px 20px;
-          border-radius: 8px;
-          font-weight: 600;
+        /* Dashboard Unique Buttons */
+        .dash-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+          color: #ffffff;
+          border: none;
+          padding: 14px 32px;
+          border-radius: 50px;
+          font-weight: 700;
+          font-size: 15px;
           text-decoration: none;
-          display: inline-block;
-          transition: all 0.2s;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 15px rgba(26, 26, 26, 0.25);
+          position: relative;
+          overflow: hidden;
         }
 
-        .btn-gold:hover {
-          background: #1a1a1a;
-          color: #ffffff;
+        .dash-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+          transition: left 0.5s;
+        }
+
+        .dash-btn:hover::before {
+          left: 100%;
+        }
+
+        .dash-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(26, 26, 26, 0.4);
         }
 
         /* Empty State */
