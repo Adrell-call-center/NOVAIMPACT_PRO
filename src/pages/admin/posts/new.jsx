@@ -502,41 +502,47 @@ export default function AdminPostNew() {
 
         .btn-outline {
           background: #ffffff;
-          color: #6c757d;
-          border: 1px solid #e8e8e8;
-          padding: 12px 20px;
-          border-radius: 10px;
+          color: var(--stripe-text-secondary);
+          border: 1px solid var(--stripe-border);
+          padding: 9px 16px;
+          border-radius: var(--stripe-radius);
           font-weight: 500;
+          font-size: 14px;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: all 0.1s;
           display: inline-flex;
           align-items: center;
           gap: 8px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
         .btn-outline:hover {
-          background: #f8f9fa;
-          color: #1a1d21;
+          background: var(--stripe-bg);
+          color: var(--stripe-text-primary);
+          border-color: #cbd5e1;
         }
 
         .btn-primary {
-          background: #1a1a1a;
-          color: #1a1d21;
+          background: var(--stripe-primary);
+          color: #ffffff;
           border: none;
-          padding: 12px 24px;
-          border-radius: 10px;
+          padding: 9px 20px;
+          border-radius: var(--stripe-radius);
           font-weight: 600;
+          font-size: 14px;
           cursor: pointer;
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          transition: all 0.2s;
+          transition: all 0.1s;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+          box-shadow: 0 1px 2px rgba(99, 91, 255, 0.2);
         }
 
         .btn-primary:hover {
-          background: #333333;
+          background: var(--stripe-primary-hover);
           transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(255,200,26,0.3);
+          box-shadow: 0 4px 8px rgba(99, 91, 255, 0.3);
         }
 
         .btn-primary:disabled, .btn-outline:disabled {
@@ -634,14 +640,15 @@ export default function AdminPostNew() {
 
         .admin-light-card {
           background: #ffffff;
-          border-radius: 16px;
-          border: 1px solid #e8e8e8;
+          border-radius: var(--stripe-radius-lg);
+          border: 1px solid var(--stripe-border);
           overflow: hidden;
-          transition: box-shadow 0.3s ease;
+          transition: box-shadow 0.15s ease;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
         .admin-light-card:hover {
-          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          box-shadow: var(--stripe-shadow-md);
         }
 
         .admin-editor-card {
@@ -727,52 +734,54 @@ export default function AdminPostNew() {
 
         .admin-label {
           display: block;
-          margin-bottom: 8px;
+          margin-bottom: 6px;
           font-size: 13px;
-          font-weight: 500;
-          color: #495057;
+          font-weight: 600;
+          color: var(--stripe-text-secondary);
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
         .char-count {
           float: right;
           font-weight: normal;
-          color: #6c757d;
+          color: var(--stripe-text-tertiary);
         }
 
         .admin-input {
           width: 100%;
-          padding: 12px 16px;
+          padding: 10px 14px;
           background: #ffffff;
-          border: 1px solid #e8e8e8;
-          border-radius: 8px;
-          color: #1a1d21;
+          border: 1px solid var(--stripe-border);
+          border-radius: var(--stripe-radius);
+          color: var(--stripe-text-primary);
           font-size: 14px;
-          transition: all 0.2s;
+          transition: all 0.1s;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
         .admin-input-lg {
-          padding: 14px 18px;
+          padding: 12px 14px;
           font-size: 16px;
-          font-weight: 500;
+          font-weight: 600;
         }
 
         .admin-input:focus {
           outline: none;
-          border-color: #1a1a1a;
-          box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
+          border-color: var(--stripe-primary);
+          box-shadow: 0 0 0 3px var(--stripe-primary-subtle);
         }
 
         .admin-input.input-error {
-          border-color: #dc3545;
+          border-color: var(--stripe-danger);
         }
 
         .admin-textarea {
           width: 100%;
-          padding: 12px 16px;
+          padding: 10px 14px;
           background: #ffffff;
-          border: 1px solid #e8e8e8;
-          border-radius: 8px;
-          color: #1a1d21;
+          border: 1px solid var(--stripe-border);
+          border-radius: var(--stripe-radius);
+          color: var(--stripe-text-primary);
           font-size: 14px;
           resize: vertical;
           font-family: inherit;
@@ -780,8 +789,8 @@ export default function AdminPostNew() {
 
         .admin-textarea:focus {
           outline: none;
-          border-color: #1a1a1a;
-          box-shadow: 0 0 0 3px rgba(255,200,26,0.15);
+          border-color: var(--stripe-primary);
+          box-shadow: 0 0 0 3px var(--stripe-primary-subtle);
         }
 
         .admin-textarea.input-error {
