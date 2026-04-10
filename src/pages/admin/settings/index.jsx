@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import AdminLayout from '@/components/admin/AdminLayout';
-import '@/styles/admin-stripe.css';
 
 export default function AdminSettings() {
   const [settings, setSettings] = useState({ siteName: '', siteUrl: '', siteDesc: '' });
