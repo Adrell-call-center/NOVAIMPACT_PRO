@@ -89,34 +89,14 @@ export default function AdminPostEdit() {
       <AdminLayout title={`Edit: ${form.titleFr.substring(0, 30)}${form.titleFr.length > 30 ? '...' : ''}`}>
         <div className="admin-editor-header">
           <div className="admin-editor-left">
-            <button className="btn-outline" onClick={() => handleSubmit('DRAFT')} disabled={saving}>
-              <i className="fa-solid fa-file me-2"></i>Save Draft
-            </button>
             <button className="btn-outline" onClick={() => setShowPreview(true)} disabled={saving}>
               <i className="fa-solid fa-eye me-2"></i>Preview
             </button>
           </div>
           <div className="admin-editor-right">
-            <div className="admin-publish-controls">
-              <label className="admin-schedule-toggle">
-                <input type="checkbox" checked={scheduleMode} onChange={(e) => setScheduleMode(e.target.checked)} />
-                <span className="admin-schedule-label">Schedule</span>
-              </label>
-              {scheduleMode && (
-                <input type="datetime-local" className="admin-input admin-input-sm admin-schedule-date" value={form.publishedAt ? new Date(form.publishedAt).toISOString().slice(0, 16) : ''} onChange={(e) => update('publishedAt', e.target.value)} />
-              )}
-            </div>
             <button className="btn-primary" onClick={() => handleSubmit('PUBLISHED')} disabled={saving}>
               {saving ? <><span className="spinner me-2"></span>Saving...</> : (
-                form.status === 'PUBLISHED' ? (
-                  scheduleMode ? (
-                    <><i className="fa-solid fa-calendar me-2"></i>Reschedule</>
-                  ) : (
-                    <><i className="fa-solid fa-check me-2"></i>Update</>
-                  )
-                ) : (
-                  <><i className="fa-solid fa-rocket me-2"></i>Publish</>
-                )
+                <><i className="fa-solid fa-check me-2"></i>Save Changes</>
               )}
             </button>
           </div>
