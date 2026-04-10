@@ -1430,15 +1430,49 @@
 
 .post-layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 320px;
   gap: 60px;
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (max-width: 1024px) {
   .post-layout {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
+  }
+  /* On mobile: sidebar col comes BEFORE the article */
+  .post-sidebar-col {
+    order: -1;
+  }
+  /* On mobile: only show the author card, hide share/latest */
+  .post-sidebar .share-card,
+  .post-sidebar .recent-posts-card {
+    display: none;
+  }
+  /* On mobile: reset any JS transform */
+  .post-sidebar {
+    transform: none !important;
+  }
+  /* Mobile author card — horizontal layout */
+  .post-sidebar .author-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    padding: 20px;
+  }
+  .post-sidebar .author-avatar {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .post-sidebar .author-bio {
+    display: none;
+  }
+  .post-sidebar .author-socials {
+    justify-content: flex-start;
   }
 }
 
@@ -1894,14 +1928,17 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
 
-/* Sidebar — Sticky on scroll */
+/* Sidebar column — fills full grid row height */
+.post-sidebar-col {
+  min-width: 0;
+}
+
+/* Sidebar inner — JS applies translateY for sticky effect (works with GSAP ScrollSmoother) */
 .post-sidebar {
-  position: sticky;
-  top: 100px;
-  align-self: start;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  will-change: transform;
 }
 
 /* Recent Posts Card */
@@ -3435,3 +3472,53 @@
 /* ── Schema ── */
 .admin-schema-hint { font-size: 11px; font-weight: 400; color: #94a3b8; }
 .schema-empty { font-size: 12px; color: #94a3b8; margin: 0; padding: 8px 0; }
+
+/* ==========================================
+   HOME PORTFOLIO V6 - WHITE TEXT ON DARK BG
+   ========================================== */
+
+.portfolio__area-6-home {
+  background-color: #0a0a0a;
+}
+
+.portfolio__title-wrap-6-white .sec-sub-title,
+.portfolio__title-wrap-6-white .sec-subtitle {
+  color: #FFC81A !important;
+}
+
+.portfolio__title-wrap-6-white .sec-title,
+.portfolio__title-wrap-6-white .portfolio__title-white {
+  color: #ffffff !important;
+}
+
+.portfolio__title-wrap-6-white p {
+  color: #cccccc !important;
+}
+
+.portfolio__pagination-white .portfolio__current,
+.portfolio__pagination-white .portfolio__total {
+  color: #ffffff !important;
+}
+
+.portfolio__item-6 .portfolio__title-6 {
+  color: #ffffff !important;
+}
+
+.portfolio__item-6 .portfolio__date {
+  color: #cccccc !important;
+}
+
+/* Line color adjustment for dark background */
+.portfolio__area-6-home .line-3 {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Active state for portfolio items */
+.portfolio__item-6.active .portfolio__title-6 {
+  color: #FFC81A !important;
+}
+
+.portfolio__item-6 a:hover .portfolio__title-6 {
+  color: #FFC81A !important;
+}
+
