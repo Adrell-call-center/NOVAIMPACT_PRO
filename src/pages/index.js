@@ -13,7 +13,6 @@ import DigitalAgencyCTA from "@/components/cta/DigitalAgencyCTA";
 import Team1 from "@/components/team/Team1";
 import Faq1 from "@/components/faq/Faq1";
 import HomeProcess from "@/components/home/HomeProcess";
-import HomeResults from "@/components/home/HomeResults";
 
 const SITE_URL = "https://novaimpact.io";
 
@@ -183,7 +182,6 @@ const Home = ({ latestPosts }) => {
           <HomePortfolioV6 />
           <HomeProcess />
           <DigitalAgencyWorkflow />
-          <HomeResults />
           <DigitalMarketingWorkflow />
           <DigitalAgencyBlog posts={latestPosts} />
           <Team1 />
