@@ -250,7 +250,7 @@ export default async function handler(req, res) {
                 <h3 style="margin: 0 0 8px; color: #1a1a1a; font-size: 15px;">Need Immediate Assistance?</h3>
                 <p style="margin: 0 0 12px; color: #666; font-size: 14px;">If your inquiry is urgent, you can also reach us directly:</p>
                 <p style="margin: 0; font-size: 15px;">
-                  <a href="mailto:${marketingEmail}" style="color: #FFC81A; text-decoration: none; font-weight: 600;">${marketingEmail}</a>
+                  <a href="mailto:${fromEmail}" style="color: #FFC81A; text-decoration: none; font-weight: 600;">${fromEmail}</a>
                 </p>
               </div>
             </td>
