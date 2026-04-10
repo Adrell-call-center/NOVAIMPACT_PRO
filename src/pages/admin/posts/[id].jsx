@@ -561,55 +561,28 @@ export default function AdminPostEdit() {
           to { transform: rotate(360deg); }
         }
 
-        body, html { overflow: hidden; height: 100%; }
+        body, html { overflow: auto; height: auto; }
 
-        .admin-main {
-          height: 100vh;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
+        .admin-main { height: auto; overflow: visible; display: block; }
 
-        .admin-content {
-          flex: 1;
-          min-height: 0;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          padding: 24px 32px;
-        }
+        .admin-content { overflow: visible; flex: none; display: block; padding: 24px 32px; }
 
-        .admin-editor-header {
-          flex-shrink: 0;
-        }
+        .admin-editor-header { flex-shrink: 0; }
 
         .admin-editor-2col {
           flex: 1;
-          min-height: 0;
           display: flex;
           gap: 24px;
-          overflow: hidden;
         }
 
         @media (max-width: 1199px) {
-          body, html { overflow: auto; height: auto; }
-          .admin-main { height: auto; overflow: visible; }
-          .admin-content { overflow: visible; flex: none; }
-          .admin-editor-2col {
-            flex-direction: column;
-            height: auto;
-            overflow: visible;
-          }
+          .admin-editor-2col { flex-direction: column; }
         }
 
         .admin-col-left {
           flex: 1;
           min-width: 0;
-          height: 100%;
-          overflow-y: auto;
           padding-bottom: 40px;
-          scrollbar-width: thin;
-          scrollbar-color: #d0d0d0 transparent;
         }
 
         .admin-col-left::-webkit-scrollbar { width: 6px; }
@@ -618,26 +591,17 @@ export default function AdminPostEdit() {
 
         .admin-col-right {
           width: 360px;
-          height: 100%;
-          overflow-y: auto;
+          min-width: 360px;
+          height: fit-content;
           padding-bottom: 40px;
           display: flex;
           flex-direction: column;
-          scrollbar-width: thin;
-          scrollbar-color: #d0d0d0 transparent;
         }
 
-        .admin-col-right::-webkit-scrollbar { width: 6px; }
-        .admin-col-right::-webkit-scrollbar-track { background: transparent; }
-        .admin-col-right::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 3px; }
-
         @media (max-width: 1199px) {
-          .admin-col-left, .admin-col-right {
-            height: auto;
-            overflow-y: visible;
-          }
           .admin-col-right {
             width: 100%;
+            min-width: 100%;
           }
         }
 
