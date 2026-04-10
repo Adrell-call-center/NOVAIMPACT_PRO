@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  compress: true,
+  poweredByHeader: false,
   eslint: {
     // ESLint is checked locally; ignore during production builds
     ignoreDuringBuilds: true,
@@ -20,6 +22,9 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     // Disable blur placeholder for sharper images
     minimumCacheTTL: 604800, // 1 week
+  },
+  experimental: {
+    optimizePackageImports: ['swiper', '@fortawesome/free-solid-svg-icons', '@fortawesome/react-fontawesome'],
   },
   async redirects() {
     return [
