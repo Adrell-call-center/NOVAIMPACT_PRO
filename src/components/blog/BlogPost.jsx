@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollSmoother);
 const SimoAvatar = '/images/Simo-Adrif.webp';
 
 function readingTime(html = '') {
+  if (!html || typeof html !== 'string') return 1;
   const text = html.replace(/<[^>]+>/g, '');
   const words = text.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
@@ -103,8 +104,8 @@ export default function BlogPost({ post, related, recent }) {
 
   if (!post) return <div className="container py-5"><h2>Post not found</h2></div>;
 
-  const title   = isFr ? post.titleFr   : post.titleEn;
-  const content = isFr ? post.contentFr : post.contentEn;
+  const title   = isFr ? (post.titleFr || post.title || 'Untitled')   : (post.titleEn || post.title || 'Untitled');
+  const content = isFr ? (post.contentFr || post.content || '') : (post.contentEn || post.content || '');
   const minRead  = readingTime(content);
 
   return (

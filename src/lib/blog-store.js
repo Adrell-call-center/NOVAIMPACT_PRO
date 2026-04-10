@@ -78,7 +78,7 @@ export const blogStore = {
       ...post,
       title: lang === 'fr' ? post.titleFr : post.titleEn,
       excerpt: lang === 'fr' ? post.excerptFr : post.excerptEn,
-      content: lang === 'fr' ? post.contentFr : post.contentEn,
+      content: lang === 'fr' ? (post.contentFr || '') : (post.contentEn || ''),
       metaTitle: lang === 'fr' ? post.metaTitleFr : post.metaTitleEn,
       metaDesc: lang === 'fr' ? post.metaDescFr : post.metaDescEn,
       focusKeyword: lang === 'fr' ? post.focusKeywordFr : post.focusKeywordEn,

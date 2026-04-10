@@ -2,6 +2,8 @@ import Head from 'next/head';
 import { buildSchema } from '@/lib/schema-builder';
 
 export default function BlogSeo({ post, lang = 'fr' }) {
+  if (!post) return null;
+
   const isFr = lang === 'fr';
   const title = post.metaTitleFr || post.titleFr || '';
   const titleEn = post.metaTitleEn || post.titleEn || '';
@@ -12,7 +14,7 @@ export default function BlogSeo({ post, lang = 'fr' }) {
   const urlEn = `${baseUrl}/blog/${post.slug}?lang=en`;
   const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
   const ogImage = post.ogImageUrl || post.coverImage || '/assets/imgs/thumb/og-default.jpg';
-  const schema = buildSchema(post, lang);
+  const schema = post ? buildSchema(post, lang) : {};
 
   return (
     <Head>
