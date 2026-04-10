@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { buildSchema } from '@/lib/schema-builder';
 
 export default function BlogSeo({ post, lang = 'fr' }) {
-  if (!post) return null;
+  if (!post || !post.slug) return null;
 
   const isFr = lang === 'fr';
-  const title = post.metaTitleFr || post.titleFr || '';
+  const title = post.metaTitleFr || post.titleFr || post.title || '';
   const titleEn = post.metaTitleEn || post.titleEn || '';
-  const desc = post.metaDescFr || post.excerptFr || '';
+  const desc = post.metaDescFr || post.excerptFr || post.excerpt || '';
   const descEn = post.metaDescEn || post.excerptEn || '';
   const baseUrl = `https://novaimpact.io`;
   const urlFr = `${baseUrl}/blog/${post.slug}?lang=fr`;
@@ -22,7 +22,7 @@ export default function BlogSeo({ post, lang = 'fr' }) {
       <meta name="description" content={isFr ? desc : descEn} />
       {post.noIndex && <meta name="robots" content="noindex, nofollow" />}
       {!post.noIndex && <meta name="robots" content="index, follow" />}
-      {post.canonicalUrl ? <link rel="canonical" href={post.canonicalUrl} /> : <link rel="canonical" href={canonicalUrl} />}
+      <link rel="canonical" href={post.canonicalUrl || canonicalUrl} />
       <meta property="og:title" content={isFr ? title : titleEn} />
       <meta property="og:description" content={isFr ? desc : descEn} />
       <meta property="og:image" content={ogImage} />
@@ -36,8 +36,12 @@ export default function BlogSeo({ post, lang = 'fr' }) {
       <link rel="alternate" hrefLang="fr" href={urlFr} />
       <link rel="alternate" hrefLang="en" href={urlEn} />
       <link rel="alternate" hrefLang="x-default" href={urlFr} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      {post.focusKeywordFr && <meta name="keywords" content={isFr ? (post.focusKeywordFr || '') : (post.focusKeywordEn || '')} />}
+      {schema && Object.keys(schema).length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      )}
+      {(post.focusKeywordFr || post.focusKeywordEn) && (
+        <meta name="keywords" content={isFr ? (post.focusKeywordFr || '') : (post.focusKeywordEn || '')} />
+      )}
     </Head>
   );
 }
