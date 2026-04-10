@@ -8,13 +8,12 @@ import RichTextEditor from '@/components/admin/RichTextEditor';
 export default function AdminPostEdit() {
   const router = useRouter();
   const { id } = router.query;
-  const [tab, setTab] = useState('content');
+  const [tab, setTab] = useState('general');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploads, setUploads] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [existingCategories, setExistingCategories] = useState([]);
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const [form, setForm] = useState({
@@ -27,7 +26,6 @@ export default function AdminPostEdit() {
     if (!id) return;
     fetchPost();
     fetchUploads();
-    fetchCategories();
   }, [id]);
 
   const fetchPost = async () => {
@@ -61,13 +59,6 @@ export default function AdminPostEdit() {
     setUploads(data.uploads || []);
   };
 
-  const fetchCategories = async () => {
-    const res = await fetch('/api/admin/posts');
-    const data = await res.json();
-    const cats = [...new Set((data.posts || []).flatMap(p => (p.category || '').split(',').map(c => c.trim())).filter(Boolean))];
-    setExistingCategories(cats);
-  };
-
   const handleChange = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
   };
@@ -99,176 +90,220 @@ export default function AdminPostEdit() {
     fetchUploads();
   };
 
+  const tabs = [
+    { id: 'general', label: 'General', icon: 'fa-solid fa-gear' },
+    { id: 'content', label: 'Content', icon: 'fa-solid fa-file-lines' },
+    { id: 'media', label: 'Media', icon: 'fa-solid fa-image' },
+    { id: 'seo', label: 'SEO & Meta', icon: 'fa-solid fa-magnifying-glass' },
+    { id: 'preview', label: 'Preview', icon: 'fa-solid fa-eye' },
+  ];
+
   if (loading) return <div style={{ padding: '80px 24px', textAlign: 'center', color: 'var(--text-tertiary)' }}>Loading...</div>;
 
   return (
     <>
       <Head><title>Edit Post — Nova Impact</title></Head>
       <AdminLayout title="Edit Post">
-        <div className="stripe-page">
-          {/* Header */}
-          <div className="stripe-page-header">
-            <div>
-              <h1 className="stripe-page-title">Edit Post</h1>
-              <p className="stripe-page-subtitle">{form.titleFr || 'Untitled'}</p>
-            </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <Link href="/admin/posts" className="btn btn-secondary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                Back
-              </Link>
-              <button className="btn btn-danger btn-sm" onClick={() => setConfirmDelete(true)}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                Delete
+        <div className="admin-create-page">
+          {/* Top Actions */}
+          <div className="admin-create-header">
+            <Link href="/admin/posts" className="btn-back">
+              <i className="fa-solid fa-arrow-left"></i> Back to Posts
+            </Link>
+            <div className="admin-create-actions">
+              <button className="btn-outline" onClick={() => setShowPreview(!showPreview)}>
+                <i className="fa-solid fa-eye"></i> Preview
               </button>
-              <button className="btn btn-secondary" onClick={() => handleSubmit('DRAFT')} disabled={saving}>
-                {saving ? 'Saving...' : 'Save Draft'}
+              <button className="btn-danger btn-sm" onClick={() => setConfirmDelete(true)}>
+                <i className="fa-solid fa-trash"></i> Delete
               </button>
-              <button className="btn btn-primary" onClick={() => handleSubmit('PUBLISHED')} disabled={saving}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                Update
+              <button className="btn-outline" onClick={() => handleSubmit('DRAFT')} disabled={saving}>
+                <i className="fa-solid fa-save"></i> {saving ? 'Saving...' : 'Save Draft'}
+              </button>
+              <button className="btn-primary" onClick={() => handleSubmit('PUBLISHED')} disabled={saving}>
+                <i className="fa-solid fa-check"></i> {saving ? 'Updating...' : 'Update'}
               </button>
             </div>
           </div>
 
-          {/* Tabs */}
-          <div className="filter-tabs" style={{ marginBottom: 24, width: 'fit-content' }}>
-            <button className={`filter-tab ${tab === 'content' ? 'active' : ''}`} onClick={() => setTab('content')}>Content</button>
-            <button className={`filter-tab ${tab === 'media' ? 'active' : ''}`} onClick={() => setTab('media')}>Media</button>
-            <button className={`filter-tab ${tab === 'seo' ? 'active' : ''}`} onClick={() => setTab('seo')}>SEO</button>
-          </div>
-
-          <div className="content-grid content-grid-full">
-            {tab === 'content' && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 24 }}>
+          <div className="admin-create-layout">
+            {/* Main Content */}
+            <div className="admin-create-main">
+              {/* General Tab */}
+              {tab === 'general' && (
                 <div className="stripe-card">
                   <div className="stripe-card-body">
                     <div className="form-group">
-                      <label className="form-label">Title</label>
-                      <input className="form-input" value={form.titleFr} onChange={e => handleChange('titleFr', e.target.value)} style={{ fontSize: '16px', fontWeight: 600, padding: '12px 14px' }} />
+                      <label className="form-label">Title (French)</label>
+                      <input className="form-input" value={form.titleFr} onChange={e => handleChange('titleFr', e.target.value)} />
                     </div>
                     <div className="form-group">
                       <label className="form-label">Slug</label>
-                      <input className="form-input" value={form.slug} onChange={e => handleChange('slug', e.target.value)} style={{ fontFamily: 'monospace', fontSize: '13px' }} />
+                      <input className="form-input form-input-mono" value={form.slug} onChange={e => handleChange('slug', e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <label className="form-label">Content</label>
-                      <RichTextEditor value={form.contentFr} onChange={v => handleChange('contentFr', v)} />
+                      <label className="form-label">Excerpt (French)</label>
+                      <textarea className="form-textarea" rows={3} value={form.excerptFr} onChange={e => handleChange('excerptFr', e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Category</label>
+                      <input className="form-input" value={form.category} onChange={e => handleChange('category', e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Tags</label>
+                      <input className="form-input" value={form.tags} onChange={e => handleChange('tags', e.target.value)} placeholder="Comma-separated" />
                     </div>
                   </div>
                 </div>
+              )}
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  <div className="stripe-card">
-                    <div className="stripe-card-header"><h3 className="stripe-card-title">Status</h3></div>
-                    <div className="stripe-card-body">
-                      <div className="form-group" style={{ marginBottom: 12 }}>
-                        <label className="form-label">Status</label>
-                        <select className="form-select" value={form.status} onChange={e => handleChange('status', e.target.value)}>
-                          <option value="DRAFT">Draft</option>
-                          <option value="PUBLISHED">Published</option>
-                        </select>
-                      </div>
-                      <div className="form-group" style={{ marginBottom: 0 }}>
-                        <label className="form-label">Category</label>
-                        <div style={{ position: 'relative' }}>
-                          <input className="form-input" value={form.category} onChange={e => { handleChange('category', e.target.value); setShowCategoryDropdown(true); }} onFocus={() => setShowCategoryDropdown(true)} />
-                          {showCategoryDropdown && existingCategories.length > 0 && (
-                            <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'white', border: '1px solid var(--border)', borderRadius: 'var(--radius)', marginTop: 4, maxHeight: 160, overflowY: 'auto', zIndex: 100, boxShadow: 'var(--shadow-md)' }}>
-                              {existingCategories.map(cat => (
-                                <div key={cat} style={{ padding: '8px 14px', fontSize: 13, cursor: 'pointer', borderBottom: '1px solid var(--border-light)' }} onClick={() => { handleChange('category', cat); setShowCategoryDropdown(false); }}>{cat}</div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="stripe-card">
-                    <div className="stripe-card-header"><h3 className="stripe-card-title">Cover Image</h3></div>
-                    <div className="stripe-card-body">
-                      {form.coverImage ? (
-                        <>
-                          <img src={form.coverImage} alt="Cover" style={{ width: '100%', borderRadius: 'var(--radius)', marginBottom: 12 }} />
-                          <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={() => handleChange('coverImage', '')}>Remove</button>
-                        </>
-                      ) : (
-                        <label className="btn btn-secondary btn-sm" style={{ width: '100%', justifyContent: 'center', cursor: uploading ? 'not-allowed' : 'pointer' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                          Upload
-                          <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={uploading} />
-                        </label>
-                      )}
-                    </div>
+              {/* Content Tab */}
+              {tab === 'content' && (
+                <div className="stripe-card">
+                  <div className="stripe-card-body">
+                    <RichTextEditor value={form.contentFr} onChange={v => handleChange('contentFr', v)} />
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {tab === 'media' && (
-              <div className="stripe-card">
-                <div className="stripe-card-header">
-                  <h3 className="stripe-card-title">Cover Image</h3>
-                  <label className="btn btn-primary btn-sm" style={{ cursor: 'pointer' }}>
-                    Upload <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
-                  </label>
-                </div>
-                <div className="stripe-card-body">
-                  {form.coverImage && (
-                    <div style={{ marginBottom: 20 }}>
-                      <p className="form-label" style={{ marginBottom: 8 }}>Current Cover</p>
-                      <img src={form.coverImage} alt="Cover" style={{ maxWidth: 400, borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }} />
-                    </div>
-                  )}
-                  <p className="form-label">Choose from library</p>
-                  <div className="media-grid" style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12 }}>
-                    {uploads.filter(u => u.mimeType?.startsWith('image')).slice(0, 12).map(u => (
-                      <div key={u.id} onClick={() => handleChange('coverImage', u.path)} style={{ cursor: 'pointer', border: form.coverImage === u.path ? '2px solid var(--primary)' : '1px solid var(--border)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
-                        <img src={u.path} alt="" style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover' }} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {tab === 'seo' && (
-              <div className="stripe-card" style={{ maxWidth: 700 }}>
-                <div className="stripe-card-header">
-                  <h3 className="stripe-card-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    Search Engine Optimization
-                  </h3>
-                </div>
-                <div className="stripe-card-body">
-                  <div className="form-group">
-                    <label className="form-label">Meta Title</label>
-                    <input className="form-input" value={form.metaTitleFr} onChange={e => handleChange('metaTitleFr', e.target.value)} maxLength={60} />
-                    <p className="form-hint">{form.metaTitleFr.length}/60 characters</p>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Meta Description</label>
-                    <textarea className="form-textarea" rows={3} value={form.metaDescFr} onChange={e => handleChange('metaDescFr', e.target.value)} maxLength={160} />
-                    <p className="form-hint">{form.metaDescFr.length}/160 characters</p>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Focus Keyword</label>
-                    <input className="form-input" value={form.focusKeywordFr} onChange={e => handleChange('focusKeywordFr', e.target.value)} />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Canonical URL</label>
-                    <input className="form-input" value={form.canonicalUrl} onChange={e => handleChange('canonicalUrl', e.target.value)} style={{ fontFamily: 'monospace', fontSize: '13px' }} />
-                  </div>
-                  <div className="form-group">
-                    <label className="checkbox">
-                      <input type="checkbox" checked={form.noIndex} onChange={e => handleChange('noIndex', e.target.checked)} />
-                      <span className="checkbox-label">No index (hide from search engines)</span>
+              {/* Media Tab */}
+              {tab === 'media' && (
+                <div className="stripe-card">
+                  <div className="stripe-card-header">
+                    <h3 className="stripe-card-title">Cover Image</h3>
+                    <label className="btn-outline btn-sm" style={{ cursor: 'pointer' }}>
+                      <i className="fa-solid fa-upload"></i> Upload
+                      <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
                     </label>
                   </div>
+                  <div className="stripe-card-body">
+                    {form.coverImage ? (
+                      <div className="cover-image-preview">
+                        <img src={form.coverImage} alt="Cover" />
+                        <button className="btn-remove-cover" onClick={() => handleChange('coverImage', '')}>
+                          <i className="fa-solid fa-times"></i>
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="cover-upload-placeholder">
+                        <i className="fa-solid fa-image"></i>
+                        <p>No cover image yet</p>
+                        <label className="btn-outline btn-sm" style={{ cursor: 'pointer' }}>
+                          Upload Image
+                          <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+                        </label>
+                      </div>
+                    )}
+                    {uploads.length > 0 && (
+                      <div style={{ marginTop: 24 }}>
+                        <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--text-secondary)' }}>Recent Uploads</h4>
+                        <div className="media-grid-compact">
+                          {uploads.filter(u => u.mimeType?.startsWith('image')).slice(0, 12).map(u => (
+                            <div key={u.id} className="media-thumb" onClick={() => handleChange('coverImage', u.path)}>
+                              <img src={u.path} alt="" />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* SEO Tab */}
+              {tab === 'seo' && (
+                <div className="stripe-card">
+                  <div className="stripe-card-body">
+                    <div className="form-group">
+                      <label className="form-label">Meta Title</label>
+                      <input className="form-input" value={form.metaTitleFr} onChange={e => handleChange('metaTitleFr', e.target.value)} maxLength={60} />
+                      <p className="form-hint">{(form.metaTitleFr || form.titleFr).length}/60</p>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Meta Description</label>
+                      <textarea className="form-textarea" rows={3} value={form.metaDescFr} onChange={e => handleChange('metaDescFr', e.target.value)} maxLength={160} />
+                      <p className="form-hint">{form.metaDescFr.length}/160</p>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Focus Keyword</label>
+                      <input className="form-input" value={form.focusKeywordFr} onChange={e => handleChange('focusKeywordFr', e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Canonical URL</label>
+                      <input className="form-input form-input-mono" value={form.canonicalUrl} onChange={e => handleChange('canonicalUrl', e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                      <label className="checkbox">
+                        <input type="checkbox" checked={form.noIndex} onChange={e => handleChange('noIndex', e.target.checked)} />
+                        <span className="checkbox-label">No index</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Preview Tab */}
+              {tab === 'preview' && (
+                <div className="stripe-card">
+                  <div className="stripe-card-body">
+                    {form.titleFr ? (
+                      <div className="post-preview">
+                        {form.coverImage && <img src={form.coverImage} alt="Cover" className="preview-cover" />}
+                        <h1>{form.titleFr}</h1>
+                        {form.excerptFr && <p className="preview-excerpt">{form.excerptFr}</p>}
+                        <div className="preview-content" dangerouslySetInnerHTML={{ __html: form.contentFr || '<p style="color:#999">No content yet...</p>' }} />
+                      </div>
+                    ) : (
+                      <div className="empty-preview">
+                        <i className="fa-solid fa-file-lines"></i>
+                        <p>Start writing to see preview</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <aside className="admin-create-sidebar">
+              {/* Tabs Navigation */}
+              <div className="sidebar-tabs">
+                {tabs.map(t => (
+                  <button key={t.id} className={`sidebar-tab ${tab === t.id ? 'active' : ''}`} onClick={() => setTab(t.id)}>
+                    <i className={t.icon}></i>
+                    <span>{t.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Status Card */}
+              <div className="stripe-card sidebar-card">
+                <div className="stripe-card-header"><h3 className="stripe-card-title">Status</h3></div>
+                <div className="stripe-card-body">
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <select className="form-select" value={form.status} onChange={e => handleChange('status', e.target.value)}>
+                      <option value="DRAFT">Draft</option>
+                      <option value="PUBLISHED">Published</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            )}
+
+              {/* Publish Card */}
+              <div className="stripe-card sidebar-card">
+                <div className="stripe-card-header"><h3 className="stripe-card-title">Actions</h3></div>
+                <div className="stripe-card-body">
+                  <div className="publish-actions">
+                    <button className="btn-outline btn-sm btn-block" onClick={() => handleSubmit('DRAFT')} disabled={saving}>
+                      <i className="fa-solid fa-save"></i> Save Draft
+                    </button>
+                    <button className="btn-primary btn-sm btn-block" onClick={() => handleSubmit('PUBLISHED')} disabled={saving}>
+                      <i className="fa-solid fa-check"></i> Update Post
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
 
@@ -288,6 +323,51 @@ export default function AdminPostEdit() {
             </div>
           </div>
         )}
+
+        <style jsx global>{`
+          .admin-create-page { max-width: 1400px; }
+          .admin-create-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+          .btn-back { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; transition: color 0.1s; }
+          .btn-back:hover { color: var(--primary); }
+          .admin-create-actions { display: flex; gap: 8px; }
+          .admin-create-layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+          .admin-create-main { min-width: 0; }
+          .admin-create-sidebar { position: sticky; top: 80px; height: fit-content; max-height: calc(100vh - 100px); overflow-y: auto; }
+          .sidebar-tabs { display: flex; flex-direction: column; gap: 4px; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 8px; margin-bottom: 20px; }
+          .sidebar-tab { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: none; background: transparent; color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; font-size: 13px; font-weight: 500; text-align: left; transition: all 0.1s; }
+          .sidebar-tab:hover { background: var(--bg-primary); color: var(--text-primary); }
+          .sidebar-tab.active { background: var(--primary); color: white; }
+          .sidebar-tab i { width: 18px; text-align: center; font-size: 14px; }
+          .sidebar-card { margin-bottom: 16px; }
+          .sidebar-card .stripe-card-header { padding: 14px 16px; }
+          .sidebar-card .stripe-card-body { padding: 14px 16px; }
+          .cover-image-preview { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+          .cover-image-preview img { width: 100%; display: block; }
+          .btn-remove-cover { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; background: rgba(0,0,0,0.6); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
+          .btn-remove-cover:hover { background: var(--danger); }
+          .cover-upload-placeholder { text-align: center; padding: 40px 20px; background: var(--bg-primary); border: 2px dashed var(--border); border-radius: var(--radius); }
+          .cover-upload-placeholder i { font-size: 32px; color: var(--text-tertiary); margin-bottom: 12px; }
+          .cover-upload-placeholder p { color: var(--text-tertiary); font-size: 14px; margin: 0 0 16px; }
+          .media-grid-compact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+          .media-thumb { aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.1s; }
+          .media-thumb:hover { border-color: var(--primary); transform: scale(1.02); }
+          .media-thumb img { width: 100%; height: 100%; object-fit: cover; }
+          .post-preview { max-width: 800px; margin: 0 auto; }
+          .post-preview .preview-cover { width: 100%; border-radius: var(--radius-lg); margin-bottom: 24px; }
+          .post-preview h1 { font-size: 28px; font-weight: 700; margin: 0 0 12px; }
+          .post-preview .preview-excerpt { color: var(--text-secondary); font-size: 16px; margin: 0 0 24px; line-height: 1.6; }
+          .preview-content { line-height: 1.8; color: var(--text-primary); }
+          .preview-content img { max-width: 100%; border-radius: 8px; }
+          .empty-preview { text-align: center; padding: 60px 20px; color: var(--text-tertiary); }
+          .empty-preview i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+          .publish-actions { display: flex; flex-direction: column; gap: 8px; }
+          .btn-block { width: 100%; justify-content: center; }
+          .form-input-mono { font-family: 'SF Mono', 'Monaco', 'Consolas', monospace; font-size: 13px; }
+          @media (max-width: 1023px) {
+            .admin-create-layout { grid-template-columns: 1fr; }
+            .admin-create-sidebar { position: static; max-height: none; }
+          }
+        `}</style>
       </AdminLayout>
     </>
   );
