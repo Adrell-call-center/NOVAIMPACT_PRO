@@ -1,13 +1,49 @@
+import { Component } from 'react';
 import RootLayout from '@/components/common/layout/RootLayout';
 import BlogPost from '@/components/blog/BlogPost';
 import { blogStore } from '@/lib/blog-store';
 
+// Error Boundary to prevent infinite error loops
+class BlogErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('Blog post error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <RootLayout header="header3" footer="footer3">
+          <div className="container py-5" style={{ textAlign: 'center', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+            <h1>Something went wrong</h1>
+            <p>Please try refreshing the page</p>
+            <button onClick={() => window.location.reload()} style={{ padding: '12px 24px', background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', marginTop: '16px' }}>
+              Refresh Page
+            </button>
+          </div>
+        </RootLayout>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function BlogSlugPage({ post, related, recent }) {
-  if (!post) return <div className="container py-5">Post not found</div>;
+  if (!post) return <div className="container py-5"><h2>Post not found</h2></div>;
   return (
-    <RootLayout header="header3" footer="footer3">
-      <BlogPost post={post} related={related} recent={recent} />
-    </RootLayout>
+    <BlogErrorBoundary>
+      <RootLayout header="header3" footer="footer3">
+        <BlogPost post={post} related={related} recent={recent} />
+      </RootLayout>
+    </BlogErrorBoundary>
   );
 }
 

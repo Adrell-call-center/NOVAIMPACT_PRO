@@ -1,47 +1,46 @@
 import Head from 'next/head';
-import { buildSchema } from '@/lib/schema-builder';
 
 export default function BlogSeo({ post, lang = 'fr' }) {
-  if (!post || !post.slug) return null;
+  if (!post || !post.slug) {
+    return (
+      <Head>
+        <title>Nova Impact Blog</title>
+        <meta name="description" content="Nova Impact - Digital Agency" />
+        <meta property="og:title" content="Nova Impact Blog" />
+        <meta property="og:description" content="Nova Impact - Digital Agency" />
+        <meta property="og:image" content="https://novaimpact.io/assets/imgs/thumb/og-default.jpg" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <html lang={lang || 'fr'} />
+      </Head>
+    );
+  }
 
   const isFr = lang === 'fr';
-  const title = post.metaTitleFr || post.titleFr || post.title || '';
-  const titleEn = post.metaTitleEn || post.titleEn || '';
-  const desc = post.metaDescFr || post.excerptFr || post.excerpt || '';
-  const descEn = post.metaDescEn || post.excerptEn || '';
-  const baseUrl = `https://novaimpact.io`;
-  const urlFr = `${baseUrl}/blog/${post.slug}?lang=fr`;
-  const urlEn = `${baseUrl}/blog/${post.slug}?lang=en`;
-  const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
-  const ogImage = post.ogImageUrl || post.coverImage || '/assets/imgs/thumb/og-default.jpg';
-  const schema = post ? buildSchema(post, lang) : {};
+  const title = isFr ? (post.titleFr || 'Nova Impact') : (post.titleEn || 'Nova Impact');
+  const desc = isFr ? (post.excerptFr || 'Nova Impact Blog') : (post.excerptEn || 'Nova Impact Blog');
+  const fullTitle = title + ' — Nova Impact';
+  const ogImage = post.ogImageUrl || post.coverImage || 'https://novaimpact.io/assets/imgs/thumb/og-default.jpg';
+  const slug = post.slug;
 
   return (
     <Head>
-      <title>{isFr ? title : titleEn} — Nova Impact</title>
-      <meta name="description" content={isFr ? desc : descEn} />
-      {post.noIndex && <meta name="robots" content="noindex, nofollow" />}
-      {!post.noIndex && <meta name="robots" content="index, follow" />}
-      <link rel="canonical" href={post.canonicalUrl || canonicalUrl} />
-      <meta property="og:title" content={isFr ? title : titleEn} />
-      <meta property="og:description" content={isFr ? desc : descEn} />
+      <title>{fullTitle}</title>
+      <meta name="description" content={desc} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={desc} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:url" content={'https://novaimpact.io/blog/' + slug} />
       <meta property="og:type" content="article" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={isFr ? title : titleEn} />
-      <meta name="twitter:description" content={isFr ? desc : descEn} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={desc} />
       <meta name="twitter:image" content={ogImage} />
+      <meta name="robots" content={post.noIndex === true ? 'noindex, nofollow' : 'index, follow'} />
+      <link rel="canonical" href={'https://novaimpact.io/blog/' + slug} />
+      <link rel="alternate" hrefLang="fr" href={'https://novaimpact.io/blog/' + slug + '?lang=fr'} />
+      <link rel="alternate" hrefLang="en" href={'https://novaimpact.io/blog/' + slug + '?lang=en'} />
       <html lang={isFr ? 'fr' : 'en'} />
-      <link rel="alternate" hrefLang="fr" href={urlFr} />
-      <link rel="alternate" hrefLang="en" href={urlEn} />
-      <link rel="alternate" hrefLang="x-default" href={urlFr} />
-      {schema && Object.keys(schema).length > 0 && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      )}
-      {(post.focusKeywordFr || post.focusKeywordEn) && (
-        <meta name="keywords" content={isFr ? (post.focusKeywordFr || '') : (post.focusKeywordEn || '')} />
-      )}
     </Head>
   );
 }
