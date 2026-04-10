@@ -95,7 +95,12 @@ export default function AdminIndex() {
                       <span className="admin-card-icon black"><i className="fa-solid fa-clock-rotate-left"></i></span>
                       Recent Posts
                     </h3>
-                    <Link href="/admin/posts" className="admin-card-link">View All <i className="fa-solid fa-arrow-right ms-1"></i></Link>
+                    <div className="admin-card-actions">
+                      <Link href="/admin/posts/new" className="dash-btn-sm">
+                        <i className="fa-solid fa-plus"></i> New Post
+                      </Link>
+                      <Link href="/admin/posts" className="admin-card-link">View All <i className="fa-solid fa-arrow-right ms-1"></i></Link>
+                    </div>
                   </div>
                   <div className="admin-card-body no-padding">
                     {recentPosts.length > 0 ? (
@@ -386,6 +391,12 @@ export default function AdminIndex() {
           border-bottom: 1px solid #f0f0f0;
         }
 
+        .admin-card-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
         .admin-card-title {
           font-size: 16px;
           font-weight: 600;
@@ -664,6 +675,29 @@ export default function AdminIndex() {
         .dash-btn:hover {
           transform: translateY(-3px);
           box-shadow: 0 8px 25px rgba(26, 26, 26, 0.4);
+        }
+
+        /* Dashboard Small Button (Black Text) */
+        .dash-btn-sm {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #ffffff;
+          color: #1a1a1a;
+          border: 2px solid #1a1a1a;
+          padding: 8px 18px;
+          border-radius: 50px;
+          font-weight: 600;
+          font-size: 13px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .dash-btn-sm:hover {
+          background: #1a1a1a;
+          color: #ffffff;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2);
         }
 
         /* Empty State */
