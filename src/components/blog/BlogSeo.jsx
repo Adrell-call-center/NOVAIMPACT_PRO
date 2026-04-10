@@ -11,7 +11,6 @@ export default function BlogSeo({ post, lang = 'fr' }) {
         <meta property="og:image" content="https://novaimpact.io/assets/imgs/thumb/og-default.jpg" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <html lang={lang || 'fr'} />
       </Head>
     );
   }
@@ -40,7 +39,6 @@ export default function BlogSeo({ post, lang = 'fr' }) {
       <link rel="canonical" href={'https://novaimpact.io/blog/' + slug} />
       <link rel="alternate" hrefLang="fr" href={'https://novaimpact.io/blog/' + slug + '?lang=fr'} />
       <link rel="alternate" hrefLang="en" href={'https://novaimpact.io/blog/' + slug + '?lang=en'} />
-      <html lang={isFr ? 'fr' : 'en'} />
     </Head>
   );
 }
