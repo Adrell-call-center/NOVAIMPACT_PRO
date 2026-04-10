@@ -424,8 +424,11 @@ export default function AdminLayout({ children, title = 'Overview' }) {
         }
 
         .stripe-content {
-          padding: 32px;
+          padding: 32px 48px;
           flex: 1;
+          max-width: 1600px;
+          margin: 0 auto;
+          width: 100%;
         }
 
         @media (max-width: 768px) {

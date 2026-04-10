@@ -290,6 +290,34 @@
   text-align: center;
 }
 
+/* Table Thumbnail */
+.table-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.table-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.table-thumb-empty {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+}
+
 /* Badge */
 .badge {
   display: inline-flex;
