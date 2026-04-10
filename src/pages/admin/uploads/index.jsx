@@ -464,7 +464,7 @@ This will replace the originals and cannot be undone.`, async () => {
             </div>
           </div>
           
-          <label className="btn-gold btn-upload">
+          <label className="btn-primary btn-upload">
             <i className="fa-solid fa-upload me-2"></i>
             {uploading ? (compressing ? 'Compressing & Uploading...' : 'Uploading...') : 'Upload Files'}
             <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} disabled={uploading} />
@@ -568,7 +568,7 @@ This will replace the originals and cannot be undone.`, async () => {
               <i className="fa-solid fa-cloud-arrow-up"></i>
               <h3>No files uploaded yet</h3>
               <p>Upload your first files to get started</p>
-              <label className="btn-gold">
+              <label className="btn-primary">
                 <i className="fa-solid fa-upload me-2"></i>Upload Files
                 <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} />
               </label>
@@ -663,7 +663,7 @@ This will replace the originals and cannot be undone.`, async () => {
 
         .compression-quality span {
           font-weight: 600;
-          color: #FFC81A;
+          color: #1a1a1a;
           min-width: 50px;
         }
 
@@ -788,8 +788,8 @@ This will replace the originals and cannot be undone.`, async () => {
           color: #6c757d;
         }
 
-        .btn-gold {
-          background: #FFC81A;
+        .btn-primary {
+          background: #1a1a1a;
           color: #1a1d21;
           border: none;
           padding: 12px 24px;
@@ -802,13 +802,13 @@ This will replace the originals and cannot be undone.`, async () => {
           transition: all 0.2s;
         }
 
-        .btn-gold:hover {
-          background: #e6b517;
+        .btn-primary:hover {
+          background: #333333;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(255,200,26,0.3);
         }
 
-        .btn-gold:disabled {
+        .btn-primary:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }
@@ -868,14 +868,14 @@ This will replace the originals and cannot be undone.`, async () => {
         }
 
         .admin-upload-card.selected {
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
           box-shadow: 0 0 0 3px rgba(255,200,26,0.2);
         }
 
         .admin-upload-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-          border-color: #FFC81A;
+          border-color: #1a1a1a;
         }
 
         .admin-upload-checkbox {
@@ -1124,12 +1124,12 @@ This will replace the originals and cannot be undone.`, async () => {
         }
 
         .modal-btn-confirm {
-          background: #FFC81A;
+          background: #1a1a1a;
           color: #1a1a1a;
         }
 
         .modal-btn-confirm:hover {
-          background: #e6b517;
+          background: #333333;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(255, 200, 26, 0.3);
         }

@@ -76,12 +76,12 @@ export default function AdminIndex() {
 
             {/* Stats Cards */}
             <div className="admin-stats-grid">
-              <StatCard title="Total Posts" value={stats.posts} icon="fa-file-lines" color="gold" link="/admin/posts" />
-              <StatCard title="Published" value={stats.published} icon="fa-check-circle" color="green" link="/admin/posts" />
-              <StatCard title="Drafts" value={stats.drafts} icon="fa-pen-to-square" color="orange" link="/admin/posts" />
-              <StatCard title="Media Files" value={stats.uploads} icon="fa-image" color="blue" link="/admin/uploads" />
-              <StatCard title="Messages" value={stats.contacts} icon="fa-envelope" color="purple" link="/admin/contacts" />
-              <StatCard title="Subscribers" value={stats.subscribers} icon="fa-users" color="teal" link="/admin/newsletter" />
+              <StatCard title="Total Posts" value={stats.posts} icon="fa-file-lines" color="black" link="/admin/posts" />
+              <StatCard title="Published" value={stats.published} icon="fa-check-circle" color="dark-gray" link="/admin/posts" />
+              <StatCard title="Drafts" value={stats.drafts} icon="fa-pen-to-square" color="medium-gray" link="/admin/posts" />
+              <StatCard title="Media Files" value={stats.uploads} icon="fa-image" color="light-gray" link="/admin/uploads" />
+              <StatCard title="Messages" value={stats.contacts} icon="fa-envelope" color="darker-gray" link="/admin/contacts" />
+              <StatCard title="Subscribers" value={stats.subscribers} icon="fa-users" color="darkest-gray" link="/admin/newsletter" />
             </div>
 
             {/* Main Content Grid */}
@@ -92,7 +92,7 @@ export default function AdminIndex() {
                 <div className="admin-light-card">
                   <div className="admin-card-header">
                     <h3 className="admin-card-title">
-                      <span className="admin-card-icon gold"><i className="fa-solid fa-clock-rotate-left"></i></span>
+                      <span className="admin-card-icon black"><i className="fa-solid fa-clock-rotate-left"></i></span>
                       Recent Posts
                     </h3>
                     <Link href="/admin/posts" className="admin-card-link">View All <i className="fa-solid fa-arrow-right ms-1"></i></Link>
@@ -127,7 +127,7 @@ export default function AdminIndex() {
                 <div className="admin-light-card mt-4">
                   <div className="admin-card-header">
                     <h3 className="admin-card-title">
-                      <span className="admin-card-icon purple"><i className="fa-solid fa-envelope"></i></span>
+                      <span className="admin-card-icon darker-gray"><i className="fa-solid fa-envelope"></i></span>
                       Recent Messages
                     </h3>
                     <Link href="/admin/contacts" className="admin-card-link">View All</Link>
@@ -159,26 +159,26 @@ export default function AdminIndex() {
                 <div className="admin-light-card">
                   <div className="admin-card-header">
                     <h3 className="admin-card-title">
-                      <span className="admin-card-icon gold"><i className="fa-solid fa-bolt"></i></span>
+                      <span className="admin-card-icon black"><i className="fa-solid fa-bolt"></i></span>
                       Quick Actions
                     </h3>
                   </div>
                   <div className="admin-card-body">
                     <div className="admin-quick-actions">
                       <Link href="/admin/posts/new" className="admin-quick-btn">
-                        <span className="admin-quick-icon gold"><i className="fa-solid fa-plus"></i></span>
+                        <span className="admin-quick-number">1</span>
                         <span>New Post</span>
                       </Link>
                       <Link href="/admin/uploads" className="admin-quick-btn">
-                        <span className="admin-quick-icon blue"><i className="fa-solid fa-upload"></i></span>
+                        <span className="admin-quick-number">2</span>
                         <span>Upload Media</span>
                       </Link>
                       <Link href="/admin/newsletter" className="admin-quick-btn">
-                        <span className="admin-quick-icon green"><i className="fa-solid fa-paper-plane"></i></span>
+                        <span className="admin-quick-number">3</span>
                         <span>Newsletter</span>
                       </Link>
                       <Link href="/admin/contacts" className="admin-quick-btn">
-                        <span className="admin-quick-icon purple"><i className="fa-solid fa-inbox"></i></span>
+                        <span className="admin-quick-number">4</span>
                         <span>Messages</span>
                       </Link>
                     </div>
@@ -189,7 +189,7 @@ export default function AdminIndex() {
                 <div className="admin-light-card mt-4">
                   <div className="admin-card-header">
                     <h3 className="admin-card-title">
-                      <span className="admin-card-icon teal"><i className="fa-solid fa-chart-line"></i></span>
+                      <span className="admin-card-icon dark-gray"><i className="fa-solid fa-chart-line"></i></span>
                       Overview
                     </h3>
                   </div>
@@ -229,8 +229,8 @@ export default function AdminIndex() {
         .admin-spinner {
           width: 40px;
           height: 40px;
-          border: 3px solid #2d3036;
-          border-top-color: #FFC81A;
+          border: 3px solid #e8e8e8;
+          border-top-color: #1a1a1a;
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
         }
@@ -241,14 +241,14 @@ export default function AdminIndex() {
 
         /* Welcome Banner */
         .admin-welcome-banner {
-          background: linear-gradient(135deg, #FFC81A 0%, #e6b517 50%, #2d1b4e 100%);
+          background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
           border-radius: 16px;
           padding: 28px 32px;
           margin-bottom: 28px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #1a1d21;
+          color: #ffffff;
         }
 
         .admin-welcome-content h2 {
@@ -330,7 +330,7 @@ export default function AdminIndex() {
         }
 
         .admin-stat-card-link:hover {
-          color: #FFC81A;
+          color: #1a1a1a;
         }
 
         .admin-stat-card-value {
@@ -407,22 +407,22 @@ export default function AdminIndex() {
           color: #fff;
         }
 
-        .admin-card-icon.gold { background: #FFC81A; color: #1a1d21; }
-        .admin-card-icon.green { background: #198754; }
-        .admin-card-icon.orange { background: #fd7e14; }
-        .admin-card-icon.blue { background: #0d6efd; }
-        .admin-card-icon.purple { background: #6f42c1; }
-        .admin-card-icon.teal { background: #20c997; }
+        .admin-card-icon.black { background: #1a1a1a; }
+        .admin-card-icon.dark-gray { background: #333333; }
+        .admin-card-icon.medium-gray { background: #6c757d; }
+        .admin-card-icon.light-gray { background: #adb5bd; }
+        .admin-card-icon.darker-gray { background: #495057; }
+        .admin-card-icon.darkest-gray { background: #212529; }
 
         .admin-card-link {
-          color: #FFC81A;
+          color: #1a1a1a;
           text-decoration: none;
           font-size: 13px;
           font-weight: 500;
         }
 
         .admin-card-link:hover {
-          color: #e6b517;
+          color: #6c757d;
         }
 
         .admin-card-body {
@@ -467,7 +467,7 @@ export default function AdminIndex() {
         }
 
         .admin-recent-content h4 a:hover {
-          color: #FFC81A;
+          color: #6c757d;
         }
 
         .admin-recent-content p {
@@ -510,13 +510,14 @@ export default function AdminIndex() {
         }
 
         .admin-quick-btn:hover {
-          background: #fff;
-          border-color: #FFC81A;
+          background: #1a1a1a;
+          color: #ffffff;
+          border-color: #1a1a1a;
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .admin-quick-icon {
+        .admin-quick-number {
           width: 40px;
           height: 40px;
           border-radius: 10px;
@@ -524,13 +525,10 @@ export default function AdminIndex() {
           align-items: center;
           justify-content: center;
           font-size: 18px;
-          color: #fff;
+          font-weight: 700;
+          color: #ffffff;
+          background: #1a1a1a;
         }
-
-        .admin-quick-icon.gold { background: #FFC81A; color: #1a1d21; }
-        .admin-quick-icon.blue { background: #0d6efd; }
-        .admin-quick-icon.green { background: #198754; }
-        .admin-quick-icon.purple { background: #6f42c1; }
 
         .admin-quick-btn span:last-child {
           font-size: 13px;
@@ -562,8 +560,8 @@ export default function AdminIndex() {
           width: 40px;
           height: 40px;
           border-radius: 10px;
-          background: linear-gradient(135deg, #FFC81A, #e6b517);
-          color: #1a1d21;
+          background: linear-gradient(135deg, #1a1a1a, #333333);
+          color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -634,8 +632,8 @@ export default function AdminIndex() {
 
         /* Buttons */
         .btn-gold {
-          background: #FFC81A;
-          color: #1a1d21;
+          background: #1a1a1a;
+          color: #ffffff;
           border: none;
           padding: 10px 20px;
           border-radius: 8px;
@@ -646,7 +644,7 @@ export default function AdminIndex() {
         }
 
         .btn-gold:hover {
-          background: #e6b517;
+          background: #333333;
         }
 
         /* Empty State */
@@ -689,15 +687,15 @@ export default function AdminIndex() {
 
 function StatCard({ title, value, icon, color, link }) {
   const colorMap = {
-    gold: { bg: '#FFC81A', accent: '#FFC81A' },
-    green: { bg: '#198754', accent: '#198754' },
-    orange: { bg: '#fd7e14', accent: '#fd7e14' },
-    blue: { bg: '#0d6efd', accent: '#0d6efd' },
-    purple: { bg: '#6f42c1', accent: '#6f42c1' },
-    teal: { bg: '#20c997', accent: '#20c997' },
+    black: { bg: '#1a1a1a', accent: '#1a1a1a' },
+    'dark-gray': { bg: '#333333', accent: '#333333' },
+    'medium-gray': { bg: '#6c757d', accent: '#6c757d' },
+    'light-gray': { bg: '#adb5bd', accent: '#adb5bd' },
+    'darker-gray': { bg: '#495057', accent: '#495057' },
+    'darkest-gray': { bg: '#212529', accent: '#212529' },
   };
 
-  const colors = colorMap[color] || colorMap.gold;
+  const colors = colorMap[color] || colorMap.black;
 
   return (
     <div className="admin-stat-card" style={{ '--card-color': colors.accent }}>

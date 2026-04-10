@@ -175,7 +175,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
         }
 
         .admin-nav-item.active {
-          background: #FFC81A;
+          background: #ffffff;
           color: #1a1d21;
           font-weight: 500;
         }
@@ -361,9 +361,9 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
         }
 
         .admin-page-btn.active {
-          background: #FFC81A;
-          color: #1a1d21;
-          border-color: #FFC81A;
+          background: #1a1a1a;
+          color: #ffffff;
+          border-color: #1a1a1a;
           font-weight: 600;
         }
 
