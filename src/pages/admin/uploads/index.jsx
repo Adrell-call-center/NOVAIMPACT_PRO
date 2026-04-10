@@ -1,37 +1,18 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import AdminLayout from '@/components/admin/AdminLayout';
-import Pagination from '@/components/admin/Pagination';
+import '@/styles/admin-stripe.css';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 18;
 
 export default function AdminUploads() {
   const [uploads, setUploads] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [preview, setPreview] = useState('');
+  const [preview, setPreview] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [selected, setSelected] = useState([]);
-  const [selectAll, setSelectAll] = useState(false);
-  const [compressing, setCompressing] = useState(false);
-  const [showBulkActions, setShowBulkActions] = useState(false);
-  const [compressionEnabled, setCompressionEnabled] = useState(true);
-  const [compressionQuality, setCompressionQuality] = useState(0.7); // 70% quality
-
-  // Modal States
-  const [confirmModal, setConfirmModal] = useState(null); // { title, message, onConfirm, type }
-  const [notificationModal, setNotificationModal] = useState(null); // { title, message, type }
-
-  // Modal Helpers
-  const showConfirm = (title, message, onConfirm, type = 'warning') => {
-    setConfirmModal({ title, message, onConfirm, type });
-  };
-  const showNotification = (title, message, type = 'success') => {
-    setNotificationModal({ title, message, type });
-  };
-  const closeModals = () => {
-    setConfirmModal(null);
-    setNotificationModal(null);
-  };
+  const [searchQuery, setSearchQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState('all');
 
   useEffect(() => { fetchUploads(); }, []);
 
@@ -41,1132 +22,247 @@ export default function AdminUploads() {
     setUploads(data.uploads || []);
   };
 
-  // Compress image before upload
-  const compressImage = (file, quality = 0.7) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-
-          // Calculate new dimensions (max 1920x1080)
-          let width = img.width;
-          let height = img.height;
-          const maxWidth = 1920;
-          const maxHeight = 1080;
-
-          if (width > maxWidth || height > maxHeight) {
-            const ratio = Math.min(maxWidth / width, maxHeight / height);
-            width *= ratio;
-            height *= ratio;
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Convert to compressed blob
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                console.log(`Compressed: ${(file.size / 1024).toFixed(0)}KB → ${(blob.size / 1024).toFixed(0)}KB (${((1 - blob.size / file.size) * 100).toFixed(0)}% reduction)`);
-                resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg', lastModified: Date.now() }));
-              } else {
-                reject(new Error('Compression failed'));
-              }
-            },
-            'image/jpeg',
-            quality
-          );
-        };
-        img.onerror = () => reject(new Error('Failed to load image'));
-        img.src = e.target.result;
-      };
-      reader.onerror = () => reject(new Error('Failed to read file'));
-      reader.readAsDataURL(file);
-    });
-  };
-
-  // Compress PDF before upload (client-side optimization)
-  const compressPdf = async (file) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // Dynamically import pdf-lib
-        const { PDFDocument } = await import('pdf-lib');
-        const arrayBuffer = await file.arrayBuffer();
-        
-        // Load the PDF
-        const pdfDoc = await PDFDocument.load(arrayBuffer, {
-          ignoreEncryption: true,
-          updateMetadata: false,
-        });
-
-        // Remove unnecessary metadata and optimize
-        pdfDoc.setTitle('');
-        pdfDoc.setAuthor('');
-        pdfDoc.setSubject('');
-        pdfDoc.setKeywords([]);
-        pdfDoc.setProducer('');
-        pdfDoc.setCreator('');
-
-        // Save with compression
-        const compressedBytes = await pdfDoc.save({
-          useObjectStreams: true,
-          addDefaultPage: false,
-          objectsPerTick: 50,
-        });
-
-        const compressedBlob = new Blob([compressedBytes], { type: 'application/pdf' });
-        const compressedFile = new File([compressedBlob], file.name, { type: 'application/pdf', lastModified: Date.now() });
-        
-        console.log(`PDF Compressed: ${(file.size / 1024).toFixed(0)}KB → ${(compressedFile.size / 1024).toFixed(0)}KB (${((1 - compressedFile.size / file.size) * 100).toFixed(0)}% reduction)`);
-        resolve(compressedFile);
-      } catch (err) {
-        console.warn('PDF compression failed, uploading original:', err);
-        resolve(file); // Fallback to original
-      }
-    });
-  };
-
   const handleUpload = async (e) => {
     const files = Array.from(e.target.files);
     setUploading(true);
-
     for (const file of files) {
-      try {
-        let fileToUpload = file;
-
-        // Compress images if enabled
-        if (compressionEnabled && file.type.startsWith('image/')) {
-          setCompressing(true);
-          try {
-            fileToUpload = await compressImage(file, compressionQuality);
-          } catch (err) {
-            console.warn('Image compression failed, uploading original:', err);
-          }
-          setCompressing(false);
-        }
-
-        // Compress PDFs if enabled
-        if (compressionEnabled && file.type === 'application/pdf') {
-          setCompressing(true);
-          try {
-            fileToUpload = await compressPdf(file);
-          } catch (err) {
-            console.warn('PDF compression failed, uploading original:', err);
-          }
-          setCompressing(false);
-        }
-
-        const fd = new FormData();
-        fd.append('file', fileToUpload);
-        await fetch('/api/admin/uploads', { method: 'POST', body: fd });
-      } catch (error) {
-        console.error('Upload error:', error);
-      }
+      const fd = new FormData();
+      fd.append('file', file);
+      await fetch('/api/admin/uploads', { method: 'POST', body: fd });
     }
-
     setUploading(false);
-    e.target.value = ''; // Reset file input
+    e.target.value = '';
     fetchUploads();
   };
 
   const handleDelete = async (id) => {
-    showConfirm('Delete File', 'Are you sure you want to delete this file?', async () => {
-      await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
-      fetchUploads();
-      setSelected(prev => prev.filter(s => s !== id));
-      closeModals();
-    });
-  };
-
-  // Selection handlers
-  const toggleSelect = (id) => {
-    setSelected(prev => 
-      prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
-    );
-  };
-
-  const toggleSelectAll = () => {
-    if (selectAll) {
-      setSelected([]);
-    } else {
-      setSelected(paginatedUploads.map(u => u.id));
-    }
-    setSelectAll(!selectAll);
-  };
-
-  // Bulk actions
-  const bulkDelete = async () => {
-    showConfirm('Delete Files', `Are you sure you want to delete ${selected.length} selected files? This cannot be undone.`, async () => {
-      for (const id of selected) {
-        await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
-      }
-      setSelected([]);
-      setSelectAll(false);
-      fetchUploads();
-      closeModals();
-    }, 'danger');
-  };
-
-  const downloadSelected = () => {
-    const selectedFiles = uploads.filter(u => selected.includes(u.id));
-    
-    for (const file of selectedFiles) {
-      const link = document.createElement('a');
-      link.href = file.path;
-      link.download = file.filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
-  const clearSelection = () => {
-    setSelected([]);
-    setSelectAll(false);
-  };
-
-  // Bulk copy URL to clipboard
-  const copyUrlsToClipboard = () => {
-    const selectedFiles = uploads.filter(u => selected.includes(u.id));
-    const urls = selectedFiles.map(f => window.location.origin + f.path).join('\n');
-    
-    navigator.clipboard.writeText(urls).then(() => {
-      showNotification('URLs Copied', `✅ ${selected.length} URLs copied to clipboard!`);
-    }).catch(() => {
-      showNotification('Failed', 'Failed to copy URLs', 'error');
-    });
-  };
-
-  // Bulk compress selected files (images + PDFs)
-  const bulkCompress = async () => {
-    const selectedFiles = uploads.filter(u => selected.includes(u.id));
-    const compressibleFiles = selectedFiles.filter(u =>
-      u.mimeType?.startsWith('image') ||
-      u.mimeType === 'application/pdf' ||
-      /\.(jpe?g|png|webp|gif|pdf)$/i.test(u.filename)
-    );
-
-    if (compressibleFiles.length === 0) {
-      showNotification('No Files', '⚠️ No compressible files selected. Please select images or PDFs.', 'warning');
-      return;
-    }
-
-    const imageCount = compressibleFiles.filter(f => f.mimeType?.startsWith('image')).length;
-    const pdfCount = compressibleFiles.filter(f => f.mimeType === 'application/pdf').length;
-
-    // Calculate estimated savings
-    const estimatedOriginalSize = compressibleFiles.reduce((acc, f) => acc + (f.size || 0), 0);
-    const estimatedCompressedSize = estimatedOriginalSize * compressionQuality * 0.6;
-    const estimatedSavings = ((1 - estimatedCompressedSize / estimatedOriginalSize) * 100).toFixed(0);
-
-    showConfirm('Compress Files', `Compress ${compressibleFiles.length} file(s)?
-
-📊 ${imageCount} image(s), ${pdfCount} PDF(s)
-📊 Quality: ${Math.round(compressionQuality * 100)}%
-📊 Original size: ${(estimatedOriginalSize / 1024 / 1024).toFixed(2)} MB
-📊 Estimated size: ~${(estimatedCompressedSize / 1024 / 1024).toFixed(2)} MB
-📊 Space saved: ~${estimatedSavings}%
-
-This will replace the originals and cannot be undone.`, async () => {
-      setCompressing(true);
-      let successCount = 0;
-      let failCount = 0;
-      let totalSaved = 0;
-
-    for (const file of compressibleFiles) {
-      try {
-        console.log(`Compressing: ${file.filename} (${(file.size / 1024).toFixed(0)}KB)`);
-
-        // Fetch the original file
-        const response = await fetch(file.path);
-        const blob = await response.blob();
-        const originalSize = blob.size;
-        const originalFile = new File([blob], file.filename, { type: file.mimeType });
-
-        let compressedFile;
-        let compressedSize;
-        let saved;
-
-        // Compress based on file type
-        if (file.mimeType?.startsWith('image')) {
-          compressedFile = await compressImage(originalFile, compressionQuality);
-          compressedSize = compressedFile.size;
-          saved = ((1 - compressedSize / originalSize) * 100).toFixed(0);
-        } else if (file.mimeType === 'application/pdf') {
-          compressedFile = await compressPdf(originalFile);
-          compressedSize = compressedFile.size;
-          saved = ((1 - compressedSize / originalSize) * 100).toFixed(0);
-        } else {
-          console.warn(`Skipping ${file.filename} - unsupported type`);
-          failCount++;
-          continue;
-        }
-
-        totalSaved += originalSize - compressedSize;
-        console.log(`✅ ${file.filename}: ${saved}% reduction (${(originalSize / 1024).toFixed(0)}KB → ${(compressedSize / 1024).toFixed(0)}KB)`);
-
-        // Upload compressed version
-        const fd = new FormData();
-        fd.append('file', compressedFile);
-        fd.append('replaceId', file.id);
-        fd.append('deleteOriginal', 'true');
-
-        await fetch('/api/admin/uploads', { method: 'POST', body: fd });
-
-        // Delete original
-        await fetch(`/api/admin/uploads/${file.id}`, { method: 'DELETE' });
-
-        successCount++;
-      } catch (error) {
-        console.error(`❌ Failed to compress ${file.filename}:`, error);
-        failCount++;
-      }
-    }
-    
-    setCompressing(false);
-    setSelected([]);
-    setSelectAll(false);
+    await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
+    setSelected(prev => prev.filter(s => s !== id));
     fetchUploads();
-    closeModals();
-
-    const totalSavedMB = (totalSaved / 1024 / 1024).toFixed(2);
-    if (failCount === 0) {
-      showNotification('Compression Complete', `✅ Successfully compressed ${successCount} file(s)!
-
-📊 Total space saved: ${totalSavedMB} MB`);
-    } else {
-      showNotification('Compression Partially Failed', `✅ ${successCount} compressed
-❌ ${failCount} failed
-
-📊 Total space saved: ${totalSavedMB} MB`, 'warning');
-    }
-  });
   };
 
-  // Helper to determine file type icon
-  const getFileIcon = (mimeType, filename) => {
-    const ext = filename?.split('.').pop()?.toLowerCase();
-    
-    if (mimeType?.includes('image') || ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext)) {
-      return 'fa-file-image';
+  const bulkDelete = async () => {
+    if (!confirm(`Delete ${selected.length} files?`)) return;
+    for (const id of selected) await fetch(`/api/admin/uploads/${id}`, { method: 'DELETE' });
+    setSelected([]);
+    fetchUploads();
+  };
+
+  const copyUrls = () => {
+    const urls = uploads.filter(u => selected.includes(u.id)).map(f => window.location.origin + f.path).join('\n');
+    navigator.clipboard.writeText(urls);
+  };
+
+  // Filter
+  const filtered = uploads.filter(u => {
+    if (typeFilter !== 'all') {
+      if (typeFilter === 'image' && !u.mimeType?.startsWith('image')) return false;
+      if (typeFilter === 'pdf' && u.mimeType !== 'application/pdf') return false;
+      if (typeFilter === 'other' && (u.mimeType?.startsWith('image') || u.mimeType === 'application/pdf')) return false;
     }
-    if (mimeType?.includes('pdf') || ext === 'pdf') {
-      return 'fa-file-pdf';
-    }
-    if (mimeType?.includes('json') || ext === 'json') {
-      return 'fa-file-code';
-    }
-    if (mimeType?.includes('video') || ['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return 'fa-file-video';
-    }
-    if (mimeType?.includes('audio') || ['mp3', 'wav', 'ogg'].includes(ext)) {
-      return 'fa-file-audio';
-    }
-    if (mimeType?.includes('word') || ext === 'docx' || ext === 'doc') {
-      return 'fa-file-word';
-    }
-    if (mimeType?.includes('excel') || mimeType?.includes('spreadsheet') || ext === 'xlsx' || ext === 'xls') {
-      return 'fa-file-excel';
-    }
-    if (mimeType?.includes('zip') || ext === 'zip') {
-      return 'fa-file-zipper';
-    }
+    if (searchQuery) return (u.filename || '').toLowerCase().includes(searchQuery.toLowerCase());
+    return true;
+  });
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  const totalSize = uploads.reduce((acc, u) => acc + (u.size || 0), 0);
+  const imageCount = uploads.filter(u => u.mimeType?.startsWith('image')).length;
+  const otherCount = uploads.length - imageCount;
+
+  const isImage = (u) => u.mimeType?.startsWith('image') || /\.(jpe?g|png|webp|gif|svg)$/i.test(u.filename || '');
+
+  const getFileIcon = (u) => {
+    if (u.mimeType?.includes('pdf') || u.filename?.endsWith('.pdf')) return 'fa-file-pdf';
+    if (u.mimeType?.includes('json') || u.filename?.endsWith('.json')) return 'fa-file-code';
+    if (u.mimeType?.includes('video') || /\.(mp4|webm|mov)$/i.test(u.filename || '')) return 'fa-file-video';
+    if (u.mimeType?.includes('zip') || u.filename?.endsWith('.zip')) return 'fa-file-zipper';
     return 'fa-file';
   };
 
-  // Helper to get file type color
-  const getFileTypeColor = (mimeType, filename) => {
-    const ext = filename?.split('.').pop()?.toLowerCase();
-    
-    if (mimeType?.includes('image') || ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext)) {
-      return '#10b981'; // Green
-    }
-    if (mimeType?.includes('pdf') || ext === 'pdf') {
-      return '#ef4444'; // Red
-    }
-    if (mimeType?.includes('json') || ext === 'json') {
-      return '#f59e0b'; // Amber
-    }
-    if (mimeType?.includes('video') || ['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return '#8b5cf6'; // Purple
-    }
-    return '#6b7280'; // Gray
+  const getFileColor = (u) => {
+    if (u.mimeType?.includes('pdf')) return '#ef4444';
+    if (u.mimeType?.includes('json')) return '#f59e0b';
+    if (u.mimeType?.includes('video')) return '#8b5cf6';
+    return '#6b7280';
   };
 
-  // Helper to get file type label
-  const getFileTypeLabel = (mimeType, filename) => {
-    const ext = filename?.split('.').pop()?.toLowerCase();
-    
-    if (mimeType?.includes('image') || ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext)) {
-      return 'Image';
-    }
-    if (mimeType?.includes('pdf') || ext === 'pdf') {
-      return 'PDF';
-    }
-    if (mimeType?.includes('json') || ext === 'json') {
-      return 'JSON';
-    }
-    if (mimeType?.includes('video') || ['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return 'Video';
-    }
-    if (ext) return ext.toUpperCase();
-    return 'File';
+  const formatSize = (bytes) => {
+    if (!bytes) return '—';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   };
-
-  // Check if file is previewable as image
-  const isImage = (mimeType, filename) => {
-    const ext = filename?.split('.').pop()?.toLowerCase();
-    return mimeType?.includes('image') || ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext);
-  };
-
-  // Pagination
-  const totalPages = Math.ceil(uploads.length / ITEMS_PER_PAGE);
-  const paginatedUploads = uploads.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   return (
     <>
-      <Head><title>Media Library — Nova Impact Admin</title></Head>
+      <Head><title>Media Library — Nova Impact</title></Head>
       <AdminLayout title="Media Library">
-        <div className="admin-page-header">
-          <div>
-            <div className="admin-upload-stats">
-              <span className="admin-stat">{uploads.length}</span> files uploaded
-              <span className="admin-stat-total">({(uploads.reduce((acc, u) => acc + (u.size || 0), 0) / 1024 / 1024).toFixed(2)} MB total)</span>
+        <div className="stripe-page">
+          <div className="stripe-page-header">
+            <div>
+              <h1 className="stripe-page-title">Media Library</h1>
+              <p className="stripe-page-subtitle">{uploads.length} files · {formatSize(totalSize)} total storage</p>
             </div>
-            
-            {/* Compression Settings */}
-            <div className="admin-compression-settings">
-              <label className="compression-toggle">
-                <input 
-                  type="checkbox" 
-                  checked={compressionEnabled} 
-                  onChange={(e) => setCompressionEnabled(e.target.checked)} 
-                />
-                <span>Auto-compress images & PDFs</span>
-              </label>
-              {compressionEnabled && (
-                <div className="compression-quality">
-                  <span>Quality: {Math.round(compressionQuality * 100)}%</span>
-                  <input 
-                    type="range" 
-                    min="0.3" 
-                    max="1" 
-                    step="0.1" 
-                    value={compressionQuality} 
-                    onChange={(e) => setCompressionQuality(parseFloat(e.target.value))} 
-                  />
-                </div>
-              )}
+            <label className="btn btn-primary" style={{ cursor: uploading ? 'not-allowed' : 'pointer', opacity: uploading ? 0.6 : 1 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              {uploading ? 'Uploading...' : 'Upload Files'}
+              <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} disabled={uploading} />
+            </label>
+          </div>
+
+          {/* Stats */}
+          <div className="stats-grid">
+            <div className="stat-card" style={{ '--stat-bg': 'var(--slate-bg)', '--stat-color': 'var(--slate)' }}>
+              <div className="stat-card-header"><div className="stat-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div></div>
+              <div className="stat-card-value">{imageCount}</div><p className="stat-card-label">Images</p>
+            </div>
+            <div className="stat-card" style={{ '--stat-bg': 'var(--purple-bg)', '--stat-color': 'var(--purple)' }}>
+              <div className="stat-card-header"><div className="stat-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div></div>
+              <div className="stat-card-value">{otherCount}</div><p className="stat-card-label">Other Files</p>
+            </div>
+            <div className="stat-card" style={{ '--stat-bg': 'var(--info-bg)', '--stat-color': 'var(--info-text)' }}>
+              <div className="stat-card-header"><div className="stat-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div></div>
+              <div className="stat-card-value">{formatSize(totalSize)}</div><p className="stat-card-label">Storage Used</p>
             </div>
           </div>
-          
-          <label className="btn-primary btn-upload">
-            <i className="fa-solid fa-upload me-2"></i>
-            {uploading ? (compressing ? 'Compressing & Uploading...' : 'Uploading...') : 'Upload Files'}
-            <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} disabled={uploading} />
-          </label>
-        </div>
 
-        {/* Bulk Actions Bar */}
-        {selected.length > 0 && (
-          <div className="admin-bulk-actions">
-            <div className="bulk-actions-left">
-              <span className="bulk-selected-count">{selected.length} selected</span>
-              <button className="bulk-btn" onClick={bulkCompress} disabled={compressing}>
-                <i className="fa-solid fa-compress"></i> {compressing ? 'Compressing...' : 'Compress'}
-              </button>
-              <button className="bulk-btn" onClick={bulkDelete} disabled={compressing}>
-                <i className="fa-solid fa-trash"></i> Delete
-              </button>
-              <button className="bulk-btn" onClick={downloadSelected} disabled={compressing}>
-                <i className="fa-solid fa-download"></i> Download
-              </button>
-              <button className="bulk-btn" onClick={copyUrlsToClipboard} disabled={compressing}>
-                <i className="fa-solid fa-copy"></i> Copy URLs
-              </button>
-              <button className="bulk-btn bulk-btn-clear" onClick={clearSelection} disabled={compressing}>
-                Clear Selection
-              </button>
-            </div>
-          </div>
-        )}
-
-        {preview && (
-          <div className="admin-preview-modal">
-            <div className="admin-preview-content">
-              {preview.endsWith('.pdf') || preview.includes('pdf') ? (
-                <iframe src={preview} style={{ width: '90vw', height: '90vh', border: 'none', borderRadius: '8px' }} />
-              ) : (
-                <img src={preview} alt="Preview" />
-              )}
-              <button className="admin-preview-close" onClick={() => setPreview('')}><i className="fa-solid fa-times"></i></button>
-            </div>
-          </div>
-        )}
-
-        {uploads.length > 0 ? (
-          <>
-            <div className="admin-upload-grid">
-              {/* Select All Header */}
-              <div className="admin-select-all-header">
-                <label className="admin-checkbox-label">
-                  <input 
-                    type="checkbox" 
-                    checked={selectAll} 
-                    onChange={toggleSelectAll} 
-                  />
-                  <span>Select All</span>
-                </label>
+          {/* Bulk Actions */}
+          {selected.length > 0 && (
+            <div className="action-bar">
+              <span className="table-cell-text">{selected.length} file{selected.length > 1 ? 's' : ''} selected</span>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button className="btn btn-secondary btn-sm" onClick={copyUrls}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy URLs</button>
+                <button className="btn btn-danger btn-sm" onClick={bulkDelete}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</button>
+                <button className="btn btn-ghost btn-sm" onClick={() => setSelected([])}>Clear</button>
               </div>
-              
-              {paginatedUploads.map(u => (
-                <div className={`admin-upload-card ${selected.includes(u.id) ? 'selected' : ''}`} key={u.id}>
-                  <div className="admin-upload-checkbox" onClick={(e) => {
-                    e.stopPropagation();
-                    toggleSelect(u.id);
-                  }}>
-                    <input 
-                      type="checkbox" 
-                      checked={selected.includes(u.id)} 
-                      onChange={() => {}} 
-                    />
-                  </div>
-                  <div className="admin-upload-thumb" onClick={() => setPreview(u.path)}>
-                    {isImage(u.mimeType, u.filename) ? (
-                      <>
-                        <img src={u.path} alt={u.filename} />
-                        <div className="admin-upload-overlay">
-                          <i className="fa-solid fa-expand"></i>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="admin-file-icon">
-                        <i className={`fa-solid ${getFileIcon(u.mimeType, u.filename)}`} style={{ color: getFileTypeColor(u.mimeType, u.filename) }}></i>
-                        <span className="admin-file-type-label">{getFileTypeLabel(u.mimeType, u.filename)}</span>
+            </div>
+          )}
+
+          {/* Media Card */}
+          <div className="stripe-card">
+            <div className="stripe-card-header">
+              <h3 className="stripe-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                All Files
+              </h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="search-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input className="form-input" style={{ width: '180px', padding: '7px 14px 7px 34px', fontSize: '13px' }} placeholder="Search files..." value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }} />
+                </div>
+                <div className="filter-tabs">
+                  <button className={`filter-tab ${typeFilter === 'all' ? 'active' : ''}`} onClick={() => { setTypeFilter('all'); setCurrentPage(1); }}>All</button>
+                  <button className={`filter-tab ${typeFilter === 'image' ? 'active' : ''}`} onClick={() => { setTypeFilter('image'); setCurrentPage(1); }}>Images</button>
+                  <button className={`filter-tab ${typeFilter === 'pdf' ? 'active' : ''}`} onClick={() => { setTypeFilter('pdf'); setCurrentPage(1); }}>PDF</button>
+                  <button className={`filter-tab ${typeFilter === 'other' ? 'active' : ''}`} onClick={() => { setTypeFilter('other'); setCurrentPage(1); }}>Other</button>
+                </div>
+              </div>
+            </div>
+
+            {paginated.length > 0 ? (
+              <>
+                {/* Select All */}
+                <div style={{ padding: '12px 20px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <label className="checkbox">
+                    <input type="checkbox" checked={selected.length === paginated.length && paginated.length > 0} onChange={(e) => { if (e.target.checked) setSelected(paginated.map(u => u.id)); else setSelected([]); }} />
+                  </label>
+                  <span className="table-cell-text" style={{ fontSize: '13px' }}>Select all on this page</span>
+                </div>
+
+                {/* Grid */}
+                <div className="media-grid">
+                  {paginated.map(u => (
+                    <div key={u.id} className={`media-item ${selected.includes(u.id) ? 'selected' : ''}`}>
+                      <div className="media-checkbox" onClick={(e) => { e.stopPropagation(); setSelected(prev => prev.includes(u.id) ? prev.filter(s => s !== u.id) : [...prev, u.id]); }}>
+                        <input type="checkbox" checked={selected.includes(u.id)} readOnly />
                       </div>
-                    )}
-                  </div>
-                  <div className="admin-upload-info">
-                    <p className="admin-upload-name" title={u.filename}>{u.filename}</p>
-                    <div className="admin-upload-meta">
-                      <span className="admin-upload-size">{u.size ? (u.size / 1024).toFixed(1) + ' KB' : 'N/A'}</span>
-                      <button className="admin-upload-delete" onClick={() => handleDelete(u.id)}><i className="fa-solid fa-trash"></i></button>
+                      <div className="media-preview" onClick={() => isImage(u) && setPreview(u)}>
+                        {isImage(u) ? (
+                          <>
+                            <img src={u.path} alt={u.filename} />
+                            <div className="media-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+                          </>
+                        ) : (
+                          <div className="media-file-icon">
+                            <i className={`fa-solid ${getFileIcon(u)}`} style={{ color: getFileColor(u), fontSize: '32px' }}></i>
+                            <span className="media-file-label">{u.filename?.split('.').pop()?.toUpperCase() || 'FILE'}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="media-info">
+                        <span className="media-name" title={u.filename}>{u.filename}</span>
+                        <div className="media-meta">
+                          <span>{formatSize(u.size)}</span>
+                          <button className="media-delete-btn" onClick={() => handleDelete(u.id)} title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="pagination">
+                    <span className="pagination-info">Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filtered.length)} of {filtered.length}</span>
+                    <div className="pagination-controls">
+                      <button className="pagination-btn" disabled={currentPage <= 1} onClick={() => setCurrentPage(p => p - 1)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let page = totalPages <= 5 ? i + 1 : currentPage <= 3 ? i + 1 : currentPage >= totalPages - 2 ? totalPages - 4 + i : currentPage - 2 + i;
+                        return <button key={page} className={`pagination-btn ${currentPage === page ? 'active' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>;
+                      })}
+                      <button className="pagination-btn" disabled={currentPage >= totalPages} onClick={() => setCurrentPage(p => p + 1)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg></button>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} itemsPerPage={ITEMS_PER_PAGE} totalItems={uploads.length} />
-          </>
-        ) : (
-          <div className="admin-light-card">
-            <div className="admin-empty-state">
-              <i className="fa-solid fa-cloud-arrow-up"></i>
-              <h3>No files uploaded yet</h3>
-              <p>Upload your first files to get started</p>
-              <label className="btn-primary">
-                <i className="fa-solid fa-upload me-2"></i>Upload Files
-                <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} />
-              </label>
-            </div>
+                )}
+              </>
+            ) : (
+              <div className="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" style={{ color: 'var(--text-tertiary)', opacity: 0.4, marginBottom: 16 }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <h4 className="empty-state-title">No files uploaded yet</h4>
+                <p className="empty-state-desc">Upload images, PDFs, and other media files</p>
+                <label className="btn btn-primary" style={{ cursor: 'pointer' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Upload Files
+                  <input type="file" accept="image/*,application/pdf" multiple onChange={handleUpload} style={{ display: 'none' }} />
+                </label>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Preview Modal */}
+        {preview && (
+          <div className="modal-overlay" onClick={() => setPreview(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: 40 }}>
+            <img src={preview.path} alt={preview.filename} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: 8, objectFit: 'contain' }} onClick={e => e.stopPropagation()} />
+            <button onClick={() => setPreview(null)} style={{ position: 'absolute', top: 20, right: 20, width: 40, height: 40, background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>&times;</button>
           </div>
         )}
 
-        {/* Confirm Modal */}
-        {confirmModal && (
-          <div className="modal-overlay" onClick={closeModals}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className={`modal-icon ${confirmModal.type}`}>
-                {confirmModal.type === 'warning' ? '⚠️' : confirmModal.type === 'danger' ? '🗑️' : 'ℹ️'}
-              </div>
-              <h3 className="modal-title">{confirmModal.title}</h3>
-              <p className="modal-message">{confirmModal.message}</p>
-              <div className="modal-actions">
-                <button className="modal-btn modal-btn-cancel" onClick={closeModals}>Cancel</button>
-                <button className={`modal-btn modal-btn-confirm ${confirmModal.type}`} onClick={confirmModal.onConfirm}>
-                  {confirmModal.type === 'danger' ? 'Delete' : 'Confirm'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Notification Modal */}
-        {notificationModal && (
-          <div className="modal-overlay" onClick={closeModals}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className={`modal-icon ${notificationModal.type}`}>
-                {notificationModal.type === 'success' ? '✅' : notificationModal.type === 'error' ? '❌' : '⚠️'}
-              </div>
-              <h3 className="modal-title">{notificationModal.title}</h3>
-              <p className="modal-message">{notificationModal.message}</p>
-              <div className="modal-actions">
-                <button className="modal-btn modal-btn-confirm primary" onClick={closeModals}>OK</button>
-              </div>
-            </div>
-          </div>
-        )}
+        <style jsx global>{`
+          .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; padding: 20px; }
+          .media-item { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: all 0.15s; position: relative; }
+          .media-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+          .media-item.selected { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-subtle); }
+          .media-checkbox { position: absolute; top: 8px; left: 8px; z-index: 10; width: 20px; height: 20px; background: rgba(255,255,255,0.9); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+          .media-checkbox input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+          .media-preview { height: 140px; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; }
+          .media-preview img { width: 100%; height: 100%; object-fit: cover; }
+          .media-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s; color: white; }
+          .media-preview:hover .media-overlay { opacity: 1; }
+          .media-file-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+          .media-file-label { font-size: 11px; font-weight: 700; color: var(--text-tertiary); letter-spacing: 0.05em; }
+          .media-info { padding: 12px; }
+          .media-name { display: block; font-size: 12px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+          .media-meta { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--text-tertiary); }
+          .media-delete-btn { background: none; border: none; color: var(--text-tertiary); cursor: pointer; padding: 4px; border-radius: 4px; transition: all 0.1s; display: flex; }
+          .media-delete-btn:hover { background: var(--danger-bg); color: var(--danger); }
+          @media (max-width: 768px) { .media-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
+        `}</style>
       </AdminLayout>
-
-      <style jsx global>{`
-        .admin-page-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 24px;
-        }
-
-        .admin-upload-stats {
-          font-size: 14px;
-          color: #6c757d;
-          margin-bottom: 12px;
-        }
-
-        .admin-compression-settings {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 8px 12px;
-          background: #f8f9fa;
-          border-radius: 8px;
-          font-size: 13px;
-        }
-
-        .compression-toggle {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          color: #495057;
-        }
-
-        .compression-toggle input[type="checkbox"] {
-          width: 16px;
-          height: 16px;
-          cursor: pointer;
-        }
-
-        .compression-quality {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .compression-quality input[type="range"] {
-          width: 100px;
-          cursor: pointer;
-        }
-
-        .compression-quality span {
-          font-weight: 600;
-          color: #1a1a1a;
-          min-width: 50px;
-        }
-
-        /* Bulk Actions Bar */
-        .admin-bulk-actions {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: #fff;
-          padding: 12px 20px;
-          border-radius: 10px;
-          margin-bottom: 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .bulk-actions-left {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        .bulk-selected-count {
-          font-weight: 600;
-          font-size: 14px;
-          margin-right: 8px;
-        }
-
-        .bulk-btn {
-          background: rgba(255,255,255,0.2);
-          color: #fff;
-          border: 1px solid rgba(255,255,255,0.3);
-          padding: 6px 14px;
-          border-radius: 6px;
-          font-size: 13px;
-          font-weight: 500;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          transition: all 0.2s;
-        }
-
-        .bulk-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .bulk-btn:hover:not(:disabled) {
-          background: rgba(255,255,255,0.3);
-          transform: translateY(-1px);
-        }
-
-        .bulk-btn:first-child:not(.bulk-btn-clear) {
-          background: rgba(255,200,26,0.3);
-          border-color: rgba(255,200,26,0.5);
-          font-weight: 600;
-        }
-
-        .bulk-btn:first-child:not(.bulk-btn-clear):hover {
-          background: rgba(255,200,26,0.4);
-        }
-
-        .bulk-btn-clear {
-          background: rgba(255,255,255,0.1);
-          border-color: rgba(255,255,255,0.2);
-          margin-left: 8px;
-        }
-
-        .bulk-btn-clear:hover {
-          background: rgba(255,255,255,0.25);
-        }
-
-        /* Select All Header */
-        .admin-select-all-header {
-          background: #f8f9fa;
-          border: 2px dashed #dee2e6;
-          border-radius: 16px;
-          padding: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .admin-checkbox-label {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          font-weight: 600;
-          color: #495057;
-          font-size: 14px;
-        }
-
-        .admin-checkbox-label input[type="checkbox"] {
-          width: 18px;
-          height: 18px;
-          cursor: pointer;
-        }
-
-        .admin-stat {
-          font-size: 24px;
-          font-weight: 700;
-          color: #1a1d21;
-          margin-right: 8px;
-        }
-
-        .admin-stat-total {
-          margin-left: 8px;
-          color: #6c757d;
-        }
-
-        .btn-primary {
-          background: #1a1a1a;
-          color: #1a1d21;
-          border: none;
-          padding: 12px 24px;
-          border-radius: 10px;
-          font-weight: 600;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-          background: #333333;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(255,200,26,0.3);
-        }
-
-        .btn-primary:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .admin-preview-modal {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0,0,0,0.85);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 9999;
-          padding: 40px;
-        }
-
-        .admin-preview-content {
-          position: relative;
-          max-width: 90vw;
-          max-height: 90vh;
-        }
-
-        .admin-preview-content img {
-          max-width: 100%;
-          max-height: 85vh;
-          object-fit: contain;
-          border-radius: 8px;
-        }
-
-        .admin-preview-close {
-          position: absolute;
-          top: -40px;
-          right: 0;
-          background: none;
-          border: none;
-          color: #fff;
-          font-size: 24px;
-          cursor: pointer;
-        }
-
-        .admin-upload-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-          gap: 20px;
-          margin-bottom: 24px;
-        }
-
-        .admin-upload-card {
-          background: #ffffff;
-          border-radius: 16px;
-          overflow: hidden;
-          border: 2px solid #e8e8e8;
-          transition: all 0.3s ease;
-          position: relative;
-        }
-
-        .admin-upload-card.selected {
-          border-color: #1a1a1a;
-          box-shadow: 0 0 0 3px rgba(255,200,26,0.2);
-        }
-
-        .admin-upload-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-          border-color: #1a1a1a;
-        }
-
-        .admin-upload-checkbox {
-          position: absolute;
-          top: 10px;
-          left: 10px;
-          z-index: 10;
-          cursor: pointer;
-        }
-
-        .admin-upload-checkbox input[type="checkbox"] {
-          width: 20px;
-          height: 20px;
-          cursor: pointer;
-          border: 2px solid #fff;
-          border-radius: 4px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .admin-upload-thumb {
-          position: relative;
-          aspect-ratio: 1;
-          overflow: hidden;
-          cursor: pointer;
-          background: #f8f9fa;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .admin-upload-thumb img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.3s;
-        }
-
-        .admin-file-icon {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .admin-file-icon i {
-          font-size: 64px;
-          transition: transform 0.3s;
-        }
-
-        .admin-file-type-label {
-          font-size: 12px;
-          font-weight: 600;
-          color: #6c757d;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-
-        .admin-upload-card:hover .admin-file-icon i {
-          transform: scale(1.1);
-        }
-
-        .admin-upload-card:hover .admin-upload-thumb img {
-          transform: scale(1.05);
-        }
-
-        .admin-upload-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0,0,0,0.4);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0;
-          transition: opacity 0.2s;
-        }
-
-        .admin-upload-card:hover .admin-upload-overlay {
-          opacity: 1;
-        }
-
-        .admin-upload-overlay i {
-          color: #fff;
-          font-size: 24px;
-        }
-
-        .admin-upload-info {
-          padding: 14px 16px;
-        }
-
-        .admin-upload-name {
-          font-size: 13px;
-          margin: 0 0 10px 0;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          color: #1a1d21;
-        }
-
-        .admin-upload-meta {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .admin-upload-size {
-          font-size: 12px;
-          color: #6c757d;
-        }
-
-        .admin-upload-delete {
-          width: 28px;
-          height: 28px;
-          border: 1px solid #e8e8e8;
-          background: #ffffff;
-          border-radius: 6px;
-          color: #6c757d;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s;
-        }
-
-        .admin-upload-delete:hover {
-          background: #dc3545;
-          color: #fff;
-          border-color: #dc3545;
-        }
-
-        .admin-light-card {
-          background: #ffffff;
-          border-radius: 16px;
-          border: 1px solid #e8e8e8;
-          overflow: hidden;
-        }
-
-        .admin-empty-state {
-          text-align: center;
-          padding: 80px 20px;
-        }
-
-        .admin-empty-state i {
-          font-size: 64px;
-          color: #e8e8e8;
-          margin-bottom: 24px;
-        }
-
-        .admin-empty-state h3 {
-          font-size: 20px;
-          color: #1a1d21;
-          margin: 0 0 8px 0;
-        }
-
-        .admin-empty-state p {
-          color: #6c757d;
-          margin: 0 0 24px 0;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.6);
-          backdrop-filter: blur(4px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 10000;
-          animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-          from { transform: translateY(20px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-content {
-          background: #ffffff;
-          border-radius: 16px;
-          padding: 32px;
-          max-width: 480px;
-          width: 90%;
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
-          animation: slideUp 0.3s ease;
-        }
-
-        .modal-icon {
-          font-size: 48px;
-          text-align: center;
-          margin-bottom: 16px;
-        }
-
-        .modal-icon.warning { filter: drop-shadow(0 4px 8px rgba(255, 193, 7, 0.3)); }
-        .modal-icon.danger { filter: drop-shadow(0 4px 8px rgba(220, 53, 69, 0.3)); }
-        .modal-icon.success { filter: drop-shadow(0 4px 8px rgba(40, 167, 69, 0.3)); }
-        .modal-icon.error { filter: drop-shadow(0 4px 8px rgba(220, 53, 69, 0.3)); }
-
-        .modal-title {
-          font-size: 20px;
-          font-weight: 700;
-          color: #1a1a1a;
-          margin: 0 0 12px;
-          text-align: center;
-        }
-
-        .modal-message {
-          font-size: 14px;
-          color: #666;
-          line-height: 1.6;
-          margin: 0 0 24px;
-          white-space: pre-line;
-          text-align: center;
-        }
-
-        .modal-actions {
-          display: flex;
-          gap: 12px;
-          justify-content: center;
-        }
-
-        .modal-btn {
-          padding: 12px 24px;
-          border-radius: 10px;
-          border: none;
-          font-weight: 600;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .modal-btn-cancel {
-          background: #f8f9fa;
-          color: #666;
-        }
-
-        .modal-btn-cancel:hover {
-          background: #e9ecef;
-        }
-
-        .modal-btn-confirm {
-          background: #1a1a1a;
-          color: #1a1a1a;
-        }
-
-        .modal-btn-confirm:hover {
-          background: #333333;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(255, 200, 26, 0.3);
-        }
-
-        .modal-btn-confirm.danger {
-          background: #dc3545;
-          color: #fff;
-        }
-
-        .modal-btn-confirm.danger:hover {
-          background: #c82333;
-          box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
-        }
-
-        /* Dark mode modals */
-        :global(.dark) .modal-content {
-          background: #1a1a1a;
-          border: 1px solid #333;
-        }
-
-        :global(.dark) .modal-title {
-          color: #ffffff;
-        }
-
-        :global(.dark) .modal-message {
-          color: #999;
-        }
-
-        :global(.dark) .modal-btn-cancel {
-          background: #2a2a2a;
-          color: #ccc;
-        }
-
-        :global(.dark) .modal-btn-cancel:hover {
-          background: #333;
-        }
-      `}</style>
     </>
   );
 }
@@ -1175,9 +271,6 @@ export async function getServerSideProps(ctx) {
   const { getServerSession } = await import("next-auth/next");
   const { authOptions } = await import("@/lib/auth");
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
-
-  if (!session) {
-    return { redirect: { destination: '/admin/login', permanent: false } };
-  }
+  if (!session) return { redirect: { destination: '/admin/login', permanent: false } };
   return { props: {} };
 }
