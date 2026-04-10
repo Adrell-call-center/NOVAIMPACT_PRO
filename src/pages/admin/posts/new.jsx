@@ -4,7 +4,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
 import RichTextEditor from '@/components/admin/RichTextEditor';
-import '@/styles/admin-stripe.css';
 
 export default function AdminPostNew() {
   const router = useRouter();

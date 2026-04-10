@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import AdminLayout from '@/components/admin/AdminLayout';
-import '@/styles/admin-stripe.css';
 
 const ITEMS_PER_PAGE = 18;
 
