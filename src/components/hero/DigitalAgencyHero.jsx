@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { SplitText } from "@/plugins";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import Link from "next/link.js";
 import ArrowDownBig from "../../../public/assets/imgs/icon/arrow-down-big.png";
 const Hero1bg = "/images/hero-background.webp";
@@ -12,42 +10,50 @@ const DigitalAgencyHero = () => {
   const heroSubTitle = useRef();
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let tHero = gsap.context(() => {
-        gsap.set(".experience", {
-          y: 50,
-          opacity: 0,
-        });
-        let split_hero__title = new SplitText(heroTitle.current, {
-          type: "chars",
-        });
-        let split_hero__subtitle = new SplitText(heroSubTitle.current, {
-          type: "chars words",
-        });
+      let mounted = true;
+      let tHero;
+      import("@/plugins").then(({ SplitText }) => {
+        if (!mounted) return;
+        tHero = gsap.context(() => {
+          gsap.set(".experience", {
+            y: 50,
+            opacity: 0,
+          });
+          let split_hero__title = new SplitText(heroTitle.current, {
+            type: "chars",
+          });
+          let split_hero__subtitle = new SplitText(heroSubTitle.current, {
+            type: "chars words",
+          });
 
-        gsap.from(split_hero__title.chars, {
-          duration: 1,
-          x: 70,
-          autoAlpha: 0,
-          stagger: 0.1,
-        });
-        gsap.from(
-          split_hero__subtitle.words,
-          { duration: 1, x: 50, autoAlpha: 0, stagger: 0.05 },
-          "-=1"
-        );
+          gsap.from(split_hero__title.chars, {
+            duration: 1,
+            x: 70,
+            autoAlpha: 0,
+            stagger: 0.1,
+          });
+          gsap.from(
+            split_hero__subtitle.words,
+            { duration: 1, x: 50, autoAlpha: 0, stagger: 0.05 },
+            "-=1"
+          );
 
-        gsap.to(
-          ".experience",
-          {
-            y: 0,
-            opacity: 1,
-            duration: 2,
-            ease: "power2.out",
-          },
-          "-=1.5"
-        );
+          gsap.to(
+            ".experience",
+            {
+              y: 0,
+              opacity: 1,
+              duration: 2,
+              ease: "power2.out",
+            },
+            "-=1.5"
+          );
+        });
       });
-      return () => tHero.revert();
+      return () => {
+        mounted = false;
+        tHero?.revert();
+      };
     }
   }, []);
   return (
