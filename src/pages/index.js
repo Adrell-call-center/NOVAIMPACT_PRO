@@ -213,6 +213,9 @@ export async function getStaticProps() {
       },
       revalidate: 60,
     };
+  } catch (e) {
+    console.error('getStaticProps failed:', e);
+    return { props: { latestPosts: [] }, revalidate: 60 };
   } finally {
     await prisma.$disconnect();
   }

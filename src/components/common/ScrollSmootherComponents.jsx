@@ -4,8 +4,10 @@ import { gsap } from "gsap";
 const ScrollSmootherComponents = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
+      let mounted = true;
       let tHero;
       import("@/plugins").then(({ ScrollSmoother }) => {
+        if (!mounted) return;
         gsap.registerPlugin(ScrollSmoother);
         let device_width = window.innerWidth;
         tHero = gsap.context(() => {
@@ -18,7 +20,10 @@ const ScrollSmootherComponents = () => {
           });
         });
       });
-      return () => tHero?.revert();
+      return () => {
+        mounted = false;
+        tHero?.revert();
+      };
     }
   }, []);
   return <div></div>;
