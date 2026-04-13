@@ -26,6 +26,28 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['swiper', '@fortawesome/free-solid-svg-icons', '@fortawesome/react-fontawesome'],
   },
+  async headers() {
+    return [
+      {
+        source: '/assets/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       // Redirect old /blog/fr/slug and /blog/en/slug → clean /blog/slug
