@@ -1,18 +1,20 @@
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import RootLayout from "@/components/common/layout/RootLayout";
 import DigitalAgencyHero from "@/components/hero/DigitalAgencyHero";
-import DigitalAgencyRoll from "@/components/roll/DigitalAgencyRoll";
-import DigitalAgencyAbout from "@/components/about/DigitalAgencyAbout";
-import DigitalAgencyService from "@/components/service/DigitalAgencyService";
-import DigitalAgencyCounter from "@/components/counter/DigitalAgencyCounter";
-import DigitalAgencyWorkflow from "@/components/workflow/DigitalAgencyWorkflow";
-import HomePortfolioV6 from "@/components/portfolio/HomePortfolioV6";
-import DigitalMarketingWorkflow from "@/components/workflow/DigitalMarketingWorkflow";
-import DigitalAgencyBlog from "@/components/blog/DigitalAgencyBlog";
-import DigitalAgencyCTA from "@/components/cta/DigitalAgencyCTA";
-import Team1 from "@/components/team/Team1";
-import Faq1 from "@/components/faq/Faq1";
-import HomeProcess from "@/components/home/HomeProcess";
+
+const DigitalAgencyRoll        = dynamic(() => import("@/components/roll/DigitalAgencyRoll"),            { ssr: false });
+const DigitalAgencyAbout       = dynamic(() => import("@/components/about/DigitalAgencyAbout"),          { ssr: false });
+const DigitalAgencyService     = dynamic(() => import("@/components/service/DigitalAgencyService"),      { ssr: false });
+const DigitalAgencyCounter     = dynamic(() => import("@/components/counter/DigitalAgencyCounter"),      { ssr: false });
+const DigitalAgencyWorkflow    = dynamic(() => import("@/components/workflow/DigitalAgencyWorkflow"),    { ssr: false });
+const HomePortfolioV6          = dynamic(() => import("@/components/portfolio/HomePortfolioV6"),         { ssr: false });
+const DigitalMarketingWorkflow = dynamic(() => import("@/components/workflow/DigitalMarketingWorkflow"), { ssr: false });
+const DigitalAgencyBlog        = dynamic(() => import("@/components/blog/DigitalAgencyBlog"),            { ssr: false });
+const DigitalAgencyCTA         = dynamic(() => import("@/components/cta/DigitalAgencyCTA"),              { ssr: false });
+const Team1                    = dynamic(() => import("@/components/team/Team1"),                        { ssr: false });
+const Faq1                     = dynamic(() => import("@/components/faq/Faq1"),                          { ssr: false });
+const HomeProcess              = dynamic(() => import("@/components/home/HomeProcess"),                  { ssr: false });
 
 const SITE_URL = "https://novaimpact.io";
 
