@@ -3522,3 +3522,23 @@
   color: #FFC81A !important;
 }
 
+/* Team bottom heading responsive size */
+.team__growth-title {
+  font-size: 72px !important;
+  line-height: 1.05;
+}
+
+@media (max-width: 991px) {
+  .team__growth-title {
+    font-size: 46px !important;
+    line-height: 1.15;
+  }
+}
+
+@media (max-width: 767px) {
+  .team__growth-title {
+    font-size: 32px !important;
+    line-height: 1.2;
+  }
+}
+

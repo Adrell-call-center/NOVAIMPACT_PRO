@@ -119,18 +119,18 @@ const Team1 = ({ limit }) => {
           <span className="line-3"></span>
           <div className="row">
             <div className="col-xxl-12">
-              <div className="sec-title-wrapper pt-80 pb-140 text-anim">
-                <h2 className="sec-title title-anim">
+              <div className="sec-title-wrapper pt-120 pb-140 text-anim">
+                <h2 className="sec-title title-anim team__growth-title">
                   Your digital growth powered by our dedicated team
                 </h2>
                 <p>
                   More than a team — a growth partner. Our experts in design, SEO, ads, and content work together to deliver measurable results for your business.
                 </p>
                 <div style={{ display: "flex", gap: "30px", marginTop: "30px", flexWrap: "wrap" }}>
-                  <Link href="/team" style={{ color: "var(--white)", textDecoration: "none", fontSize: "16px", borderBottom: "1px solid var(--primary)", paddingBottom: "4px" }}>
+                  <Link href="/team" style={{ color: "var(--black-2)", textDecoration: "none", fontSize: "16px", borderBottom: "1px solid var(--primary)", paddingBottom: "4px", display: "inline-flex", alignItems: "center" }}>
                     Meet Everyone <i className="fa-solid fa-arrow-right" style={{ marginLeft: "8px" }}></i>
                   </Link>
-                  <Link href="/contact" style={{ color: "var(--white)", textDecoration: "none", fontSize: "16px", borderBottom: "1px solid var(--primary)", paddingBottom: "4px" }}>
+                  <Link href="/contact" style={{ color: "var(--black-2)", textDecoration: "none", fontSize: "16px", borderBottom: "1px solid var(--primary)", paddingBottom: "4px", display: "inline-flex", alignItems: "center" }}>
                     Join Our Team <i className="fa-solid fa-arrow-right" style={{ marginLeft: "8px" }}></i>
                   </Link>
                 </div>
