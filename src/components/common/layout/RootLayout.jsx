@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import allNavData from "../../../data/navData.json";
 import Preloader from "@/components/preloader/Preloader";
 import CommonAnimation from "../CommonAnimation";
@@ -6,16 +7,17 @@ import ScrollSmootherComponents from "../ScrollSmootherComponents";
 import CursorAnimation from "../CursorAnimation";
 import Switcher from "../Switcher";
 import ScrollTop from "../ScrollTop";
-import Header1 from "@/components/header/Header1";
-import Footer1 from "@/components/footer/Footer1";
-import Header2 from "@/components/header/Header2";
-import Header3 from "@/components/header/Header3";
-import Header4 from "@/components/header/Header4";
-import Header5 from "@/components/header/Header5";
-import Footer2 from "@/components/footer/Footer2";
-import Footer3 from "@/components/footer/Footer3";
-import Footer4 from "@/components/footer/Footer4";
-import Footer5 from "@/components/footer/Footer5";
+
+const Header1 = dynamic(() => import("@/components/header/Header1"));
+const Header2 = dynamic(() => import("@/components/header/Header2"));
+const Header3 = dynamic(() => import("@/components/header/Header3"));
+const Header4 = dynamic(() => import("@/components/header/Header4"));
+const Header5 = dynamic(() => import("@/components/header/Header5"));
+const Footer1 = dynamic(() => import("@/components/footer/Footer1"));
+const Footer2 = dynamic(() => import("@/components/footer/Footer2"));
+const Footer3 = dynamic(() => import("@/components/footer/Footer3"));
+const Footer4 = dynamic(() => import("@/components/footer/Footer4"));
+const Footer5 = dynamic(() => import("@/components/footer/Footer5"));
 
 const HeaderContent = ({ header, navData }) => {
   if (header == "header1") {
