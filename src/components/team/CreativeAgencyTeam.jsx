@@ -1,10 +1,6 @@
 import { useEffect, useRef } from "react";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "@/plugins";
 import Link from "next/link";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CreativeAgencyTeam = () => {
   const teamItemContent = useRef();
@@ -23,44 +19,54 @@ const CreativeAgencyTeam = () => {
           setInterval(teamImageAnimation(event, team_item_7[i]), 1000);
         });
       }
-      let device_width = window.innerWidth;
-      let tHero = gsap.context(() => {
-        gsap.set(".fade_bottom_3", { y: 30, opacity: 0 });
 
-        if (device_width < 1023) {
-          const fadeArray = gsap.utils.toArray(".fade_bottom_3");
-          fadeArray.forEach((item, i) => {
-            let fadeTl = gsap.timeline({
-              scrollTrigger: {
-                trigger: item,
-                start: "top center+=200",
-              },
+      let mounted = true;
+      let tHero;
+      import("@/plugins").then(({ ScrollTrigger }) => {
+        if (!mounted) return;
+        gsap.registerPlugin(ScrollTrigger);
+        let device_width = window.innerWidth;
+        tHero = gsap.context(() => {
+          gsap.set(".fade_bottom_3", { y: 30, opacity: 0 });
+
+          if (device_width < 1023) {
+            const fadeArray = gsap.utils.toArray(".fade_bottom_3");
+            fadeArray.forEach((item, i) => {
+              let fadeTl = gsap.timeline({
+                scrollTrigger: {
+                  trigger: item,
+                  start: "top center+=200",
+                },
+              });
+              fadeTl.to(item, {
+                y: 0,
+                opacity: 1,
+                ease: "power2.out",
+                duration: 1.5,
+              });
             });
-            fadeTl.to(item, {
+          } else {
+            gsap.to(".fade_bottom_3", {
+              scrollTrigger: {
+                trigger: ".fade_bottom_3",
+                start: "top center+=300",
+                markers: false,
+              },
               y: 0,
               opacity: 1,
               ease: "power2.out",
-              duration: 1.5,
+              duration: 1,
+              stagger: {
+                each: 0.2,
+              },
             });
-          });
-        } else {
-          gsap.to(".fade_bottom_3", {
-            scrollTrigger: {
-              trigger: ".fade_bottom_3",
-              start: "top center+=300",
-              markers: false,
-            },
-            y: 0,
-            opacity: 1,
-            ease: "power2.out",
-            duration: 1,
-            stagger: {
-              each: 0.2,
-            },
-          });
-        }
+          }
+        });
       });
-      return () => tHero.revert();
+      return () => {
+        mounted = false;
+        tHero?.revert();
+      };
     }
   }, []);
   return (
