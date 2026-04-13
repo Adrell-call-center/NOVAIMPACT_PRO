@@ -6,6 +6,8 @@ const CreativeAgencyTeam = () => {
   const teamItemContent = useRef();
   useEffect(() => {
     if (typeof window !== "undefined") {
+      let mounted = true;
+      let tHero;
       const team_item_7 = teamItemContent.current.children;
 
       function teamImageAnimation(event, team_item_7) {
@@ -19,9 +21,6 @@ const CreativeAgencyTeam = () => {
           setInterval(teamImageAnimation(event, team_item_7[i]), 1000);
         });
       }
-
-      let mounted = true;
-      let tHero;
       import("@/plugins").then(({ ScrollTrigger }) => {
         if (!mounted) return;
         gsap.registerPlugin(ScrollTrigger);
