@@ -1,13 +1,6 @@
 import { useEffect } from "react";
 import $ from "jquery";
 import { Power2, gsap } from "gsap";
-import {
-  ScrollTrigger,
-  ScrollSmoother,
-  ScrollToPlugin,
-  SplitText,
-} from "@/plugins";
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 const CommonAnimation = ({ children }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,8 +25,10 @@ const CommonAnimation = ({ children }) => {
       });
 
       // Common Animation
-
-      let tHero = gsap.context(() => {
+      let tHero;
+      import("@/plugins").then(({ ScrollTrigger, ScrollSmoother, ScrollToPlugin, SplitText }) => {
+        gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
+        tHero = gsap.context(() => {
         try {
           const all_btns = gsap.utils.toArray(".btn_wrapper");
           if (all_btns.length > 0) {
@@ -151,8 +146,9 @@ const CommonAnimation = ({ children }) => {
         } catch (e) {
           console.log(e);
         }
+        });
       });
-      return () => tHero.revert();
+      return () => tHero?.revert();
     }
   }, []);
   return children;
