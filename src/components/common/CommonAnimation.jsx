@@ -25,8 +25,10 @@ const CommonAnimation = ({ children }) => {
       });
 
       // Common Animation
+      let mounted = true;
       let tHero;
       import("@/plugins").then(({ ScrollTrigger, ScrollSmoother, ScrollToPlugin, SplitText }) => {
+        if (!mounted) return;
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
         tHero = gsap.context(() => {
         try {
@@ -148,7 +150,10 @@ const CommonAnimation = ({ children }) => {
         }
         });
       });
-      return () => tHero?.revert();
+      return () => {
+        mounted = false;
+        tHero?.revert();
+      };
     }
   }, []);
   return children;
