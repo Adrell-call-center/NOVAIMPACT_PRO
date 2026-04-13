@@ -193,7 +193,7 @@ const Home = ({ latestPosts }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const { PrismaClient } = await import('@prisma/client');
   const prisma = new PrismaClient();
   try {
@@ -211,6 +211,7 @@ export async function getServerSideProps() {
       props: {
         latestPosts: JSON.parse(JSON.stringify(posts)),
       },
+      revalidate: 60,
     };
   } finally {
     await prisma.$disconnect();
