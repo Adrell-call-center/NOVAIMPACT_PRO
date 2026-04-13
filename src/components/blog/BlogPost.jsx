@@ -8,8 +8,6 @@ import { ScrollSmoother } from '@/plugins';
 
 gsap.registerPlugin(ScrollSmoother);
 
-const SimoAvatar = '/images/Simo-Adrif.webp';
-
 function readingTime(html) {
   if (!html || typeof html !== 'string') return 1;
   const text = html.replace(/<[^>]+>/g, '');
@@ -29,6 +27,15 @@ function getContent(post, lang) {
     title: post.titleEn || post.title || 'Untitled',
     content: post.contentEn || post.content || '',
   };
+}
+
+function getScrollY() {
+  const smoother = ScrollSmoother.get();
+  if (!smoother) return window.scrollY;
+  if (typeof smoother.scrollTop === 'function') return smoother.scrollTop();
+  if (typeof smoother.scrollTop === 'number') return smoother.scrollTop;
+  if (typeof smoother.scroll === 'function') return smoother.scroll();
+  return window.scrollY;
 }
 
 export default function BlogPost({ post, related, recent, initialLang }) {
@@ -59,8 +66,7 @@ export default function BlogPost({ post, related, recent, initialLang }) {
     const tick = () => {
       const article = articleRef.current;
       if (!article) return;
-      const smoother = ScrollSmoother.get();
-      const scrollY  = smoother ? smoother.scrollTop() : window.scrollY;
+      const scrollY  = getScrollY();
       const rect     = article.getBoundingClientRect();
       const absTop   = scrollY + rect.top;
       const height   = article.offsetHeight;
@@ -85,8 +91,7 @@ export default function BlogPost({ post, related, recent, initialLang }) {
         sidebar.style.transform = '';
         return;
       }
-      const smoother   = ScrollSmoother.get();
-      const scrollY    = smoother ? smoother.scrollTop() : window.scrollY;
+      const scrollY    = getScrollY();
       const wrapRect   = wrapper.getBoundingClientRect();
       const wrapAbsTop = scrollY + wrapRect.top;
       const wrapHeight = wrapper.offsetHeight;
@@ -206,14 +211,14 @@ export default function BlogPost({ post, related, recent, initialLang }) {
                     target="_blank" rel="noopener noreferrer"
                     className="post-footer-share-btn linkedin"
                   >
-                    <i className="fa-brands fa-linkedin"></i>
+                    <span className="social-glyph" aria-hidden="true">in</span>
                   </a>
                   <a
                     href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}&text=${encodeURIComponent(title || '')}`}
                     target="_blank" rel="noopener noreferrer"
                     className="post-footer-share-btn twitter"
                   >
-                    <i className="fa-brands fa-x-twitter"></i>
+                    <span className="social-glyph" aria-hidden="true">X</span>
                   </a>
                   <button className="post-footer-share-btn copy" onClick={copyLink} title="Copy link">
                     <i className={`fa-solid ${copied ? 'fa-check' : 'fa-link'}`}></i>
@@ -225,43 +230,27 @@ export default function BlogPost({ post, related, recent, initialLang }) {
             <div className="post-sidebar-col">
               <div className="post-sidebar" ref={sidebarRef}>
 
-                <div className="sidebar-card author-card">
-                  <div className="author-avatar">
-                    <Image
-                      src={SimoAvatar}
-                      alt="Simo Adrif"
-                      width={80}
-                      height={80}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
-                    />
-                  </div>
-                  <h4 className="author-name">Simo Adrif</h4>
-                  <p className="author-role">Founder &amp; CEO</p>
-                  <p className="author-bio">Passionate about digital marketing, web development, and helping brands grow through strategy and innovation.</p>
-                  <div className="author-socials">
-                    <a href="https://www.linkedin.com/company/nova-impact-io/" target="_blank" rel="noopener noreferrer" className="author-social">
-                      <i className="fa-brands fa-linkedin"></i>
-                    </a>
-                    <a href="https://x.com/ImpactNova_io" target="_blank" rel="noopener noreferrer" className="author-social">
-                      <i className="fa-brands fa-x-twitter"></i>
-                    </a>
-                    <a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer" className="author-social">
-                      <i className="fa-brands fa-instagram"></i>
-                    </a>
-                  </div>
+                <div className="sidebar-card sidebar-cta-card">
+                  <h4 className="sidebar-cta-title">Need help growing your brand?</h4>
+                  <p className="sidebar-cta-text">
+                    Get a free strategy call with our team and discover the fastest way to scale your digital presence.
+                  </p>
+                  <Link href="/contact" className="sidebar-cta-btn">
+                    Book a Free Call <i className="fa-solid fa-arrow-right" style={{ marginLeft: '8px' }}></i>
+                  </Link>
                 </div>
 
                 <div className="sidebar-card share-card">
                   <h4 className="share-title">Share this article</h4>
                   <div className="share-buttons">
                     <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer" className="share-btn linkedin">
-                      <i className="fa-brands fa-linkedin"></i>
+                      <span className="social-glyph" aria-hidden="true">in</span>
                     </a>
                     <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(title || '')}`} target="_blank" rel="noopener noreferrer" className="share-btn twitter">
-                      <i className="fa-brands fa-x-twitter"></i>
+                      <span className="social-glyph" aria-hidden="true">X</span>
                     </a>
                     <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer" className="share-btn facebook">
-                      <i className="fa-brands fa-facebook-f"></i>
+                      <span className="social-glyph" aria-hidden="true">f</span>
                     </a>
                   </div>
                 </div>

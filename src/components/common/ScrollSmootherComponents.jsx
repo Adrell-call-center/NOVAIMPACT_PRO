@@ -6,9 +6,9 @@ const ScrollSmootherComponents = () => {
     if (typeof window !== "undefined") {
       let mounted = true;
       let tHero;
-      import("@/plugins").then(({ ScrollSmoother }) => {
+      import("@/plugins").then(({ ScrollTrigger, ScrollSmoother }) => {
         if (!mounted) return;
-        gsap.registerPlugin(ScrollSmoother);
+        gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
         let device_width = window.innerWidth;
         tHero = gsap.context(() => {
           ScrollSmoother.create({

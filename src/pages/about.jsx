@@ -1,4 +1,3 @@
-import DigitalAgencyBrand from "@/components/brand/DigitalAgencyBrand";
 import RootLayout from "@/components/common/layout/RootLayout";
 import AboutCounter from "@/components/counter/AboutCounter";
 import DigitalAgencyCTA from "@/components/cta/DigitalAgencyCTA";
@@ -7,7 +6,6 @@ import AboutStory from "@/components/story/AboutStory";
 import AboutValues from "@/components/about/AboutValues";
 import AboutServices from "@/components/about/AboutServices";
 import AboutTeam from "@/components/team/AboutTeam";
-import StartupAgencyTestimonial from "@/components/testimonial/StartupAgencyTestimonial";
 import DigitalAgencyWorkflow from "@/components/workflow/DigitalAgencyWorkflow";
 import Head from "next/head";
 
@@ -69,8 +67,6 @@ const About = () => {
           <AboutServices />
           <DigitalAgencyWorkflow />
           <AboutTeam />
-          <DigitalAgencyBrand />
-          <StartupAgencyTestimonial />
           <DigitalAgencyCTA />
         </RootLayout>
       </main>
