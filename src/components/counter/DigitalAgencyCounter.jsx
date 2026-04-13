@@ -57,6 +57,7 @@ const DigitalAgencyCounter = () => {
           });
         }
       });
+      ScrollTrigger.refresh();
       return () => tHero.revert();
     }
   }, []);

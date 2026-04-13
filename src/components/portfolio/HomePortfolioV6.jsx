@@ -68,6 +68,7 @@ const HomePortfolioV6 = () => {
           pin: ".portfolio__title-wrap-6",
           pinSpacing: false,
         });
+        ScrollTrigger.refresh();
       });
       return () => {
         tHero.revert();

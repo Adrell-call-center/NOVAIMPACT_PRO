@@ -44,6 +44,7 @@ const DigitalAgencyBlog = ({ posts = [] }) => {
           });
         }
       });
+      ScrollTrigger.refresh();
       return () => tHero.revert();
     }
   }, []);

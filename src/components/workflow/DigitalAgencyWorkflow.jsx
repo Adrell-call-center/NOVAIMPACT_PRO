@@ -20,6 +20,7 @@ const DigitalAgencyWorkflow = () => {
           stagger: { each: 0.2 },
         });
       });
+      ScrollTrigger.refresh();
       return () => tHero.revert();
     }
   }, []);

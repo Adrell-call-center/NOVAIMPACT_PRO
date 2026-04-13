@@ -111,6 +111,7 @@ const DigitalMarketingWorkflow = () => {
           }
         }
       });
+      ScrollTrigger.refresh();
       return () => tHero.revert();
     }
   }, []);

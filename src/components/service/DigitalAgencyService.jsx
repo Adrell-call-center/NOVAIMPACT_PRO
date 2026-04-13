@@ -59,6 +59,7 @@ const DigitalAgencyService = () => {
           home1ServiceTl.to(service__text[i], { x: 0, opacity: 1, duration: 1.2 }, "-=1");
           home1ServiceTl.to(service__link[i], { x: 0, opacity: 1, duration: 1.2 }, "-=1");
         });
+        ScrollTrigger.refresh();
       });
       return () => tHero.revert();
     }
