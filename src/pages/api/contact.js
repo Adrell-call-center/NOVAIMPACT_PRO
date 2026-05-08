@@ -1,7 +1,10 @@
 import nodemailer from "nodemailer";
 import prisma from "@/lib/prisma";
 
-const marketingEmail = process.env.CONTACT_NOTIFICATION_EMAIL;
+const notificationEmail1 =
+  process.env.CONTACT_NOTIFICATION_EMAIL1 || process.env.CONTACT_NOTIFICATION_EMAIL;
+const notificationEmail2 = process.env.CONTACT_NOTIFICATION_EMAIL2;
+const notificationRecipients = [notificationEmail1, notificationEmail2].filter(Boolean);
 const fromEmail = process.env.SMTP_FROM_EMAIL;
 const companyName = process.env.SMTP_FROM_NAME;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -29,7 +32,8 @@ export default async function handler(req, res) {
   }
 
   const requiredEnv = {
-    CONTACT_NOTIFICATION_EMAIL: marketingEmail,
+    CONTACT_NOTIFICATION_EMAIL1: notificationEmail1,
+    CONTACT_NOTIFICATION_EMAIL2: notificationEmail2,
     SMTP_FROM_EMAIL: fromEmail,
     SMTP_FROM_NAME: companyName,
     NEXT_PUBLIC_SITE_URL: siteUrl,
@@ -310,10 +314,10 @@ export default async function handler(req, res) {
     // Verify transporter configuration
     await transporter.verify();
     
-    // Email to marketing team (assurancezoom@gmail.com)
+    // Email to company recipients (from .env first + second)
     await transporter.sendMail({
       from: `"${companyName}" <${fromEmail}>`,
-      to: marketingEmail,
+      to: notificationRecipients.join(","),
       replyTo: email,
       subject: `[Contact] ${subject}`,
       html: companyEmailHTML,
