@@ -1,17 +1,17 @@
 import nodemailer from "nodemailer";
 import prisma from "@/lib/prisma";
 
-const marketingEmail = "assurancezoom@gmail.com";
-const fromEmail = "contact@novaimpact.io";
-const companyName = process.env.SMTP_FROM_NAME || "Nova Impact";
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nova-impact.com";
+const marketingEmail = process.env.CONTACT_NOTIFICATION_EMAIL;
+const fromEmail = process.env.SMTP_FROM_EMAIL;
+const companyName = process.env.SMTP_FROM_NAME;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 // Social Links
 const socialLinks = {
-  youtube: "https://www.youtube.com/@novaimpactagency",
-  instagram: "https://www.instagram.com/novaimpact.io/",
-  twitter: "https://x.com/ImpactNova_io",
-  linkedin: "https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all",
+  youtube: process.env.SOCIAL_YOUTUBE_URL,
+  instagram: process.env.SOCIAL_INSTAGRAM_URL,
+  twitter: process.env.SOCIAL_TWITTER_URL,
+  linkedin: process.env.SOCIAL_LINKEDIN_URL,
 };
 
 export default async function handler(req, res) {
@@ -26,6 +26,32 @@ export default async function handler(req, res) {
 
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const requiredEnv = {
+    CONTACT_NOTIFICATION_EMAIL: marketingEmail,
+    SMTP_FROM_EMAIL: fromEmail,
+    SMTP_FROM_NAME: companyName,
+    NEXT_PUBLIC_SITE_URL: siteUrl,
+    SOCIAL_YOUTUBE_URL: socialLinks.youtube,
+    SOCIAL_INSTAGRAM_URL: socialLinks.instagram,
+    SOCIAL_TWITTER_URL: socialLinks.twitter,
+    SOCIAL_LINKEDIN_URL: socialLinks.linkedin,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_USER: process.env.SMTP_USER || process.env.SMTP_USERNAME,
+    SMTP_PASS: process.env.SMTP_PASS || process.env.SMTP_PASSWORD,
+  };
+
+  const missingEnv = Object.entries(requiredEnv)
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+  if (missingEnv.length > 0) {
+    return res.status(500).json({
+      error: "Missing required email configuration",
+      missing: missingEnv,
+    });
   }
 
   // Save to database
@@ -56,19 +82,12 @@ export default async function handler(req, res) {
     minute: "2-digit",
   });
 
+  // Use text badges instead of external images because many inboxes block remote icons.
   const socialIconsHTML = `
-    <a href="${socialLinks.youtube}" style="display:inline-block; margin:0 6px; text-decoration:none;">
-      <img src="https://cdn-icons-png.flaticon.com/32/1384/1384060.png" alt="YouTube" width="28" height="28" style="display:inline-block; border:0;" />
-    </a>
-    <a href="${socialLinks.linkedin}" style="display:inline-block; margin:0 6px; text-decoration:none;">
-      <img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="LinkedIn" width="28" height="28" style="display:inline-block; border:0;" />
-    </a>
-    <a href="${socialLinks.instagram}" style="display:inline-block; margin:0 6px; text-decoration:none;">
-      <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" alt="Instagram" width="28" height="28" style="display:inline-block; border:0;" />
-    </a>
-    <a href="${socialLinks.twitter}" style="display:inline-block; margin:0 6px; text-decoration:none;">
-      <img src="https://cdn-icons-png.flaticon.com/32/3670/3670151.png" alt="X" width="28" height="28" style="display:inline-block; border:0;" />
-    </a>
+    <a href="${socialLinks.youtube}" style="display:inline-block; margin:0 6px; padding:6px 10px; border-radius:999px; background:#2a2a2a; color:#ffffff; text-decoration:none; font-size:12px; font-weight:700; line-height:1;">YT</a>
+    <a href="${socialLinks.linkedin}" style="display:inline-block; margin:0 6px; padding:6px 10px; border-radius:999px; background:#2a2a2a; color:#ffffff; text-decoration:none; font-size:12px; font-weight:700; line-height:1;">IN</a>
+    <a href="${socialLinks.instagram}" style="display:inline-block; margin:0 6px; padding:6px 10px; border-radius:999px; background:#2a2a2a; color:#ffffff; text-decoration:none; font-size:12px; font-weight:700; line-height:1;">IG</a>
+    <a href="${socialLinks.twitter}" style="display:inline-block; margin:0 6px; padding:6px 10px; border-radius:999px; background:#2a2a2a; color:#ffffff; text-decoration:none; font-size:12px; font-weight:700; line-height:1;">X</a>
   `;
 
   // ==========================================
