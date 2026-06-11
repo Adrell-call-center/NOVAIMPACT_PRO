@@ -42,7 +42,7 @@ export default function NavItem({ nav, navStyle = "" }) {
             if (el.type === "megamenu") {
               return (
                 <li className="has-megamenu" key={i}>
-                  <Link href={el.link}>{el.nav_name}</Link>
+                  <Link href={el.link} prefetch={false}>{el.nav_name}</Link>
                   <ul className={el.full_width ? "mega-menu" : "mega-menu-2"}>
                     {el.sub_nav.map((subEl, index) => {
                       return (
@@ -52,7 +52,7 @@ export default function NavItem({ nav, navStyle = "" }) {
                             {subEl.data.map((elData, elIndex) => {
                               return (
                                 <li key={elIndex}>
-                                  <Link href={elData.link}>{elData.name}</Link>
+                                  <Link href={elData.link} prefetch={false}>{elData.name}</Link>
                                 </li>
                               );
                             })}
@@ -66,12 +66,12 @@ export default function NavItem({ nav, navStyle = "" }) {
             } else if (el.type === "dropdown") {
               return (
                 <li key={i}>
-                  <Link href={el.link}>{el.nav_name}</Link>
+                  <Link href={el.link} prefetch={false}>{el.nav_name}</Link>
                   <ul className="main-dropdown">
                     {el.sub_nav.map((subEl, index) => {
                       return (
                         <li key={index}>
-                          <Link href={subEl.link}>{subEl.name}</Link>
+                          <Link href={subEl.link} prefetch={false}>{subEl.name}</Link>
                           {subEl.sub_dropdown_nav &&
                             subEl.sub_dropdown_nav.length && (
                               <ul className="sub-dropdown">
@@ -79,7 +79,7 @@ export default function NavItem({ nav, navStyle = "" }) {
                                   (subDrop, subIndex) => {
                                     return (
                                       <li key={subIndex}>
-                                        <Link href={subDrop.link}>
+                                        <Link href={subDrop.link} prefetch={false}>
                                           {subDrop.name}
                                         </Link>
                                       </li>
@@ -97,7 +97,7 @@ export default function NavItem({ nav, navStyle = "" }) {
             } else {
               return (
                 <li key={i}>
-                  <Link href={el.link}>{el.nav_name}</Link>
+                  <Link href={el.link} prefetch={false}>{el.nav_name}</Link>
                 </li>
               );
             }

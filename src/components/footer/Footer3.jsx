@@ -68,15 +68,15 @@ export default function Footer3() {
                   <div className="footer__widget-2">
                     <h2 className="footer__widget-title">Services</h2>
                     <ul className="footer__link">
-                      <li><Link href="/service-details/website-creation">Website Creation</Link></li>
-                      <li><Link href="/service-details/social-media-management">Social Media Management</Link></li>
-                      <li><Link href="/service-details/content-creation">Content Creation</Link></li>
-                      <li><Link href="/service-details/meta-ads">Meta Ads</Link></li>
-                      <li><Link href="/service-details/google-ads">Google Ads</Link></li>
-                      <li><Link href="/service-details/seo">SEO</Link></li>
-                      <li><Link href="/service-details/brand-identity">Brand Identity</Link></li>
-                      <li><Link href="/service-details/comparator-creation">Comparator Creation</Link></li>
-                      <li><Link href="/service-details/consulting-support">Consulting & Support</Link></li>
+                      <li><Link href="/service-details/website-creation" prefetch={false}>Website Creation</Link></li>
+                      <li><Link href="/service-details/social-media-management" prefetch={false}>Social Media Management</Link></li>
+                      <li><Link href="/service-details/content-creation" prefetch={false}>Content Creation</Link></li>
+                      <li><Link href="/service-details/meta-ads" prefetch={false}>Meta Ads</Link></li>
+                      <li><Link href="/service-details/google-ads" prefetch={false}>Google Ads</Link></li>
+                      <li><Link href="/service-details/seo" prefetch={false}>SEO</Link></li>
+                      <li><Link href="/service-details/brand-identity" prefetch={false}>Brand Identity</Link></li>
+                      <li><Link href="/service-details/comparator-creation" prefetch={false}>Comparator Creation</Link></li>
+                      <li><Link href="/service-details/consulting-support" prefetch={false}>Consulting & Support</Link></li>
                     </ul>
                   </div>
 
@@ -115,7 +115,7 @@ export default function Footer3() {
                       Chaque marque est unique. Nous analysons vos objectifs concrets : développer votre visibilité, générer des leads, construire une image forte.
                     </p>
                     <div className="btn_wrapper">
-                      <Link href="/contact" className="wc-btn-primary btn-hover btn-item">
+                      <Link href="/contact" className="wc-btn-primary btn-hover btn-item" prefetch={false}>
                         <span></span> Contact us <i className="fa-solid fa-arrow-right"></i>
                       </Link>
                     </div>
@@ -125,10 +125,10 @@ export default function Footer3() {
                   <div className="footer__copyright">
                     <p>©2026 – Copyright NOVAIMPACT</p>
                     <ul className="footer__legal">
-                      <li><Link href="/mentions-legales">Mentions légales</Link></li>
-                      <li><Link href="/politique-confidentialite">Politique de confidentialité et de cookies</Link></li>
-                      <li><Link href="/refund-policy">Refund Policy</Link></li>
-                      <li><Link href="/terms-of-service">Terms of Service</Link></li>
+                      <li><Link href="/mentions-legales" prefetch={false}>Mentions légales</Link></li>
+                      <li><Link href="/politique-confidentialite" prefetch={false}>Politique de confidentialité et de cookies</Link></li>
+                      <li><Link href="/refund-policy" prefetch={false}>Refund Policy</Link></li>
+                      <li><Link href="/terms-of-service" prefetch={false}>Terms of Service</Link></li>
                     </ul>
                   </div>
 

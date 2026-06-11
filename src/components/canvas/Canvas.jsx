@@ -78,7 +78,7 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
         <div className="offcanvas__body">
           <div className="offcanvas__left">
             <div className="offcanvas__logo">
-              <Link href="/">
+              <Link href="/" prefetch={false}>
                 <Image
                   priority
                   width={160}
@@ -100,10 +100,10 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
             </div>
             <div className="offcanvas__links">
               <ul>
-                <li><Link href="/about">About</Link></li>
-                <li><Link href="/contact">Contact</Link></li>
-                <li><Link href="/blog">Blog</Link></li>
-                <li><Link href="/faq">FAQs</Link></li>
+                <li><Link href="/about" prefetch={false}>About</Link></li>
+                <li><Link href="/contact" prefetch={false}>Contact</Link></li>
+                <li><Link href="/blog" prefetch={false}>Blog</Link></li>
+                <li><Link href="/faq" prefetch={false}>FAQs</Link></li>
               </ul>
             </div>
           </div>
@@ -111,7 +111,7 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
           <div className="offcanvas__mid">
             {/* Mobile-only logo inside menu panel */}
             <div className="offcanvas__mobile-logo" style={{ padding: "24px 24px 0", display: "none" }}>
-              <Link href="/" onClick={closeCanvas}>
+              <Link href="/" onClick={closeCanvas} prefetch={false}>
                 <Image
                   priority
                   width={140}
@@ -129,14 +129,14 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
                   {/* HOME */}
                   <li>
                     <div className="header_title">
-                      <Link href="/">HOME</Link>
+                      <Link href="/" prefetch={false}>HOME</Link>
                     </div>
                   </li>
 
                   {/* SERVICES */}
                   <li>
                     <div className="header_title d-flex">
-                      <Link href="/service">SERVICES</Link>
+                      <Link href="/service" prefetch={false}>SERVICES</Link>
                       <div className="accordian-btn">
                         {accordion === 2 ? (
                           <a onClick={() => openData(0)}>-</a>
@@ -149,43 +149,43 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
                       className="sub_title"
                       style={accordion === 2 ? { display: "" } : { display: "none" }}
                     >
-                      <li><Link href="/service-details/website-creation">Website Creation</Link></li>
-                      <li><Link href="/service-details/social-media-management">Social Media Management</Link></li>
-                      <li><Link href="/service-details/content-creation">Content Creation</Link></li>
-                      <li><Link href="/service-details/meta-ads">Meta Ads (Facebook & Instagram)</Link></li>
-                      <li><Link href="/service-details/google-ads">Google Ads</Link></li>
-                      <li><Link href="/service-details/seo">SEO (Search Engine Optimization)</Link></li>
-                      <li><Link href="/service-details/brand-identity">Brand Identity</Link></li>
-                      <li><Link href="/service-details/comparator-creation">Comparator Creation</Link></li>
-                      <li><Link href="/service-details/consulting-support">Consulting & Support</Link></li>
+                      <li><Link href="/service-details/website-creation" prefetch={false}>Website Creation</Link></li>
+                      <li><Link href="/service-details/social-media-management" prefetch={false}>Social Media Management</Link></li>
+                      <li><Link href="/service-details/content-creation" prefetch={false}>Content Creation</Link></li>
+                      <li><Link href="/service-details/meta-ads" prefetch={false}>Meta Ads (Facebook & Instagram)</Link></li>
+                      <li><Link href="/service-details/google-ads" prefetch={false}>Google Ads</Link></li>
+                      <li><Link href="/service-details/seo" prefetch={false}>SEO (Search Engine Optimization)</Link></li>
+                      <li><Link href="/service-details/brand-identity" prefetch={false}>Brand Identity</Link></li>
+                      <li><Link href="/service-details/comparator-creation" prefetch={false}>Comparator Creation</Link></li>
+                      <li><Link href="/service-details/consulting-support" prefetch={false}>Consulting & Support</Link></li>
                     </ul>
                   </li>
 
                   {/* PORTFOLIO */}
                   <li>
                     <div className="header_title">
-                      <Link href="/portfolio">PORTFOLIO</Link>
+                      <Link href="/portfolio" prefetch={false}>PORTFOLIO</Link>
                     </div>
                   </li>
 
                   {/* ABOUT */}
                   <li>
                     <div className="header_title">
-                      <Link href="/about">ABOUT</Link>
+                      <Link href="/about" prefetch={false}>ABOUT</Link>
                     </div>
                   </li>
 
                   {/* BLOG */}
                   <li>
                     <div className="header_title">
-                      <Link href="/blog">BLOG</Link>
+                      <Link href="/blog" prefetch={false}>BLOG</Link>
                     </div>
                   </li>
 
                   {/* CONTACT */}
                   <li>
                     <div className="header_title">
-                      <Link href="/contact">CONTACT</Link>
+                      <Link href="/contact" prefetch={false}>CONTACT</Link>
                     </div>
                   </li>
 
