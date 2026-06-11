@@ -156,7 +156,7 @@ const CommonAnimation = ({ children }) => {
       };
     }
   }, []);
-  return children;
+  return null;
 };
 
 export default CommonAnimation;

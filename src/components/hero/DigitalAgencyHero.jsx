@@ -78,7 +78,7 @@ const DigitalAgencyHero = () => {
                   From website creation to the deployment of your SEO and advertising campaigns, Nova Impact supports you in converting, retaining, and expanding your reach.
                 </p>
                 <Image
-                  priority
+                  loading="lazy"
                   width={170}
                   style={{ height: "auto" }}
                   src={ArrowDownBig}
@@ -98,9 +98,10 @@ const DigitalAgencyHero = () => {
           priority
           width={1920}
           height={1080}
-          style={{ width: "auto", height: "auto" }}
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
           src={Hero1bg}
-          alt="image"
+          alt="Nova Impact digital agency background"
           className="hero1_bg"
         />
       </section>

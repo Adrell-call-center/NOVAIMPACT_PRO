@@ -31,11 +31,11 @@ const Switcher = ({ setMode, mode, cursor1, cursor2 }) => {
     let cursor_val = cursorStyle.current.value;
 
     if (cursor_val == "1") {
-      cursor1.current.style.display = "none";
-      cursor2.current.style.display = "none";
+      if (cursor1.current) cursor1.current.style.display = "none";
+      if (cursor2.current) cursor2.current.style.display = "none";
     } else {
-      cursor1.current.style.display = "";
-      cursor2.current.style.display = "";
+      if (cursor1.current) cursor1.current.style.display = "";
+      if (cursor2.current) cursor2.current.style.display = "";
     }
   };
 

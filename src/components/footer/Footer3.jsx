@@ -10,9 +10,10 @@ export default function Footer3() {
         <div className="footer__top">
           <div className="container footer-line"></div>
           <Image
-            priority
+            loading="lazy"
             width={1160}
             height={773}
+            sizes="100vw"
             style={{ height: "auto" }}
             src={ThumbFooter}
             alt="Footer Image"
@@ -28,7 +29,7 @@ export default function Footer3() {
                   {/* Widget 1 - About */}
                   <div className="footer__widget">
                     <Image
-                      priority
+                      loading="lazy"
                       width={160}
                       height={50}
                       style={{ width: "auto", height: "45px", objectFit: "contain" }}

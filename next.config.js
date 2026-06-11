@@ -23,9 +23,6 @@ const nextConfig = {
     // Disable blur placeholder for sharper images
     minimumCacheTTL: 604800, // 1 week
   },
-  experimental: {
-    optimizePackageImports: ['swiper', '@fortawesome/free-solid-svg-icons', '@fortawesome/react-fontawesome'],
-  },
   async headers() {
     return [
       {

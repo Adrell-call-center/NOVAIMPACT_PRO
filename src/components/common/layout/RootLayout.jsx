@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Header3 from "@/components/header/Header3";
 import Footer3 from "@/components/footer/Footer3";
-import Preloader from "@/components/preloader/Preloader";
-import CommonAnimation from "../CommonAnimation";
-import ScrollSmootherComponents from "../ScrollSmootherComponents";
-import CursorAnimation from "../CursorAnimation";
-import Switcher from "../Switcher";
-import ScrollTop from "../ScrollTop";
+
+const CommonAnimation = dynamic(() => import("../CommonAnimation"), { ssr: false });
+const ScrollSmootherComponents = dynamic(() => import("../ScrollSmootherComponents"), { ssr: false });
+const CursorAnimation = dynamic(() => import("../CursorAnimation"), { ssr: false });
+const Switcher = dynamic(() => import("../Switcher"), { ssr: false });
+const ScrollTop = dynamic(() => import("../ScrollTop"), { ssr: false });
 
 export default function RootLayout({
   children,
@@ -14,6 +15,7 @@ export default function RootLayout({
   footer = "",
   defaultMode = "",
 }) {
+  const [hasFinePointer, setHasFinePointer] = useState(false);
   const [mode, setMode] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("nova-theme-mode") || defaultMode;
@@ -23,6 +25,14 @@ export default function RootLayout({
 
   const cursor1 = useRef();
   const cursor2 = useRef();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHasFinePointer(
+        window.matchMedia("(min-width: 1201px) and (pointer: fine)").matches
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -47,29 +57,31 @@ export default function RootLayout({
 
   return (
     <>
-      <CommonAnimation>
-        <div className="has-smooth" id="has_smooth"></div>
-        <ScrollSmootherComponents />
-        <div className="cursor" id="team_cursor">
-          Drag
-        </div>
-        <Preloader />
-        <CursorAnimation cursor1={cursor1} cursor2={cursor2} />
-        <Switcher
-          setMode={setMode}
-          mode={mode}
-          cursor1={cursor1}
-          cursor2={cursor2}
-        />
-        <ScrollTop />
-        <Header3 />
-        <div id="smooth-wrapper">
-          <div id="smooth-content">
-            {children}
-            {footer !== "none" && <Footer3 />}
+      <CommonAnimation />
+      <div className="has-smooth" id="has_smooth"></div>
+      <ScrollSmootherComponents />
+      {hasFinePointer && (
+        <>
+          <div className="cursor" id="team_cursor">
+            Drag
           </div>
+          <CursorAnimation cursor1={cursor1} cursor2={cursor2} />
+        </>
+      )}
+      <Switcher
+        setMode={setMode}
+        mode={mode}
+        cursor1={cursor1}
+        cursor2={cursor2}
+      />
+      <ScrollTop />
+      <Header3 />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          {children}
+          {footer !== "none" && <Footer3 />}
         </div>
-      </CommonAnimation>
+      </div>
     </>
   );
 }
