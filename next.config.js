@@ -26,7 +26,47 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/assets/:path*',
+        source: '/assets/video/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-transform',
+          },
+          {
+            key: 'Accept-Ranges',
+            value: 'bytes',
+          },
+        ],
+      },
+      {
+        source: '/assets/imgs/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/assets/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/assets/gsap-plugins/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/assets/gsap-old/:path*',
         headers: [
           {
             key: 'Cache-Control',
