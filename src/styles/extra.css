@@ -1307,6 +1307,7 @@
   border-radius: 12px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 }
 
 .home-video-gallery .home-video-gallery__media video {

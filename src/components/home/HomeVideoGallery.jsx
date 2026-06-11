@@ -10,43 +10,25 @@ import "swiper/css/free-mode";
 
 const HomeVideoGallery = () => {
   const charAnim = useRef();
-  const sectionRef = useRef(null);
 
   useEffect(() => {
     animationCharCome(charAnim.current);
   }, []);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section || typeof IntersectionObserver === "undefined") return;
+  const handleVideoEnter = (event) => {
+    const video = event.currentTarget.querySelector("video");
+    if (video) video.play().catch(() => {});
+  };
 
-    const videos = section.querySelectorAll("video");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
-
-    videos.forEach((video) => {
-      video.play().catch(() => {});
-      observer.observe(video);
-    });
-    return () => observer.disconnect();
-  }, []);
+  const handleVideoLeave = (event) => {
+    const video = event.currentTarget.querySelector("video");
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+  };
 
   return (
-    <section
-      ref={sectionRef}
-      className="portfolio__area-7 home-video-gallery"
-    >
+    <section className="portfolio__area-7 home-video-gallery">
       <div className="container pt-140 pb-60">
         <div className="row">
           <div className="col-xxl-8 col-xl-7 col-lg-6 col-md-6">
@@ -87,14 +69,17 @@ const HomeVideoGallery = () => {
           {homeVideos.map((video) => (
             <SwiperSlide key={video.id}>
               <div className="portfolio__slide-7">
-                <div className="slide-img home-video-gallery__media">
+                <div
+                  className="slide-img home-video-gallery__media"
+                  onMouseEnter={handleVideoEnter}
+                  onMouseLeave={handleVideoLeave}
+                >
                   <video
                     src={video.src}
-                    autoPlay
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload="metadata"
                     aria-label={`${video.title} ${video.titleAccent}`}
                   />
                 </div>

@@ -16,32 +16,25 @@ const VideoGalleryPage = () => {
     animationCharCome(charAnim.current);
   }, []);
 
+  const handleThumbEnter = (event) => {
+    const video = event.currentTarget.querySelector("video");
+    if (video) video.play().catch(() => {});
+  };
+
+  const handleThumbLeave = (event) => {
+    const video = event.currentTarget.querySelector("video");
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+  };
+
   useEffect(() => {
-    const grid = gridRef.current;
-    if (!grid || typeof IntersectionObserver === "undefined") return undefined;
-
-    const videos = grid.querySelectorAll(".videos-page__thumb video");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-
-    videos.forEach((video) => {
-      video.play().catch(() => {});
-      observer.observe(video);
+    if (!activeVideo || !gridRef.current) return;
+    gridRef.current.querySelectorAll("video").forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
     });
-
-    return () => observer.disconnect();
-  }, []);
+  }, [activeVideo]);
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -90,7 +83,7 @@ const VideoGalleryPage = () => {
               <div className="blog__text">
                 <p>
                   Campaign reels, brand content, and behind-the-scenes work from
-                  the Nova Impact studio. Click any video to watch with sound.
+                  the Nova Impact studio. Hover to preview, click to watch with sound.
                 </p>
               </div>
             </div>
@@ -114,6 +107,10 @@ const VideoGalleryPage = () => {
                   type="button"
                   className="videos-page__card"
                   onClick={() => setActiveVideo(video)}
+                  onMouseEnter={handleThumbEnter}
+                  onMouseLeave={handleThumbLeave}
+                  onFocus={handleThumbEnter}
+                  onBlur={handleThumbLeave}
                   aria-label={`Play ${video.title} ${video.titleAccent}`}
                 >
                   <div
@@ -121,11 +118,10 @@ const VideoGalleryPage = () => {
                   >
                     <video
                       src={video.src}
-                      autoPlay
                       muted
                       loop
                       playsInline
-                      preload="auto"
+                      preload="metadata"
                       aria-hidden="true"
                     />
                     <span className="videos-page__play" aria-hidden="true">
