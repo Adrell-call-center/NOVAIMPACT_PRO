@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { getAllProjectSlugs } from '@/data/projects';
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://novaimpact.io';
 
@@ -51,6 +52,10 @@ export default async function handler(req, res) {
 
   for (const page of staticPages) {
     xml += url(page.loc, today, page.changefreq, page.priority);
+  }
+
+  for (const slug of getAllProjectSlugs()) {
+    xml += url(`/portfolio/${slug}`, today, 'monthly', '0.7');
   }
 
   for (const post of posts) {

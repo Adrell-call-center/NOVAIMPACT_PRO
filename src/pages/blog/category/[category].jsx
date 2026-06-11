@@ -1,14 +1,22 @@
-import Head from 'next/head';
 import RootLayout from '@/components/common/layout/RootLayout';
 import BlogIndex from '@/components/blog/BlogIndex';
+import PageSeo from '@/components/seo/PageSeo';
+import { blogCategorySchema } from '@/lib/schema-helpers';
+import { absoluteUrl } from '@/lib/site';
 
 export default function BlogCategory({ posts, categories, category, pagination }) {
+  const title = `${category} — Blog — Nova Impact`;
+  const description = `Articles about ${category} from Nova Impact.`;
+  const canonical = absoluteUrl(`/blog/category/${encodeURIComponent(category)}`);
+
   return (
     <>
-      <Head>
-        <title>{category} — Blog — Nova Impact</title>
-        <meta name="description" content={`Articles about ${category} from Nova Impact.`} />
-      </Head>
+      <PageSeo
+        title={title}
+        description={description}
+        canonical={canonical}
+        schema={blogCategorySchema(category)}
+      />
       <RootLayout header="header3" footer="footer3">
         <BlogIndex initialPosts={posts} initialCategories={categories} pagination={pagination} />
       </RootLayout>

@@ -1,3 +1,5 @@
+const JESWITCH_THUMBNAIL = "/images/nova-project/jeswitch/jeswitch.png";
+
 export const projects = [
   {
     slug: "jeswitch-fr",
@@ -138,21 +140,16 @@ export const projects = [
       "+ Lead Generation Optimization",
       "+ Performance Marketing",
     ],
-    thumbnail: "/images/nova-project/jeswitch/Modern%20user%20dashboard%20in%20a%20laptop%20mockup.png",
+    thumbnail: JESWITCH_THUMBNAIL,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: [
-      "/images/nova-project/jeswitch/Modern%20user%20dashboard%20in%20a%20laptop%20mockup.png",
-      "/images/nova-project/jeswitch/Futuristic%20UI%20design%20for%20JeSwitch.png",
-      "/images/nova-project/jeswitch/Modern%20SaaS%20dashboard%20mockup%20design.png",
-      "/images/nova-project/jeswitch/Website%20UI%20showcase%20with%20neon%20accents.png",
-    ],
+    images: [JESWITCH_THUMBNAIL],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "JeSwitch",
     displaySubtitle: "Insurance Comparison Platform",
     heroDescription:
       "A modern platform that simplifies how users compare, evaluate and purchase insurance with clarity, trust and confidence. Nova Impact designed and developed JeSwitch.fr to combine clarity, trust, speed, and conversion performance across health, auto, home, motorcycle, borrower, pet, life, and related insurance products.",
-    heroImage: "/images/nova-project/jeswitch.png",
+    heroImage: JESWITCH_THUMBNAIL,
     primaryCta: { label: "Visit Live Platform", url: "https://jeswitch.fr/" },
     heroStats: [
       { value: "50+", label: "Insurance Partners" },
@@ -180,18 +177,8 @@ export const projects = [
       "Real-time Insights",
     ],
     featuresTitle: "Powerful Features",
-    screenshots: [
-      "/images/nova-project/jeswitch/Futuristic%20UI%20design%20for%20JeSwitch.png",
-      "/images/nova-project/jeswitch/Modern%20SaaS%20dashboard%20mockup%20design.png",
-      "/images/nova-project/jeswitch/Website%20UI%20showcase%20with%20neon%20accents.png",
-      "/images/nova-project/jeswitch/Modern%20user%20dashboard%20in%20a%20laptop%20mockup.png",
-    ],
-    imageLabels: [
-      "Platform UI",
-      "Dashboard",
-      "Website Showcase",
-      "Device Mockup",
-    ],
+    screenshots: [JESWITCH_THUMBNAIL],
+    imageLabels: ["Platform Preview"],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
       "Discovery",
@@ -1401,6 +1388,10 @@ export const projects = [
     slug: "planostra",
     title: "Planostra",
     subtitle: "Marketing Intelligence & Analytics SaaS",
+    seoTitle:
+      "Planostra Case Study | Marketing Intelligence SaaS by Nova Impact",
+    metaDescription:
+      "Discover how Nova Impact designed and developed Planostra, a marketing intelligence and analytics SaaS platform built to turn data into actionable decisions.",
     url: "https://planostra.com/",
     category: "SaaS / Marketing Analytics",
     client: "Planostra",
@@ -1423,6 +1414,10 @@ export const projects = [
     slug: "trustedpulse",
     title: "TrustedPulse",
     subtitle: "Review & Reputation Platform",
+    seoTitle:
+      "TrustedPulse Case Study | Review & Reputation Platform by Nova Impact",
+    metaDescription:
+      "Discover how Nova Impact designed and developed TrustedPulse, a review and reputation management platform that helps businesses collect, manage, and showcase customer trust.",
     url: "https://trustedpulse.com/",
     category: "SaaS / Reputation Management",
     client: "TrustedPulse",

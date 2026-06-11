@@ -1,14 +1,25 @@
 import RootLayout from "@/components/common/layout/RootLayout";
-import Head from "next/head";
+import PageSeo from "@/components/seo/PageSeo";
+import { legalPageSchema } from "@/lib/schema-helpers";
+import { absoluteUrl } from "@/lib/site";
+
+const TITLE = "Mentions légales — Nova Impact";
+const DESCRIPTION =
+  "Mentions légales et informations légales de NOVA IMPACT LTD.";
 
 export default function MentionsLegales() {
   return (
     <div>
-      <Head>
-        <title>Mentions légales — Nova Impact</title>
-        <meta name="description" content="Mentions légales et informations légales de NOVA IMPACT LTD." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <PageSeo
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={absoluteUrl("/mentions-legales")}
+        schema={legalPageSchema({
+          path: "/mentions-legales",
+          title: TITLE,
+          description: DESCRIPTION,
+        })}
+      />
       <RootLayout>
         <main className="legal-page">
           <div className="container" style={{ maxWidth: "860px", margin: "0 auto", padding: "100px 20px 80px" }}>

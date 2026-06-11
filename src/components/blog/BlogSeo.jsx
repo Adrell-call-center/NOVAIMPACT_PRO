@@ -1,44 +1,47 @@
-import Head from 'next/head';
+import PageSeo from "@/components/seo/PageSeo";
+import { buildSchema } from "@/lib/schema-builder";
+import { absoluteUrl } from "@/lib/site";
 
-export default function BlogSeo({ post, lang = 'fr' }) {
+export default function BlogSeo({ post, lang = "fr" }) {
   if (!post || !post.slug) {
     return (
-      <Head>
-        <title>Nova Impact Blog</title>
-        <meta name="description" content="Nova Impact - Digital Agency" />
-        <meta property="og:title" content="Nova Impact Blog" />
-        <meta property="og:description" content="Nova Impact - Digital Agency" />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/thumb/og-default.jpg" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
+      <PageSeo
+        title="Nova Impact Blog"
+        description="Nova Impact - Digital Agency"
+        canonical={absoluteUrl("/blog")}
+      />
     );
   }
 
-  const isFr = lang === 'fr';
-  const title = isFr ? (post.titleFr || 'Nova Impact') : (post.titleEn || 'Nova Impact');
-  const desc = isFr ? (post.excerptFr || 'Nova Impact Blog') : (post.excerptEn || 'Nova Impact Blog');
-  const fullTitle = title + ' — Nova Impact';
-  const ogImage = post.ogImageUrl || post.coverImage || 'https://novaimpact.io/assets/imgs/thumb/og-default.jpg';
+  const isFr = lang === "fr";
+  const title = isFr
+    ? post.metaTitleFr || post.titleFr || "Nova Impact"
+    : post.metaTitleEn || post.titleEn || "Nova Impact";
+  const desc = isFr
+    ? post.metaDescFr || post.excerptFr || "Nova Impact Blog"
+    : post.metaDescEn || post.excerptEn || "Nova Impact Blog";
+  const fullTitle = `${title} — Nova Impact`;
+  const ogImage = absoluteUrl(
+    post.ogImageUrl ||
+      post.coverImage ||
+      "/assets/imgs/logo/footer-logo-white.png"
+  );
   const slug = post.slug;
+  const canonical = post.canonicalUrl || absoluteUrl(`/blog/${slug}`);
 
   return (
-    <Head>
-      <title>{fullTitle}</title>
-      <meta name="description" content={desc} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={desc} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={'https://novaimpact.io/blog/' + slug} />
-      <meta property="og:type" content="article" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={desc} />
-      <meta name="twitter:image" content={ogImage} />
-      <meta name="robots" content={post.noIndex === true ? 'noindex, nofollow' : 'index, follow'} />
-      <link rel="canonical" href={'https://novaimpact.io/blog/' + slug} />
-      <link rel="alternate" hrefLang="fr" href={'https://novaimpact.io/blog/' + slug + '?lang=fr'} />
-      <link rel="alternate" hrefLang="en" href={'https://novaimpact.io/blog/' + slug + '?lang=en'} />
-    </Head>
+    <PageSeo
+      title={fullTitle}
+      description={desc}
+      canonical={canonical}
+      ogImage={ogImage}
+      ogType="article"
+      robots={post.noIndex === true ? "noindex, nofollow" : "index, follow"}
+      schema={buildSchema(post, lang)}
+      hrefLangAlternates={[
+        { hrefLang: "fr", href: absoluteUrl(`/blog/${slug}?lang=fr`) },
+        { hrefLang: "en", href: absoluteUrl(`/blog/${slug}?lang=en`) },
+      ]}
+    />
   );
 }

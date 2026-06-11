@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
 
@@ -38,6 +39,10 @@ export default function AdminLayout({ children, title = 'Overview' }) {
   };
 
   return (
+    <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
     <div className="stripe-layout">
       {isMobile && sidebarOpen && (
         <div className="stripe-overlay" onClick={() => setSidebarOpen(false)} />
@@ -348,5 +353,6 @@ export default function AdminLayout({ children, title = 'Overview' }) {
         ::selection { background: rgba(99, 91, 255, 0.1); color: var(--stripe-primary); }
       `}</style>
     </div>
+    </>
   );
 }

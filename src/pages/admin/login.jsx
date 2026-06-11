@@ -27,7 +27,10 @@ export default function AdminLogin() {
 
   return (
     <>
-      <Head><title>Sign In — Nova Impact</title></Head>
+      <Head>
+        <title>Sign In — Nova Impact</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <div className="login-page">
         <div className="login-container">
           <div className="login-logo">

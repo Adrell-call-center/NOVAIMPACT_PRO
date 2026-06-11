@@ -73,7 +73,7 @@ const HomeVideoGallery = () => {
           spaceBetween={30}
           slidesPerView={1}
           freeMode={true}
-          loop={homeVideos.length > 1}
+          loop={false}
           centeredSlides={true}
           speed={2000}
           breakpoints={{

@@ -1,14 +1,25 @@
 import RootLayout from "@/components/common/layout/RootLayout";
-import Head from "next/head";
+import PageSeo from "@/components/seo/PageSeo";
+import { legalPageSchema } from "@/lib/schema-helpers";
+import { absoluteUrl } from "@/lib/site";
+
+const TITLE = "Terms of Service — Nova Impact";
+const DESCRIPTION =
+  "Terms of Service governing access to and use of Nova Impact LTD services.";
 
 export default function TermsOfService() {
   return (
     <div>
-      <Head>
-        <title>Terms of Service — Nova Impact</title>
-        <meta name="description" content="Terms of Service governing access to and use of Nova Impact LTD services." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <PageSeo
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={absoluteUrl("/terms-of-service")}
+        schema={legalPageSchema({
+          path: "/terms-of-service",
+          title: TITLE,
+          description: DESCRIPTION,
+        })}
+      />
       <RootLayout>
         <main className="legal-page">
           <div className="container" style={{ maxWidth: "860px", margin: "0 auto", padding: "100px 20px 80px" }}>

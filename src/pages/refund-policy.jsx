@@ -1,14 +1,25 @@
 import RootLayout from "@/components/common/layout/RootLayout";
-import Head from "next/head";
+import PageSeo from "@/components/seo/PageSeo";
+import { legalPageSchema } from "@/lib/schema-helpers";
+import { absoluteUrl } from "@/lib/site";
+
+const TITLE = "Refund Policy — Nova Impact";
+const DESCRIPTION =
+  "Refund policy for Nova Impact LTD services and subscriptions.";
 
 export default function RefundPolicy() {
   return (
     <div>
-      <Head>
-        <title>Refund Policy — Nova Impact</title>
-        <meta name="description" content="Refund policy for Nova Impact LTD services and subscriptions." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <PageSeo
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={absoluteUrl("/refund-policy")}
+        schema={legalPageSchema({
+          path: "/refund-policy",
+          title: TITLE,
+          description: DESCRIPTION,
+        })}
+      />
       <RootLayout>
         <main className="legal-page">
           <div className="container" style={{ maxWidth: "860px", margin: "0 auto", padding: "100px 20px 80px" }}>

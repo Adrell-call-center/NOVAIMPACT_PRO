@@ -1,14 +1,25 @@
 import RootLayout from "@/components/common/layout/RootLayout";
-import Head from "next/head";
+import PageSeo from "@/components/seo/PageSeo";
+import { legalPageSchema } from "@/lib/schema-helpers";
+import { absoluteUrl } from "@/lib/site";
+
+const TITLE = "Politique de confidentialité et de cookies — Nova Impact";
+const DESCRIPTION =
+  "Politique de confidentialité et de cookies de NOVA IMPACT LTD.";
 
 export default function PolitiqueConfidentialite() {
   return (
     <div>
-      <Head>
-        <title>Politique de confidentialité et de cookies — Nova Impact</title>
-        <meta name="description" content="Politique de confidentialité et de cookies de NOVA IMPACT LTD." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <PageSeo
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={absoluteUrl("/politique-confidentialite")}
+        schema={legalPageSchema({
+          path: "/politique-confidentialite",
+          title: TITLE,
+          description: DESCRIPTION,
+        })}
+      />
       <RootLayout>
         <main className="legal-page">
           <div className="container" style={{ maxWidth: "860px", margin: "0 auto", padding: "100px 20px 80px" }}>

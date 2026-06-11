@@ -29,4 +29,6 @@ Allow: /
 User-agent: CCBot
 Disallow: /
 
-Sitemap: https://novaimpact.io/sitemap.xml
+Sitemap: https://novaimpact.io/api/sitemap.xml
+
+# LLM context: https://novaimpact.io/llms.txt
