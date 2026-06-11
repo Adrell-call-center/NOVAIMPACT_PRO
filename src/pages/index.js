@@ -8,13 +8,14 @@ const DigitalAgencyAbout       = dynamic(() => import("@/components/about/Digita
 const DigitalAgencyService     = dynamic(() => import("@/components/service/DigitalAgencyService"),      { ssr: false });
 const DigitalAgencyCounter     = dynamic(() => import("@/components/counter/DigitalAgencyCounter"),      { ssr: false });
 const DigitalAgencyWorkflow    = dynamic(() => import("@/components/workflow/DigitalAgencyWorkflow"),    { ssr: false });
-const HomePortfolioV6          = dynamic(() => import("@/components/portfolio/HomePortfolioV6"),         { ssr: false });
+const HomePortfolioGallery      = dynamic(() => import("@/components/portfolio/HomePortfolioGallery"),      { ssr: false });
 const DigitalMarketingWorkflow = dynamic(() => import("@/components/workflow/DigitalMarketingWorkflow"), { ssr: false });
 const DigitalAgencyBlog        = dynamic(() => import("@/components/blog/DigitalAgencyBlog"),            { ssr: false });
 const DigitalAgencyCTA         = dynamic(() => import("@/components/cta/DigitalAgencyCTA"),              { ssr: false });
 const Team1                    = dynamic(() => import("@/components/team/Team1"),                        { ssr: false });
 const Faq1                     = dynamic(() => import("@/components/faq/Faq1"),                          { ssr: false });
 const HomeProcess              = dynamic(() => import("@/components/home/HomeProcess"),                  { ssr: false });
+const HomeVideoGallery         = dynamic(() => import("@/components/home/HomeVideoGallery"),           { ssr: false });
 
 const SITE_URL = "https://novaimpact.io";
 
@@ -181,7 +182,8 @@ const Home = ({ latestPosts }) => {
           <DigitalAgencyAbout />
           <DigitalAgencyService />
           <DigitalAgencyCounter />
-          <HomePortfolioV6 />
+          <HomePortfolioGallery />
+          <HomeVideoGallery />
           <HomeProcess />
           <DigitalAgencyWorkflow />
           <DigitalMarketingWorkflow />

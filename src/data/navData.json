@@ -56,6 +56,12 @@
       "sub_nav": []
     },
     {
+      "nav_name": "Videos",
+      "link": "/videos",
+      "type": "",
+      "sub_nav": []
+    },
+    {
       "nav_name": "About",
       "link": "/about",
       "type": "",

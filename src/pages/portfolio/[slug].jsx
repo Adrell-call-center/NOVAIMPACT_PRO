@@ -1,7 +1,9 @@
 import Head from "next/head";
 import RootLayout from "@/components/common/layout/RootLayout";
-import PortfolioDetails1 from "@/components/portfolio/PortfolioDetails1";
+import PortfolioCaseStudy from "@/components/portfolio/PortfolioCaseStudy";
 import { getProjectBySlug, getAllProjectSlugs } from "@/data/projects";
+
+const SITE_URL = "https://novaimpact.io";
 
 export async function getStaticPaths() {
   const slugs = getAllProjectSlugs();
@@ -32,23 +34,24 @@ export async function getStaticProps({ params }) {
 }
 
 const PortfolioDetails = ({ project }) => {
+  const pageUrl = `${SITE_URL}/portfolio/${project.slug}`;
+
   return (
     <>
       <Head>
-        <title>{project.title} — Case Study — Nova Impact</title>
-        <meta
-          name="description"
-          content={`How Nova Impact transformed ${project.title}'s online presence through digital strategy and design.`}
-        />
+        <title>{project.seoTitle || `${project.title} — Case Study — Nova Impact`}</title>
+        <meta name="description" content={project.metaDescription || project.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content={`${project.title} — Nova Impact`} />
-        <meta property="og:description" content={project.description} />
-        <meta property="og:url" content={project.url} />
-        <meta property="og:type" content="website" />
+        <meta property="og:description" content={project.metaDescription || project.description} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:image" content={`${SITE_URL}${project.thumbnail}`} />
+        <meta property="og:type" content="article" />
       </Head>
       <main>
         <RootLayout header="header3" footer="footer3">
-          <PortfolioDetails1 project={project} />
+          <PortfolioCaseStudy project={project} />
         </RootLayout>
       </main>
     </>
