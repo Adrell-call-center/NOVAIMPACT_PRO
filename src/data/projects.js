@@ -1,4 +1,11 @@
-const JESWITCH_THUMBNAIL = "/images/nova-project/jeswitch/jeswitch.png";
+const JESWITCH_DIR = "/images/nova-project/jeswitch";
+const JESWITCH_THUMBNAIL = `${JESWITCH_DIR}/jeswitch.png`;
+const JESWITCH_SCREENSHOTS = [
+  `${JESWITCH_DIR}/Modern%20user%20dashboard%20in%20a%20laptop%20mockup.png`,
+  `${JESWITCH_DIR}/Futuristic%20UI%20design%20for%20JeSwitch.png`,
+  `${JESWITCH_DIR}/Modern%20SaaS%20dashboard%20mockup%20design.png`,
+  `${JESWITCH_DIR}/Website%20UI%20showcase%20with%20neon%20accents.png`,
+];
 
 export const projects = [
   {
@@ -143,7 +150,7 @@ export const projects = [
     thumbnail: JESWITCH_THUMBNAIL,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: [JESWITCH_THUMBNAIL],
+    images: JESWITCH_SCREENSHOTS,
     heroLabel: "FEATURED PROJECT",
     displayTitle: "JeSwitch",
     displaySubtitle: "Insurance Comparison Platform",
@@ -177,8 +184,13 @@ export const projects = [
       "Real-time Insights",
     ],
     featuresTitle: "Powerful Features",
-    screenshots: [JESWITCH_THUMBNAIL],
-    imageLabels: ["Platform Preview"],
+    screenshots: JESWITCH_SCREENSHOTS,
+    imageLabels: [
+      "Dashboard in laptop mockup",
+      "Futuristic UI design",
+      "SaaS dashboard mockup",
+      "Website UI showcase",
+    ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
       "Discovery",
