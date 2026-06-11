@@ -108,7 +108,13 @@ const allHomeVideos = [
   },
 ];
 
-export const allVideos = allHomeVideos;
+const landscapeFirst = (videos) =>
+  [...videos].sort((a, b) => {
+    if (a.orientation === b.orientation) return 0;
+    return a.orientation === "landscape" ? -1 : 1;
+  });
+
+export const allVideos = landscapeFirst(allHomeVideos);
 
 export const homeVideos = allHomeVideos.filter(
   (video) => video.orientation === "landscape"
