@@ -59,7 +59,7 @@ const HomeVideoGallery = () => {
               1400: { slidesPerView: 3, spaceBetween: 70 },
             }}
           >
-            {homeVideos.map((video) => (
+            {homeVideos.map((video, i) => (
               <SwiperSlide key={video.id}>
                 <div className="portfolio__slide-7">
                   <button
@@ -68,9 +68,23 @@ const HomeVideoGallery = () => {
                     onClick={() => setActiveVideo(video)}
                     aria-label={`Play ${video.title} ${video.titleAccent ?? ""}`}
                   >
+                    {/* index */}
+                    <span className="home-video-gallery__index">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    {/* title in the card */}
+                    <div className="home-video-gallery__card-title">
+                      <p>{video.title}</p>
+                      {video.titleAccent && <p className="accent">{video.titleAccent}</p>}
+                    </div>
+
+                    {/* play button */}
                     <div className="home-video-gallery__play-icon">
                       <i className="fa-solid fa-play" />
                     </div>
+
+                    {/* bottom label */}
                     <div className="home-video-gallery__card-meta">
                       <span className="home-video-gallery__card-subtitle">{video.subtitle}</span>
                     </div>
