@@ -1,7 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const VideoPlayerModal = ({ video, onClose }) => {
   const videoRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!video) return undefined;
@@ -28,11 +34,11 @@ const VideoPlayerModal = ({ video, onClose }) => {
     };
   }, [video, onClose]);
 
-  if (!video) return null;
+  if (!mounted || !video) return null;
 
   const label = [video.title, video.titleAccent].filter(Boolean).join(" ");
 
-  return (
+  return createPortal(
     <div
       className="video-modal"
       onClick={onClose}
@@ -66,7 +72,8 @@ const VideoPlayerModal = ({ video, onClose }) => {
           <p>{video.subtitle}</p>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
