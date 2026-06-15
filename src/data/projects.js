@@ -1,11 +1,45 @@
-const JESWITCH_DIR = "/images/nova-project/jeswitch";
-const JESWITCH_THUMBNAIL = `${JESWITCH_DIR}/jeswitch.png`;
+const PROJECTS = "/images/projects";
+
+const JESWITCH = `${PROJECTS}/jeswitch-fr`;
+const JESWITCH_COVER = `${JESWITCH}/hero.png`;
+const JESWITCH_HERO = `${JESWITCH}/hero.png`;
 const JESWITCH_SCREENSHOTS = [
-  `${JESWITCH_DIR}/Modern%20user%20dashboard%20in%20a%20laptop%20mockup.png`,
-  `${JESWITCH_DIR}/Futuristic%20UI%20design%20for%20JeSwitch.png`,
-  `${JESWITCH_DIR}/Modern%20SaaS%20dashboard%20mockup%20design.png`,
-  `${JESWITCH_DIR}/Website%20UI%20showcase%20with%20neon%20accents.png`,
+  `${JESWITCH}/screenshots/dashboard-laptop.png`,
+  `${JESWITCH}/screenshots/futuristic-ui.png`,
+  `${JESWITCH}/screenshots/saas-dashboard.png`,
+  `${JESWITCH}/screenshots/website-ui-showcase.png`,
 ];
+
+const STYLISTE = `${PROJECTS}/styliste-ai-fashion-assistant-app`;
+const STYLISTE_COVER = `${STYLISTE}/cover.webp`;
+const STYLISTE_SCREENSHOTS = [
+  `${STYLISTE}/screenshots/1.png`,
+  `${STYLISTE}/screenshots/2.png`,
+  `${STYLISTE}/screenshots/3.png`,
+  `${STYLISTE}/screenshots/4.png`,
+  `${STYLISTE}/screenshots/5.png`,
+];
+
+const VELMORA = `${PROJECTS}/velmora-premium-ecommerce-platform`;
+const VELMORA_COVER = `${VELMORA}/cover.webp`;
+const VELMORA_PORTRAIT = `${VELMORA}/portrait-design.webp`;
+const VELMORA_SCREENSHOTS = [VELMORA_COVER, VELMORA_PORTRAIT];
+
+const AKODASHI = `${PROJECTS}/akodashi`;
+const AKODASHI_COVER = `${AKODASHI}/AKODASHI.webp`;
+const AKODASHI_SCREENSHOTS = [
+  `${AKODASHI}/AKODASHI.webp`,
+  `${AKODASHI}/ecommerce-desktop-2.webp`,
+];
+
+const ZOOMASSURANCE = `${PROJECTS}/zoomassurance-fr`;
+const MUTUELLES = `${PROJECTS}/mutuellespaschere-com`;
+const ALLWORLD = `${PROJECTS}/allworld247-com`;
+const MYGESTION = `${PROJECTS}/mygestion`;
+const SWITCHLEADS = `${PROJECTS}/switchleads`;
+const PLANOSTRA = `${PROJECTS}/planostra`;
+const TRUSTEDPULSE = `${PROJECTS}/trustedpulse`;
+const EXIFINJECTOR = `${PROJECTS}/exifinjector`;
 
 export const projects = [
   {
@@ -147,7 +181,7 @@ export const projects = [
       "+ Lead Generation Optimization",
       "+ Performance Marketing",
     ],
-    thumbnail: JESWITCH_THUMBNAIL,
+    thumbnail: JESWITCH_COVER,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
     images: JESWITCH_SCREENSHOTS,
@@ -156,7 +190,7 @@ export const projects = [
     displaySubtitle: "Insurance Comparison Platform",
     heroDescription:
       "A modern platform that simplifies how users compare, evaluate and purchase insurance with clarity, trust and confidence. Nova Impact designed and developed JeSwitch.fr to combine clarity, trust, speed, and conversion performance across health, auto, home, motorcycle, borrower, pet, life, and related insurance products.",
-    heroImage: JESWITCH_THUMBNAIL,
+    heroImage: JESWITCH_HERO,
     primaryCta: { label: "Visit Live Platform", url: "https://jeswitch.fr/" },
     heroStats: [
       { value: "50+", label: "Insurance Partners" },
@@ -380,16 +414,16 @@ export const projects = [
       "+ Social Media Assets",
       "+ Audience Growth",
     ],
-    thumbnail: "/images/nova-project/zoom.png",
+    thumbnail: `${ZOOMASSURANCE}/hero.png`,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: ["/images/nova-project/zoom.png"],
+    images: [`${ZOOMASSURANCE}/hero.png`],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "ZoomAssurance",
     displaySubtitle: "Finance Media & Insurance News Platform",
     heroDescription:
       "A scalable digital media platform built to combine editorial efficiency, brand authority, and long-term audience growth across finance, insurance, savings, and consumer education.",
-    heroImage: "/images/nova-project/zoom.png",
+    heroImage: `${ZOOMASSURANCE}/hero.png`,
     primaryCta: { label: "Visit Website", url: "https://zoomassurance.fr/" },
     heroStats: [
       { value: "Media", label: "Finance & Insurance Platform" },
@@ -418,10 +452,10 @@ export const projects = [
     ],
     featuresTitle: "Platform Capabilities",
     screenshots: [
-      "/images/nova-project/zoom.png",
-      "/images/nova-project/zoom.png",
-      "/images/nova-project/zoom.png",
-      "/images/nova-project/zoom.png",
+      `${ZOOMASSURANCE}/hero.png`,
+      `${ZOOMASSURANCE}/hero.png`,
+      `${ZOOMASSURANCE}/hero.png`,
+      `${ZOOMASSURANCE}/hero.png`,
     ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
@@ -606,16 +640,16 @@ export const projects = [
       "+ Lead Generation Optimization",
       "+ Conversion Rate Optimization",
     ],
-    thumbnail: "/images/nova-project/mutuelle-pas-chere.png",
+    thumbnail: `${MUTUELLES}/hero.png`,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: ["/images/nova-project/mutuelle-pas-chere.png"],
+    images: [`${MUTUELLES}/hero.png`],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "MutuellesPasChere.com",
     displaySubtitle: "Health Insurance Comparison Platform",
     heroDescription:
       "A modern health insurance comparison platform created to help French consumers find affordable complementary health coverage — combining product clarity, trust, and performance marketing into a scalable lead-generation ecosystem.",
-    heroImage: "/images/nova-project/mutuelle-pas-chere.png",
+    heroImage: `${MUTUELLES}/hero.png`,
     primaryCta: {
       label: "Visit Website",
       url: "https://mutuellespaschere.com/",
@@ -647,10 +681,10 @@ export const projects = [
     ],
     featuresTitle: "Platform Capabilities",
     screenshots: [
-      "/images/nova-project/mutuelle-pas-chere.png",
-      "/images/nova-project/mutuelle-pas-chere.png",
-      "/images/nova-project/mutuelle-pas-chere.png",
-      "/images/nova-project/mutuelle-pas-chere.png",
+      `${MUTUELLES}/hero.png`,
+      `${MUTUELLES}/hero.png`,
+      `${MUTUELLES}/hero.png`,
+      `${MUTUELLES}/hero.png`,
     ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
@@ -855,16 +889,16 @@ export const projects = [
       "+ Audience Growth Marketing",
       "+ Content & Creative Production",
     ],
-    thumbnail: "/images/nova-project/all-world.png",
+    thumbnail: `${ALLWORLD}/hero.png`,
     thumbnailWidth: 1536,
     thumbnailHeight: 1024,
-    images: ["/images/nova-project/all-world.png"],
+    images: [`${ALLWORLD}/hero.png`],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "AllWorld247",
     displaySubtitle: "Global Digital Publishing Platform",
     heroDescription:
       "A global digital publishing platform bringing together news, business, technology, lifestyle, and international perspectives — built for worldwide contributors, editorial efficiency, and long-term digital growth.",
-    heroImage: "/images/nova-project/all-world.png",
+    heroImage: `${ALLWORLD}/hero.png`,
     primaryCta: { label: "Visit Website", url: "https://allworld247.com/" },
     heroStats: [
       { value: "60+", label: "Countries Network" },
@@ -893,10 +927,10 @@ export const projects = [
     ],
     featuresTitle: "Platform Capabilities",
     screenshots: [
-      "/images/nova-project/all-world.png",
-      "/images/nova-project/all-world.png",
-      "/images/nova-project/all-world.png",
-      "/images/nova-project/all-world.png",
+      `${ALLWORLD}/hero.png`,
+      `${ALLWORLD}/hero.png`,
+      `${ALLWORLD}/hero.png`,
+      `${ALLWORLD}/hero.png`,
     ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
@@ -1088,16 +1122,16 @@ export const projects = [
       "+ Dashboard & Reporting",
       "+ System Architecture",
     ],
-    thumbnail: "/images/nova-project/mygestion-placeholder.svg",
+    thumbnail: `${MYGESTION}/cover.svg`,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: ["/images/nova-project/mygestion-placeholder.svg"],
+    images: [`${MYGESTION}/cover.svg`],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "MyGestion",
     displaySubtitle: "Call Center Management Software",
     heroDescription:
       "A custom internal management platform designed to centralize call center operations, manage business workflows, and improve administrative control through one secure and scalable system.",
-    heroImage: "/images/nova-project/mygestion-placeholder.svg",
+    heroImage: `${MYGESTION}/cover.svg`,
     heroStats: [
       { value: "CRM", label: "Client Management" },
       { value: "RBAC", label: "Role Permissions" },
@@ -1125,10 +1159,10 @@ export const projects = [
     ],
     featuresTitle: "Platform Capabilities",
     screenshots: [
-      "/images/nova-project/mygestion-placeholder.svg",
-      "/images/nova-project/mygestion-placeholder.svg",
-      "/images/nova-project/mygestion-placeholder.svg",
-      "/images/nova-project/mygestion-placeholder.svg",
+      `${MYGESTION}/cover.svg`,
+      `${MYGESTION}/cover.svg`,
+      `${MYGESTION}/cover.svg`,
+      `${MYGESTION}/cover.svg`,
     ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
@@ -1317,16 +1351,16 @@ export const projects = [
       "+ Conversion Optimization",
       "+ Campaign Analytics",
     ],
-    thumbnail: "/images/nova-project/switchleads-placeholder.svg",
+    thumbnail: `${SWITCHLEADS}/cover.svg`,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: ["/images/nova-project/switchleads-placeholder.svg"],
+    images: [`${SWITCHLEADS}/cover.svg`],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "SwitchLeads",
     displaySubtitle: "Lead Generation Platform",
     heroDescription:
       "A lead generation platform created to help businesses acquire, manage, qualify, and convert high-quality prospects through a structured digital acquisition ecosystem.",
-    heroImage: "/images/nova-project/switchleads-placeholder.svg",
+    heroImage: `${SWITCHLEADS}/cover.svg`,
     heroStats: [
       { value: "Leads", label: "Centralized Management" },
       { value: "CRM", label: "Pipeline Integration" },
@@ -1354,10 +1388,10 @@ export const projects = [
     ],
     featuresTitle: "Platform Capabilities",
     screenshots: [
-      "/images/nova-project/switchleads-placeholder.svg",
-      "/images/nova-project/switchleads-placeholder.svg",
-      "/images/nova-project/switchleads-placeholder.svg",
-      "/images/nova-project/switchleads-placeholder.svg",
+      `${SWITCHLEADS}/cover.svg`,
+      `${SWITCHLEADS}/cover.svg`,
+      `${SWITCHLEADS}/cover.svg`,
+      `${SWITCHLEADS}/cover.svg`,
     ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
@@ -1399,239 +1433,207 @@ export const projects = [
   {
     slug: "planostra",
     title: "Planostra",
-    subtitle: "Marketing Intelligence & Analytics SaaS",
+    subtitle: "AI Social Media Management Platform",
     seoTitle:
-      "Planostra Case Study | Marketing Intelligence SaaS by Nova Impact",
+      "Planostra Case Study | AI Social Media Management Platform by Nova Impact",
     metaDescription:
-      "Discover how Nova Impact designed and developed Planostra, a marketing intelligence and analytics SaaS platform built to turn data into actionable decisions.",
+      "Discover how Nova Impact designed and developed Planostra, an AI-powered social media management SaaS platform built to help businesses, agencies, and creators schedule, publish, manage, and analyze content across multiple social networks from one centralized dashboard.",
     url: "https://planostra.com/",
-    category: "SaaS / Marketing Analytics",
+    category: "SaaS / Social Media & Marketing Technology",
     client: "Planostra",
     startDate: null,
     handoverDate: null,
-    description: "Marketing intelligence that turns data into decisions.",
-    fullDescription: "Case study content for Planostra is coming soon. Nova Impact is preparing the full project breakdown covering strategy, product design, and growth outcomes.",
-    services: [
-      "+ Product Strategy",
-      "+ UX/UI Design",
-      "+ Front-end Development",
-      "+ Analytics Integration"
-    ],
-    thumbnail: "/images/nova-project/planostra.png",
-    thumbnailWidth: 1672,
-    thumbnailHeight: 941,
-    images: ["/images/nova-project/planostra.png"]
-  },
-  {
-    slug: "trustedpulse",
-    title: "TrustedPulse",
-    subtitle: "Review & Reputation Platform",
-    seoTitle:
-      "TrustedPulse Case Study | Review & Reputation Platform by Nova Impact",
-    metaDescription:
-      "Discover how Nova Impact designed and developed TrustedPulse, a review and reputation management SaaS platform that helps businesses collect, moderate, and activate customer reviews — like Trustpilot, built for conversion and trust.",
-    url: "https://trustedpulse.com/",
-    category: "SaaS / Reputation Management",
-    client: "TrustedPulse",
-    startDate: null,
-    handoverDate: null,
-    eyebrow: "Case Study · SaaS, Reviews & Reputation Management",
+    eyebrow: "Case Study · SaaS Platform, Social Media & Marketing Technology",
     heroHeadline:
-      "Turning Customer Reviews into a Scalable Trust & Conversion Engine",
+      "Turning Social Media Chaos into One Unified SaaS Dashboard",
     heroSubheadline:
-      "How Nova Impact designed and developed TrustedPulse — a complete review and reputation management SaaS platform built to collect, moderate, and activate authentic customer feedback at scale.",
+      "How Nova Impact designed and developed Planostra — an AI-powered social media management platform built to help businesses, agencies, and creators schedule, publish, manage, and analyze content across multiple social networks.",
     description:
-      "TrustedPulse is a review and reputation management SaaS platform that helps businesses gather, manage, and display authentic customer reviews and testimonials — with AI-powered moderation, conversion widgets, and SEO-rich social proof.",
+      "Planostra is an AI-powered social media management platform designed to help businesses, agencies, creators, and marketing teams schedule, publish, manage, and analyze content across multiple social networks from one centralized dashboard.",
     fullDescription:
-      "Online purchase decisions depend on trust. Yet most businesses struggle to collect reviews consistently, moderate feedback at scale, respond professionally, and activate social proof where it actually drives conversion — on product pages, checkout flows, landing pages, and local search results.\n\nTrustedPulse was created to solve this gap with a SaaS platform in the same category as Trustpilot, Avis Vérifiés, and other review ecosystems — but designed for marketing and operations teams who need faster activation, clearer ROI, and a unified workflow from collection to conversion.\n\nNova Impact supported the project from product positioning to platform launch — designing and building the full digital ecosystem behind the product, including public website, SaaS dashboard, review widgets, AI moderation workflows, and growth-oriented content architecture.",
+      "Managing content across multiple platforms can quickly become complex. Businesses and creators often work across several tabs, social accounts, file libraries, calendars, spreadsheets, and analytics dashboards.\n\nPlanostra was created to simplify that process by bringing content, publishing, analytics, and collaboration into one unified workspace.\n\nThe platform supports content scheduling, multi-channel publishing, content calendar planning, social media account management, team collaboration, campaign organization, analytics and reporting, bulk scheduling, content library management, automation workflows, and AI-assisted content creation — helping users save time, organize content, collaborate with teams, and grow their social media presence more efficiently.",
     quickStats: [
-      "26M+ reviews orchestrated monthly",
-      "500+ teams supported",
-      "AI-powered moderation & replies",
-      "Multi-channel review activation",
+      "12+ social network integrations",
+      "Centralized content dashboard",
+      "AI-assisted content creation",
+      "Team collaboration & approvals",
     ],
     challengeTitle:
-      "Building Trust at Scale in a Crowded Reviews Market",
+      "Turning Social Media Complexity into One Unified Workflow",
     challenge:
-      "The online reviews market is mature and competitive. Businesses already know that social proof matters — but they often face fragmented tools, slow moderation, poor widget performance, limited SEO impact, and platforms that are expensive or difficult to operationalize across teams.\n\nThe challenge was to create a SaaS product that could compete with established players like Trustpilot and Avis Vérifiés while offering a clearer path to ROI: simpler onboarding, faster review collection, AI-assisted moderation, flexible widget deployment, and dashboards that marketing, retail, and support teams could actually use.\n\nThe client needed more than a marketing website — a complete reputation management ecosystem with product design, dashboard development, widget infrastructure, content strategy, and acquisition-ready positioning.",
+      "The client needed a scalable SaaS platform capable of managing content creation, scheduling, publishing, analytics, collaboration, and integrations across many social networks.\n\nThe main challenges were to build a centralized social media dashboard, support multi-platform publishing, integrate with major social APIs, create a visual content calendar, enable content scheduling and bulk planning, support teams, roles, and approvals, provide analytics and performance reporting, manage subscriptions and user access, and optimize the platform for speed, reliability, and future scale.\n\nThe objective was not just to build another scheduling tool. It was to create a unified social media operating system for creators, brands, and agencies.",
     approachTitle:
-      "Combining Product Strategy, SaaS Design, and Conversion Marketing",
+      "Combining SaaS Architecture, Automation, and Marketing Workflow Design",
     approach:
-      "Nova Impact approached TrustedPulse as a full product launch in the reviews and UGC category. We focused on five core priorities:",
+      "Nova Impact approached Planostra as a full marketing-tech product designed around speed, clarity, and scalability. We focused on six strategic priorities:",
     approachPoints: [
       {
-        title: "Category Positioning",
-        text: "We positioned TrustedPulse as a modern alternative to legacy review platforms — emphasizing verified reviews, conversion widgets, AI workflows, and measurable business impact for SMEs and enterprise teams.",
+        title: "Unified Dashboard Experience",
+        text: "We designed the product around a centralized dashboard that gives users one place to manage accounts, content, publishing, analytics, and team activity.",
       },
       {
-        title: "SaaS User Experience",
-        text: "We designed a clear journey for collecting, moderating, responding to, and syndicating reviews — reducing operational friction for marketing, customer support, and multi-location teams.",
+        title: "Multi-Platform Publishing",
+        text: "Planostra supports publishing across multiple social networks — including Facebook, Instagram, X/Twitter, LinkedIn, YouTube, TikTok, Pinterest, Threads, Google Business Profile, WordPress, Bluesky, Telegram, Reddit, and more.",
       },
       {
-        title: "AI Review Workflows",
-        text: "We built product logic around AI-assisted UGC creation, instant moderation, automated categorization, intelligent analysis, and assisted replies — making review management 6x faster.",
+        title: "Content Scheduling and Calendar Planning",
+        text: "We developed a scheduling engine and visual content calendar to help users plan content weeks or months ahead, manage campaigns, and organize posts by platform, date, status, or campaign type.",
       },
       {
-        title: "Trust-Centered Brand Design",
-        text: "We created a credible, conversion-focused visual identity that communicates transparency, authenticity, and enterprise-grade reliability across the public site and SaaS dashboard.",
+        title: "Team Collaboration",
+        text: "For agencies and businesses, we developed user management, role-based permissions, approval workflows, internal comments, and multi-brand management logic.",
       },
       {
-        title: "Growth & SEO Ecosystem",
-        text: "We developed comparison content, industry landing pages, rich-snippet-ready structures, and activation-focused messaging to support organic acquisition and competitive evaluation journeys.",
+        title: "Analytics and Performance Insights",
+        text: "We built analytics logic to help users understand content performance, engagement, reach, clicks, audience behavior, and best posting times — with real-time metrics and exportable reports.",
+      },
+      {
+        title: "AI and Automation",
+        text: "We integrated automation workflows and AI support to help users create, organize, schedule, and optimize content faster while reducing repetitive work.",
       },
     ],
-    solutionTitle: "A Complete Review & Reputation Management SaaS Platform",
+    solutionTitle: "A Complete Social Media Management SaaS Platform",
     solution:
-      "Nova Impact designed, developed, and launched a complete SaaS platform for review collection, moderation, and activation.\n\nThe solution included public website design and development, SaaS dashboard UX/UI, review collection workflows, AI-powered moderation and reply assistance, embeddable marketing widgets, loyalty and referral program modules, multi-location reputation management, analytics and ROI dashboards, responsive design, SEO foundation with schema and rich snippets, conversion-focused landing pages, industry-specific solution pages, competitive comparison content, brand identity system, and integration-ready architecture for CRM and commerce platforms.\n\nThe platform helps businesses turn customer feedback into structured social proof — displayed at the moments that matter most for trust, conversion, and long-term brand reputation.",
-    resultsTitle: "Business Impact",
+      "Nova Impact designed and developed Planostra as a scalable SaaS platform for content planning, publishing, collaboration, and analytics.\n\nThe solution included web design, SaaS platform development, dashboard development, social media management platform, content scheduling system, multi-channel publishing system, social media API integrations, analytics dashboard, team collaboration system, content calendar development, automation workflows, user management, subscription management, SEO optimization, and performance optimization.\n\nPlanostra supports a clear workflow: sign up, connect accounts, schedule posts, and track results. The platform connects with major channels such as Facebook, Instagram, Twitter/X, LinkedIn, Pinterest, TikTok, YouTube, Google Business, Telegram, Threads, and WordPress — plus APIs for Bluesky, Reddit, Snapchat, and more.\n\nBy combining multi-channel publishing, AI assistance, content planning, analytics, collaboration, and automation, Planostra became a complete social media operating system for brands, agencies, and creators.",
+    resultsTitle: "Product Impact",
     results: [
-      "Professional SaaS platform launch in the reviews category",
-      "Scalable review collection and moderation workflows",
-      "AI-assisted UGC creation, categorization, and replies",
-      "Conversion widgets and rich-snippet-ready review activation",
-      "Stronger brand positioning vs. Trustpilot and Avis Vérifiés",
-      "Multi-industry solution architecture for growth teams",
-      "Unified dashboard for marketing, retail, and support alignment",
-      "Foundation for subscription growth and partner integrations",
+      "AI-powered social media management platform",
+      "Centralized dashboard for content and accounts",
+      "Multi-platform publishing across 12+ social networks",
+      "Smart scheduling and content calendar system",
+      "Advanced analytics and performance reporting",
+      "Team collaboration and approval workflows",
+      "Content library and bulk scheduling support",
+      "Subscription and user management system",
+      "Scalable SaaS architecture for future growth",
+      "SEO and performance optimized platform",
     ],
     whyItMatters: {
-      title: "From Review Collection to a Scalable Trust Platform",
+      title: "From Social Media Chaos to a Unified Marketing Workspace",
       content:
-        "TrustedPulse shows how a crowded SaaS category can still be entered with clarity, speed, and product discipline. Nova Impact built a full ecosystem designed to help businesses collect authentic reviews, moderate feedback efficiently, respond with confidence, activate social proof across high-intent pages, and measure reputation as a growth lever — not just a compliance checkbox.",
+        "Planostra shows how a SaaS platform can transform the daily workflow of social media teams. Instead of switching between multiple apps, spreadsheets, calendars, and analytics tools, users can manage their content operations from one unified dashboard. Nova Impact created a platform designed to help users connect multiple social accounts, plan content visually, schedule posts across channels, collaborate with teams, manage approvals, analyze content performance, automate repetitive publishing tasks, and grow social media results with less friction.",
     },
     servicesDelivered: [
       {
-        category: "Strategy & Branding",
+        category: "Design & SaaS Development",
         items: [
-          "Brand Strategy",
-          "Logo Design & Brand Identity Development",
-          "Visual Identity System",
-          "Product Positioning",
-          "Competitive Positioning vs. Trustpilot & Avis Vérifiés",
-          "Go-To-Market Strategy",
-        ],
-      },
-      {
-        category: "Design & Development",
-        items: [
-          "UX/UI Design",
-          "Website Design & Development",
-          "SaaS Dashboard Design & Development",
-          "Review Widget Design & Development",
-          "User Journey Optimization",
-          "Mobile Responsive Design",
+          "Web Design",
+          "SaaS Development",
+          "Dashboard Development",
+          "Social Media Management Platform",
+          "Mobile Responsive Interface",
           "Performance Optimization",
-          "SEO Foundation Setup",
-          "Conversion Rate Optimization",
+          "SEO Optimization",
         ],
       },
       {
-        category: "Product Development",
+        category: "Publishing & Scheduling",
         items: [
-          "Review Collection & Invitation System",
-          "AI Moderation & Categorization Engine",
-          "Assisted Reply Workflows",
-          "UGC Creation & Translation Tools",
-          "Loyalty & Referral Program Modules",
-          "Multi-Location Reputation Management",
-          "Analytics & ROI Dashboard",
-          "CRM & Commerce Integrations",
+          "Content Scheduling System",
+          "Multi-Channel Publishing",
+          "Content Calendar Development",
+          "Bulk Scheduling Logic",
+          "Content Library Management",
+          "Automation Workflows",
+          "AI Content Assistant",
         ],
       },
       {
-        category: "Digital Marketing",
+        category: "Integrations & Infrastructure",
         items: [
-          "Marketing Strategy",
-          "SEO Content Architecture",
-          "Comparison & Alternative Landing Pages",
-          "Industry Solution Pages",
-          "Lead Generation Campaigns",
-          "Email Marketing",
-          "Social Media Marketing",
+          "Social Media API Integrations",
+          "REST API Development",
+          "GraphQL Architecture",
+          "AWS Cloud Infrastructure",
+          "Docker Deployment",
+          "Redis Queue / Caching Logic",
+          "PostgreSQL Database Architecture",
         ],
       },
       {
-        category: "Creative Production",
+        category: "Team & Business Features",
         items: [
-          "Social Media Content Creation",
-          "Marketing Creatives",
-          "Product Visual Design",
-          "Case Study & Testimonial Layouts",
-          "Promotional Asset Design",
+          "Team Collaboration System",
+          "User Management",
+          "Role-Based Access",
+          "Approval Workflows",
+          "Subscription Management",
+          "Billing System",
+          "Multi-Brand / Client Workspace Logic",
         ],
       },
       {
-        category: "Growth & Analytics",
+        category: "Analytics & Growth",
         items: [
-          "Funnel Optimization",
-          "Review Activation Strategy",
-          "User Behavior Analytics",
+          "Analytics Dashboard",
           "Performance Reporting",
-          "Product Growth Strategy",
+          "Campaign Tracking",
+          "Best Time Analysis",
+          "Exportable Reports",
           "Data-Driven Optimization",
         ],
       },
     ],
     services: [
-      "+ Product Strategy & Branding",
-      "+ SaaS Dashboard Development",
-      "+ Review Widgets & UGC Activation",
-      "+ AI Moderation Workflows",
-      "+ SEO & Comparison Content",
-      "+ Conversion Optimization",
+      "+ SaaS Platform Development",
+      "+ Multi-Channel Publishing",
+      "+ Social Media API Integrations",
+      "+ Content Calendar & Scheduling",
+      "+ Team Collaboration & Approvals",
+      "+ AI Content Assistant",
     ],
-    thumbnail: "/images/trustedpulse-portfolio.webp",
+    thumbnail: `${PLANOSTRA}/hero.png`,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: ["/images/trustedpulse-portfolio.webp"],
+    images: [`${PLANOSTRA}/hero.png`],
     heroLabel: "FEATURED PROJECT",
-    displayTitle: "TrustedPulse",
-    displaySubtitle: "Review & Reputation SaaS Platform",
+    displayTitle: "Planostra",
+    displaySubtitle: "AI Social Media Management Platform",
     heroDescription:
-      "A complete reviews and reputation management SaaS platform — built to help businesses collect verified customer feedback, moderate at scale with AI, and activate social proof across every high-intent touchpoint, from product pages to local SEO.",
-    heroImage: "/images/trustedpulse-portfolio.webp",
-    primaryCta: { label: "Visit Website", url: "https://trustedpulse.com/" },
+      "An AI-powered social media management platform — built to help businesses, agencies, and creators schedule, publish, manage, and analyze content across multiple social networks from one centralized dashboard.",
+    heroImage: `${PLANOSTRA}/hero.png`,
+    primaryCta: { label: "Visit Website", url: "https://planostra.com/" },
     heroStats: [
-      { value: "26M+", label: "Reviews Orchestrated Monthly" },
-      { value: "500+", label: "Teams Supported" },
-      { value: "AI", label: "Moderation & Replies" },
+      { value: "12+", label: "Social Networks" },
+      { value: "AI", label: "Content Assistant" },
+      { value: "SaaS", label: "Unified Dashboard" },
     ],
     challengePoints: [
-      "Review platforms like Trustpilot are powerful but often costly and hard to operationalize",
-      "Businesses need faster collection, moderation, and widget activation workflows",
-      "Marketing, retail, and support teams lack a single source of truth for customer feedback",
-      "Client needed a full SaaS ecosystem — not just a comparison landing page",
+      "Social teams juggle tabs, calendars, spreadsheets, and analytics tools",
+      "Multi-platform publishing requires complex API integrations",
+      "Agencies need roles, approvals, and multi-brand workspaces",
+      "Client needed a scalable social OS—not just a scheduling tool",
     ],
     solutionPoints: [
-      "Unified review collection, moderation, and activation in one SaaS dashboard",
-      "AI-assisted UGC creation, categorization, and reply workflows",
-      "Conversion-focused widgets and rich-snippet-ready review display",
-      "Industry pages, comparison content, and growth-ready product positioning",
+      "Centralized dashboard for accounts, content, publishing, and analytics",
+      "Visual content calendar with bulk scheduling and automation",
+      "API integrations across Facebook, Instagram, LinkedIn, TikTok, and more",
+      "Team collaboration, subscriptions, and AI-assisted content workflows",
     ],
     features: [
-      "Review Collection",
-      "AI Moderation",
-      "Assisted Replies",
-      "Marketing Widgets",
-      "Loyalty & Referral",
-      "SEO Rich Snippets",
+      "Content Scheduling",
+      "Multi-Channel Publishing",
+      "Content Calendar",
+      "AI Content Assistant",
+      "Team Approvals",
+      "Analytics Dashboard",
     ],
-    featuresTitle: "Platform Capabilities",
-    screenshots: ["/images/trustedpulse-portfolio.webp"],
-    screenshotsTitle: "Platform Screenshots",
+    featuresTitle: "Platform Features",
+    screenshots: [`${PLANOSTRA}/hero.png`],
+    screenshotsTitle: "Visual Mockups",
     processSteps: [
       "Discovery",
       "UX / UI Design",
       "SaaS Development",
-      "AI Integration",
+      "API Integration",
       "Launch",
     ],
     impactDescription:
-      "By combining SaaS development, AI review workflows, trust-centered design, and conversion marketing, TrustedPulse became more than a reviews tool — a scalable reputation platform built to compete in the same category as Trustpilot and leading UGC ecosystems.",
+      "By combining multi-channel publishing, AI assistance, content planning, analytics, collaboration, and automation, Planostra became more than a scheduling tool — a complete social media operating system for brands, agencies, and creators.",
     impactStats: [
-      { value: "26M+", label: "Monthly Review Volume" },
-      { value: "500+", label: "Teams Onboarded" },
-      { value: "AI", label: "Moderation Speed" },
+      { value: "12+", label: "Social Networks" },
+      { value: "AI", label: "Content Assistant" },
+      { value: "Teams", label: "Collaboration Ready" },
       { value: "SaaS", label: "Platform Launch" },
     ],
     techStack: [
@@ -1639,17 +1641,227 @@ export const projects = [
       "React",
       "TypeScript",
       "Node.js",
-      "AI APIs",
-      "Stripe",
-      "Google Analytics",
-      "Salesforce",
-      "Figma",
+      "PostgreSQL",
+      "Redis",
+      "REST API",
+      "GraphQL",
+      "AWS",
+      "Docker",
     ],
-    similarSlugs: ["exifinjector", "planostra", "jeswitch-fr", "zoomassurance-fr"],
-    ctaTitle: "Need a SaaS platform built for trust and growth?",
+    similarSlugs: ["trustedpulse", "exifinjector", "styliste-ai-fashion-assistant-app", "jeswitch-fr"],
+    ctaTitle: "Need a SaaS platform built for scale?",
     ctaText:
-      "At Nova Impact, we design and develop digital products that combine strategy, technology, design, and performance marketing — whether you need a review platform, reputation dashboard, or complete growth ecosystem.",
-    ctaButton: "Book a Strategy Call",
+      "At Nova Impact, we design and develop SaaS platforms, dashboards, automation systems, API integrations, and marketing technology products built for growth.",
+    ctaButton: "Start Your Project",
+  },
+  {
+    slug: "trustedpulse",
+    title: "TrustedPulse",
+    subtitle: "Reviews & Reputation Management Platform",
+    seoTitle:
+      "TrustedPulse Case Study | Reviews & Reputation Management Platform by Nova Impact",
+    metaDescription:
+      "Discover how Nova Impact designed and developed TrustedPulse, a customer reviews and reputation management SaaS platform built to help businesses collect verified reviews, manage profiles, monitor reputation, and strengthen consumer trust through analytics and API integrations.",
+    url: "https://trustedpulse.com/",
+    category: "SaaS / Customer Reviews & Reputation Management",
+    client: "TrustedPulse",
+    startDate: null,
+    handoverDate: null,
+    eyebrow: "Case Study · SaaS Platform, Customer Reviews & Reputation Management",
+    heroHeadline:
+      "Turning Customer Feedback into a Centralized Reputation Management Ecosystem",
+    heroSubheadline:
+      "How Nova Impact designed and developed TrustedPulse — a customer reviews and reputation management platform built to help businesses collect authentic feedback, monitor online reputation, and build consumer trust.",
+    description:
+      "TrustedPulse is a customer reviews and reputation management platform designed to help businesses collect authentic feedback, monitor online reputation, manage business profiles, and build consumer trust through verified reviews, ratings, analytics, and reputation insights.",
+    fullDescription:
+      "Online reputation plays a critical role in how consumers choose brands, services, local businesses, and digital platforms. Businesses need more than isolated review pages — they need a centralized system to collect, manage, analyze, and activate customer feedback across multiple touchpoints.\n\nTrustedPulse was created to solve this challenge with a modern SaaS platform that supports verified customer reviews, business profile management, review collection workflows, reputation monitoring, customer feedback management, business directory discovery, advanced search and filtering, Google Maps-based business visibility, analytics dashboards, and SEO-ready reputation pages.\n\nNova Impact built the platform to help businesses strengthen trust while giving consumers a clearer way to evaluate companies through authentic review data.",
+    quickStats: [
+      "Verified customer review system",
+      "Business profile directory",
+      "Google Maps API integration",
+      "Analytics & reputation dashboards",
+    ],
+    challengeTitle:
+      "Turning Customer Feedback into a Scalable Trust Platform",
+    challenge:
+      "The client needed a platform capable of bringing together reviews, business profiles, ratings, reputation insights, and discovery tools into one centralized ecosystem.\n\nThe main challenges were to build a scalable review management system, support verified customer feedback, create business profile pages, enable search and filtering across businesses, integrate location-based discovery with Google Maps, provide an admin dashboard for operational management, build secure user authentication, structure review and business data efficiently, and optimize the platform for performance and SEO visibility.\n\nThe objective was not just to build a website. It was to create a reputation management SaaS platform capable of supporting businesses, consumers, administrators, and future product growth.",
+    approachTitle:
+      "Combining Review Technology, Business Discovery, and Reputation Analytics",
+    approach:
+      "Nova Impact approached TrustedPulse as a complete reputation-tech platform built around trust, transparency, and performance. We focused on five strategic priorities:",
+    approachPoints: [
+      {
+        title: "Trust-Centered Product Experience",
+        text: "We designed the platform around verified reviews, clear ratings, business profiles, and transparent customer feedback — helping consumers evaluate businesses more confidently while helping companies turn reputation into a business asset.",
+      },
+      {
+        title: "Review Management Infrastructure",
+        text: "We developed structured workflows for collecting, managing, moderating, and displaying customer reviews — creating a stronger foundation for businesses to monitor customer sentiment and respond more effectively.",
+      },
+      {
+        title: "Business Directory and Search Experience",
+        text: "TrustedPulse required more than review pages. We built directory logic, search features, filters, and business profile structures to make companies easier to discover and compare.",
+      },
+      {
+        title: "Dashboard and Analytics",
+        text: "We designed dashboard functionality to help administrators and businesses monitor review activity, profile performance, customer feedback, and reputation metrics from one central interface.",
+      },
+      {
+        title: "Integration and Scalability",
+        text: "We built the platform with API integration capability, Google Maps API functionality, secure authentication, scalable database architecture, SEO optimization, and performance-focused infrastructure.",
+      },
+    ],
+    solutionTitle: "A Scalable Review and Reputation Management SaaS Platform",
+    solution:
+      "Nova Impact designed and developed a modern platform that brings together customer reviews, business profiles, reputation analytics, and business discovery in one digital ecosystem.\n\nThe solution included website design, website development, admin dashboard development, review management system, reputation management platform, customer feedback system, business directory development, advanced search and filtering, Google Maps API integration, third-party API integration, user authentication, analytics dashboard, database architecture, SEO optimization, and performance optimization.\n\nThe live platform also highlights features such as review collection through email, SMS, and QR code; review moderation and replies; widgets and badges; analytics reports; multi-platform syndication; accessibility; and AI-assisted review replies.\n\nBy combining SaaS product development, reputation workflows, business directory logic, and analytics, TrustedPulse became a centralized platform for building consumer trust through verified customer feedback.",
+    resultsTitle: "Product Impact",
+    results: [
+      "Scalable SaaS platform for reviews and reputation management",
+      "Centralized business profile directory",
+      "Verified review and customer feedback system",
+      "Reputation management dashboard",
+      "Review collection workflows",
+      "Advanced search and filtering engine",
+      "Google Maps API integration",
+      "Third-party API integration capability",
+      "Business analytics and reputation insights",
+      "SEO and performance optimized platform",
+    ],
+    whyItMatters: {
+      title: "From Customer Reviews to a Complete Reputation Ecosystem",
+      content:
+        "TrustedPulse shows how review technology can become a powerful business growth system when combined with analytics, discovery, and trust-building tools. Instead of simply displaying customer opinions, the platform helps businesses collect authentic feedback, manage online reputation, monitor customer sentiment, display trust signals, improve visibility through SEO, manage business profiles, and make better decisions through analytics. Nova Impact created a platform designed to support both business credibility and consumer confidence.",
+    },
+    servicesDelivered: [
+      {
+        category: "Design & Development",
+        items: [
+          "Website Design",
+          "Website Development",
+          "Admin Dashboard Development",
+          "SaaS Platform Development",
+          "Business Directory Development",
+          "Mobile Responsive Interface",
+          "Performance Optimization",
+          "SEO Optimization",
+        ],
+      },
+      {
+        category: "Review & Reputation Platform",
+        items: [
+          "Review Management System",
+          "Reputation Management Platform",
+          "Customer Feedback System",
+          "Review Collection Workflows",
+          "Verified Review System",
+          "Business Profile Directory",
+          "Review Moderation Logic",
+          "Reputation Monitoring",
+        ],
+      },
+      {
+        category: "Search, Data & Integrations",
+        items: [
+          "Advanced Search Engine",
+          "Search & Filter System",
+          "Google Maps API Integration",
+          "Third-Party API Integration",
+          "REST API Development",
+          "Database Architecture",
+          "Business Data Structuring",
+          "Analytics Dashboard",
+        ],
+      },
+      {
+        category: "Security & Infrastructure",
+        items: [
+          "User Authentication",
+          "Secure Access System",
+          "Cloud Infrastructure",
+          "Database Security Foundations",
+          "Scalable Backend Architecture",
+          "Performance Monitoring",
+        ],
+      },
+    ],
+    services: [
+      "+ SaaS Platform Development",
+      "+ Review & Reputation Management",
+      "+ Business Directory & Search",
+      "+ Google Maps API Integration",
+      "+ Analytics Dashboard",
+      "+ SEO & Performance Optimization",
+    ],
+    thumbnail: `${TRUSTEDPULSE}/cover.webp`,
+    thumbnailWidth: 1672,
+    thumbnailHeight: 941,
+    images: [`${TRUSTEDPULSE}/cover.webp`],
+    heroLabel: "FEATURED PROJECT",
+    displayTitle: "TrustedPulse",
+    displaySubtitle: "Reviews & Reputation Management Platform",
+    heroDescription:
+      "A customer reviews and reputation management platform — built to help businesses collect authentic feedback, monitor online reputation, manage business profiles, and build consumer trust through verified reviews, ratings, analytics, and reputation insights.",
+    heroImage: `${TRUSTEDPULSE}/cover.webp`,
+    primaryCta: { label: "Visit Website", url: "https://trustedpulse.com/" },
+    heroStats: [
+      { value: "Verified", label: "Customer Reviews" },
+      { value: "Maps", label: "Google Maps Integration" },
+      { value: "SaaS", label: "Reputation Dashboard" },
+    ],
+    challengePoints: [
+      "Businesses need a centralized system—not isolated review pages",
+      "Reviews, profiles, ratings, and discovery tools must work together",
+      "Location-based discovery requires Google Maps integration",
+      "Client needed a scalable reputation SaaS—not just a marketing website",
+    ],
+    solutionPoints: [
+      "Review management with collection via email, SMS, and QR code",
+      "Business directory with advanced search and filtering",
+      "Admin dashboard with reputation analytics and moderation",
+      "Google Maps API, third-party APIs, and SEO-ready architecture",
+    ],
+    features: [
+      "Verified Reviews",
+      "Business Profiles",
+      "Review Moderation",
+      "Google Maps",
+      "Analytics Dashboard",
+      "API Integrations",
+    ],
+    featuresTitle: "Platform Features",
+    screenshots: [`${TRUSTEDPULSE}/cover.webp`],
+    screenshotsTitle: "Visual Mockups",
+    processSteps: [
+      "Discovery",
+      "UX / UI Design",
+      "SaaS Development",
+      "API Integration",
+      "Launch",
+    ],
+    impactDescription:
+      "By combining verified reviews, business discovery, reputation analytics, and centralized dashboard management, TrustedPulse became more than a review website — a complete trust infrastructure for businesses and consumers.",
+    impactStats: [
+      { value: "Verified", label: "Review System" },
+      { value: "Directory", label: "Business Profiles" },
+      { value: "Maps", label: "Location Discovery" },
+      { value: "SaaS", label: "Platform Launch" },
+    ],
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "MongoDB",
+      "Google Maps API",
+      "REST API",
+      "Cloud Infrastructure",
+    ],
+    similarSlugs: ["exifinjector", "planostra", "styliste-ai-fashion-assistant-app", "jeswitch-fr"],
+    ctaTitle: "Need a SaaS platform built around trust and growth?",
+    ctaText:
+      "At Nova Impact, we design and develop scalable SaaS platforms, dashboards, directories, API integrations, and data-driven digital products — whether you need a review platform, business directory, or reputation management system.",
+    ctaButton: "Start Your Project",
   },
   {
     slug: "exifinjector",
@@ -1820,16 +2032,16 @@ export const projects = [
       "+ Paid Advertising",
       "+ Video & Motion Design",
     ],
-    thumbnail: "/images/nova-project/exif.png",
+    thumbnail: `${EXIFINJECTOR}/hero.png`,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: ["/images/nova-project/exif.png"],
+    images: [`${EXIFINJECTOR}/hero.png`],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "EXIF Injector",
     displaySubtitle: "AI Metadata SaaS Platform",
     heroDescription:
       "A complete SaaS platform designed to help creators, agencies, photographers, marketers, and e-commerce businesses manage image metadata at scale — from brand identity and public website to SaaS dashboard, AI workflows, and growth strategy.",
-    heroImage: "/images/nova-project/exif.png",
+    heroImage: `${EXIFINJECTOR}/hero.png`,
     primaryCta: { label: "Visit Website", url: "https://exifinjector.com/" },
     heroStats: [
       { value: "AI", label: "Metadata Automation" },
@@ -1858,10 +2070,10 @@ export const projects = [
     ],
     featuresTitle: "Product Capabilities",
     screenshots: [
-      "/images/nova-project/exif.png",
-      "/images/nova-project/exif.png",
-      "/images/nova-project/exif.png",
-      "/images/nova-project/exif.png",
+      `${EXIFINJECTOR}/hero.png`,
+      `${EXIFINJECTOR}/hero.png`,
+      `${EXIFINJECTOR}/hero.png`,
+      `${EXIFINJECTOR}/hero.png`,
     ],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
@@ -1894,6 +2106,652 @@ export const projects = [
     ctaText:
       "At Nova Impact, we design and develop digital products that combine strategy, technology, design, and performance marketing — whether you need a SaaS platform, dashboard, or complete growth ecosystem.",
     ctaButton: "Book a Strategy Call",
+  },
+  {
+    slug: "styliste-ai-fashion-assistant-app",
+    title: "Styliste",
+    subtitle: "AI Fashion Assistant Mobile App",
+    seoTitle:
+      "Styliste Case Study | AI Fashion Assistant App by Nova Impact",
+    metaDescription:
+      "Discover how Nova Impact designed and developed Styliste, an AI-powered fashion assistant mobile app built to help users generate outfits, organize collections, save looks, and share fashion inspiration through a seamless mobile experience.",
+    category: "Mobile Application / Fashion Technology",
+    client: "Styliste",
+    startDate: null,
+    handoverDate: null,
+    eyebrow: "Case Study · Mobile Application, Fashion Technology & AI",
+    heroHeadline:
+      "Turning Outfit Inspiration into a Smart Mobile Fashion Assistant",
+    heroSubheadline:
+      "How Nova Impact designed and developed Styliste — an AI-powered fashion assistant mobile application built to help users discover, generate, save, and share outfit ideas.",
+    description:
+      "Styliste is an AI-powered fashion assistant mobile application designed to help users discover outfit inspiration, generate personalized looks, organize fashion collections, and share style content through an intuitive mobile experience.",
+    fullDescription:
+      "Fashion discovery is highly visual, personal, and fast-moving. Users often save inspiration across multiple platforms, screenshots, social media posts, and shopping apps, making it difficult to organize their style ideas in one place.\n\nStyliste was created to solve this problem with a mobile-first AI fashion assistant that helps users discover outfit inspiration, generate personalized looks, save favorite styles, organize collections, manage their profile, publish fashion content, and share inspiration with others.\n\nNova Impact built the application as a complete AI-powered fashion ecosystem, designed for both usability and scalability — combining UI/UX design, product design, AI integration, React Native development, backend development, authentication, social features, analytics, and deployment support.",
+    quickStats: [
+      "AI-powered outfit generation",
+      "Cross-platform mobile app",
+      "Collections & saved looks",
+      "Social content publishing",
+    ],
+    challengeTitle: "Creating a Personalized Fashion Experience Powered by AI",
+    challenge:
+      "The client needed a mobile application that could combine fashion discovery, AI outfit generation, social interaction, and user personalization in one seamless product.\n\nThe main challenges were to create an intuitive mobile user experience, integrate AI-powered outfit generation, support user profiles and saved collections, build a smooth authentication system, enable social content sharing, manage data efficiently across the app, optimize app performance, and prepare the product for deployment and future growth.\n\nThe goal was not just to build a fashion app — it was to create a modern AI-powered style companion that feels useful, engaging, and easy to use every day.",
+    approachTitle:
+      "Combining Mobile Product Design, AI, and Social Fashion Features",
+    approach:
+      "Nova Impact approached Styliste as a mobile-first product designed around personalization, creativity, and engagement. We focused on five core priorities:",
+    approachPoints: [
+      {
+        title: "Mobile-First User Experience",
+        text: "We designed the app around simple navigation, clean screens, fast actions, and a visually attractive fashion interface — making outfit discovery and saving feel natural, smooth, and enjoyable.",
+      },
+      {
+        title: "AI Outfit Generation",
+        text: "We integrated AI functionality to help users generate personalized outfit ideas based on preferences, style inspiration, occasions, or fashion goals — transforming the app from a static inspiration tool into an interactive fashion assistant.",
+      },
+      {
+        title: "Collections and Saved Looks",
+        text: "We developed features that allow users to save, organize, and revisit outfit ideas, helping them build their own personal fashion library.",
+      },
+      {
+        title: "Social and Publishing Features",
+        text: "Styliste was designed to support content sharing and fashion expression, allowing users to publish looks, interact with style content, and build a more engaging community experience.",
+      },
+      {
+        title: "Scalable Technical Foundation",
+        text: "We built the application with a modern mobile stack, backend architecture, authentication, APIs, cloud infrastructure, analytics, and support systems to prepare the product for growth.",
+      },
+    ],
+    solutionTitle: "A Complete AI Fashion Assistant App",
+    solution:
+      "Nova Impact designed and developed a cross-platform mobile application for Styliste, focused on personalization, usability, and fashion discovery.\n\nThe solution included mobile application design, cross-platform React Native development, AI outfit generator, user profile management, saved looks and collections, content publishing system, authentication system, backend development, API development, Firebase integration, database architecture, Google authentication, analytics integration, performance optimization, app deployment support, and ongoing maintenance planning.\n\nThe application enables users to discover, generate, save, and share fashion inspiration from one mobile platform. By combining AI, mobile UX, and social fashion features, Styliste became a complete digital product experience for modern fashion users.",
+    resultsTitle: "Product Impact",
+    results: [
+      "Complete AI-powered fashion assistant app",
+      "Cross-platform mobile experience",
+      "Personalized outfit generation",
+      "User profile and authentication system",
+      "Collections and saved looks functionality",
+      "Content publishing and social features",
+      "Scalable backend and API infrastructure",
+      "Analytics integration for product insights",
+      "App deployment-ready mobile product",
+      "Ongoing maintenance and support foundation",
+    ],
+    whyItMatters: {
+      title: "From Outfit Inspiration to an AI Fashion Ecosystem",
+      content:
+        "Styliste shows how AI can transform a mobile fashion app into a more personalized and interactive experience. Instead of simply browsing style inspiration, users can generate looks, save ideas, organize collections, manage profiles, and share fashion content from one mobile application. Nova Impact created a product designed to simplify fashion discovery, personalize outfit inspiration, improve user engagement, support social content sharing, create a scalable mobile platform, and prepare the brand for long-term app growth.",
+    },
+    servicesDelivered: [
+      {
+        category: "Product & Strategy",
+        items: [
+          "Product Design",
+          "Feature Planning",
+          "User Journey Mapping",
+          "Mobile App Strategy",
+          "Product Experience Design",
+          "App Store Release Planning",
+        ],
+      },
+      {
+        category: "Design & Development",
+        items: [
+          "Mobile App Development",
+          "UI/UX Design",
+          "React Native Development",
+          "Cross-Platform Development",
+          "Backend Development",
+          "API Development",
+          "Database Architecture",
+          "Performance Optimization",
+        ],
+      },
+      {
+        category: "AI & Core Features",
+        items: [
+          "AI Integration",
+          "AI Outfit Generator",
+          "Personalized Look Generation",
+          "User Profile Management",
+          "Collections & Saved Looks",
+          "Content Publishing System",
+          "Social Features Development",
+        ],
+      },
+      {
+        category: "Authentication & Infrastructure",
+        items: [
+          "Firebase Integration",
+          "Google Authentication",
+          "User Authentication System",
+          "Cloud Infrastructure",
+          "REST API Development",
+          "Data Management",
+          "Security Foundations",
+        ],
+      },
+      {
+        category: "Growth & Support",
+        items: [
+          "Analytics Integration",
+          "App Store Deployment",
+          "Maintenance & Support",
+          "Performance Monitoring",
+          "Feature Enhancements",
+          "Product Optimization",
+        ],
+      },
+    ],
+    services: [
+      "+ Mobile App Design & Development",
+      "+ AI Outfit Generation",
+      "+ React Native Cross-Platform",
+      "+ Firebase & Backend APIs",
+      "+ Social & Publishing Features",
+      "+ App Store Deployment",
+    ],
+    thumbnail: STYLISTE_COVER,
+    thumbnailWidth: 1536,
+    thumbnailHeight: 1024,
+    images: STYLISTE_SCREENSHOTS,
+    heroLabel: "FEATURED PROJECT",
+    displayTitle: "Styliste",
+    displaySubtitle: "AI Fashion Assistant Mobile App",
+    heroDescription:
+      "An AI-powered fashion assistant mobile application — built to help users discover outfit inspiration, generate personalized looks, organize collections, manage profiles, and share fashion content through a seamless mobile experience.",
+    heroImage: STYLISTE_COVER,
+    heroStats: [
+      { value: "AI", label: "Outfit Generation" },
+      { value: "React Native", label: "Cross-Platform App" },
+      { value: "Social", label: "Content Publishing" },
+    ],
+    challengePoints: [
+      "Fashion inspiration is scattered across screenshots, social media, and shopping apps",
+      "Users need AI personalization—not just static style browsing",
+      "Collections, profiles, and social sharing must work in one seamless flow",
+      "Client needed a deployment-ready mobile product—not just UI mockups",
+    ],
+    solutionPoints: [
+      "AI outfit generator based on preferences, occasions, and style goals",
+      "Saved looks, collections, and user profile management",
+      "Content publishing and social fashion features",
+      "React Native app with Firebase, MongoDB, REST APIs, and analytics",
+    ],
+    features: [
+      "AI Outfit Generator",
+      "Saved Collections",
+      "User Profiles",
+      "Content Publishing",
+      "Google Auth",
+      "Analytics",
+    ],
+    featuresTitle: "Core App Features",
+    screenshots: STYLISTE_SCREENSHOTS,
+    screenshotWidths: [3000, 3000, 4520, 4520, 3000],
+    screenshotHeights: [3000, 3000, 3000, 3000, 3000],
+    imageLabels: [
+      "Mobile app onboarding",
+      "Outfit inspiration feed",
+      "AI outfit generator",
+      "Saved collections",
+      "User profile & sharing",
+    ],
+    screenshotsTitle: "Mobile App Mockups",
+    processSteps: [
+      "Discovery",
+      "UX / UI Design",
+      "React Native Development",
+      "AI Integration",
+      "Launch",
+    ],
+    impactDescription:
+      "By combining mobile development, AI integration, product design, and social fashion features, Styliste became more than a mobile app — a personalized fashion ecosystem for discovering, generating, saving, and sharing style inspiration.",
+    impactStats: [
+      { value: "AI", label: "Outfit Generation" },
+      { value: "Mobile", label: "Cross-Platform App" },
+      { value: "Social", label: "Content Publishing" },
+      { value: "Scale", label: "Backend Ready" },
+    ],
+    techStack: [
+      "React Native",
+      "TypeScript",
+      "Tailwind CSS",
+      "Firebase",
+      "MongoDB",
+      "REST API",
+      "Google Authentication",
+      "Analytics",
+      "Figma",
+    ],
+    similarSlugs: ["trustedpulse", "exifinjector", "planostra", "jeswitch-fr"],
+    ctaTitle: "Need a mobile app built for growth?",
+    ctaText:
+      "At Nova Impact, we design and develop mobile applications that combine product strategy, beautiful UI/UX, scalable technology, AI integration, and deployment support.",
+    ctaButton: "Start Your Project",
+  },
+  {
+    slug: "velmora-premium-ecommerce-platform",
+    title: "Velmora",
+    subtitle: "Premium Fashion & Lifestyle E-Commerce",
+    seoTitle:
+      "Velmora Case Study | Premium E-Commerce Website by Nova Impact",
+    metaDescription:
+      "Discover how Nova Impact designed and developed Velmora, a premium e-commerce platform built for fashion and lifestyle products, combining elegant branding, mobile optimization, secure payments, SEO, GEO, analytics, and conversion-focused shopping journeys.",
+    category: "E-Commerce / Fashion Retail & Lifestyle",
+    client: "Velmora",
+    startDate: null,
+    handoverDate: null,
+    eyebrow: "Case Study · E-Commerce, Fashion Retail & Lifestyle Brand",
+    heroHeadline:
+      "Designing a Conversion-Focused E-Commerce Platform for a Modern Fashion Brand",
+    heroSubheadline:
+      "How Nova Impact designed and developed Velmora — a premium e-commerce platform built for fashion, lifestyle, and accessories with elegant branding and conversion-focused shopping journeys.",
+    description:
+      "Velmora is a premium e-commerce platform designed to deliver a smooth, elegant, and conversion-focused shopping experience for fashion, lifestyle, and accessories products.",
+    fullDescription:
+      "Fashion and lifestyle e-commerce requires more than simply listing products online. Customers need a shopping experience that feels trustworthy, easy to navigate, visually attractive, and optimized for conversion.\n\nVelmora needed a premium online store capable of supporting product discovery, elegant product presentation, smooth mobile shopping, secure checkout, promotional campaigns, customer engagement, analytics and tracking, and scalable online sales.\n\nNova Impact created a complete e-commerce experience designed to combine brand image, technical performance, and commercial effectiveness — built around brand presentation, product discovery, secure payments, mobile optimization, SEO, GEO optimization, analytics, and conversion rate optimization.",
+    quickStats: [
+      "Premium fashion e-commerce launch",
+      "Mobile-optimized shopping experience",
+      "Secure payment gateway integration",
+      "SEO, GEO & analytics foundations",
+    ],
+    challengeTitle: "Creating a Premium Shopping Experience That Converts",
+    challenge:
+      "The client needed an e-commerce platform that could present fashion and lifestyle products professionally while guiding users toward purchase with minimal friction.\n\nThe main challenges were to build a polished and trustworthy brand experience, organize product collections clearly, improve the shopping journey across desktop and mobile, integrate secure payment options, support promotions and seasonal campaigns, optimize the website for search visibility, track user behavior and sales performance, and improve conversion opportunities through better UX.\n\nThe objective was not just to create a beautiful online store — it was to create a shopping system designed to support customer confidence and revenue growth.",
+    approachTitle:
+      "Combining E-Commerce Design, Brand Experience, and Conversion Strategy",
+    approach:
+      "Nova Impact approached Velmora as a premium online retail project focused on both design quality and commercial performance. We focused on five key priorities:",
+    approachPoints: [
+      {
+        title: "Premium Brand Presentation",
+        text: "We shaped the visual experience around elegance, simplicity, and product value — helping the store feel refined, trustworthy, and aligned with fashion and lifestyle expectations.",
+      },
+      {
+        title: "Conversion-Focused Shopping Journey",
+        text: "We structured the user journey to make product discovery, browsing, cart interaction, and checkout as smooth as possible.",
+      },
+      {
+        title: "Mobile Optimization",
+        text: "Because many e-commerce users shop from mobile devices, we prioritized a responsive experience that works smoothly across smartphones, tablets, and desktop screens.",
+      },
+      {
+        title: "Technical and SEO Foundations",
+        text: "We supported the store with SEO optimization, GEO optimization, tracking, performance improvements, and structured product presentation to improve visibility and long-term growth potential.",
+      },
+      {
+        title: "Marketing and Automation Infrastructure",
+        text: "We built the foundation for email marketing automation, analytics, retargeting, customer engagement, and future promotional campaigns.",
+      },
+    ],
+    solutionTitle: "A Modern Online Store Built for Product Discovery and Sales Growth",
+    solution:
+      "Nova Impact designed and developed a premium e-commerce platform for Velmora, focused on product clarity, customer trust, and conversion performance.\n\nThe solution included branding and visual direction, e-commerce website design, UI/UX design, web development, mobile optimization, Shopify development, WooCommerce development support when needed, payment gateway integration, product catalog management, SEO optimization, GEO optimization, performance optimization, conversion rate optimization, email marketing automation, and analytics and tracking setup.\n\nThe live store includes a cart experience, customer account login, order tracking, product catalog structure, and payment options such as Mastercard, American Express, PayPal, and Visa. The platform also supports promotional messaging, collection-based navigation, featured product sections, and cross-channel brand visibility through social media links.",
+    resultsTitle: "Business Impact",
+    results: [
+      "Premium e-commerce website launched",
+      "Professional fashion and lifestyle product presentation",
+      "Improved mobile shopping experience",
+      "Secure payment gateway integration",
+      "Clearer product catalog and collection structure",
+      "SEO and GEO optimization foundations",
+      "Analytics and tracking implementation",
+      "Conversion-focused customer journey",
+      "Scalable platform for future promotions and online growth",
+    ],
+    whyItMatters: {
+      title: "From Online Store to Premium Shopping Experience",
+      content:
+        "Velmora demonstrates how e-commerce success depends on more than product listings. A strong online store needs elegant branding, clear product presentation, smooth navigation, secure payments, mobile-first usability, promotional flexibility, analytics visibility, and conversion-focused optimization. Nova Impact helped create a digital commerce platform designed to support both customer experience and sales performance.",
+    },
+    servicesDelivered: [
+      {
+        category: "Strategy & Branding",
+        items: [
+          "Branding",
+          "Visual Direction",
+          "E-Commerce Brand Positioning",
+          "Product Presentation Strategy",
+          "Customer Journey Strategy",
+        ],
+      },
+      {
+        category: "E-Commerce Design & Development",
+        items: [
+          "E-Commerce Design",
+          "UI/UX Design",
+          "Web Development",
+          "Shopify Development",
+          "WooCommerce Development",
+          "Mobile Optimization",
+          "Product Catalog Management",
+          "Payment Gateway Integration",
+          "Performance Optimization",
+        ],
+      },
+      {
+        category: "Search & Growth Optimization",
+        items: [
+          "SEO Optimization",
+          "GEO Optimization",
+          "Conversion Rate Optimization",
+          "Analytics & Tracking",
+          "Technical Optimization",
+          "Product Page Optimization",
+          "Collection Page Optimization",
+        ],
+      },
+      {
+        category: "Marketing Automation",
+        items: [
+          "Email Marketing Automation",
+          "Customer Engagement Flows",
+          "Promotional Campaign Support",
+          "Abandoned Cart Journey Planning",
+          "Retargeting Readiness",
+          "Customer Segmentation Support",
+        ],
+      },
+    ],
+    services: [
+      "+ E-Commerce Design & Development",
+      "+ Shopify & WooCommerce",
+      "+ Payment Gateway Integration",
+      "+ SEO & GEO Optimization",
+      "+ Analytics & CRO",
+      "+ Email Marketing Automation",
+    ],
+    thumbnail: VELMORA_COVER,
+    thumbnailWidth: 1536,
+    thumbnailHeight: 1024,
+    images: VELMORA_SCREENSHOTS,
+    heroLabel: "FEATURED PROJECT",
+    displayTitle: "Velmora",
+    displaySubtitle: "Premium Fashion & Lifestyle E-Commerce",
+    heroDescription:
+      "A premium e-commerce platform for fashion, lifestyle, and accessories — combining elegant branding, mobile optimization, secure payments, SEO, GEO, analytics, and conversion-focused shopping journeys.",
+    heroImage: VELMORA_COVER,
+    heroStats: [
+      { value: "Premium", label: "E-Commerce Launch" },
+      { value: "Mobile", label: "Optimized Shopping" },
+      { value: "CRO", label: "Conversion Focus" },
+    ],
+    challengePoints: [
+      "Fashion e-commerce must feel trustworthy, elegant, and easy to navigate",
+      "Product collections, checkout, and payments need a seamless flow",
+      "Mobile shopping, SEO, GEO, and analytics must work together",
+      "Client needed a sales-ready store—not just a visual concept",
+    ],
+    solutionPoints: [
+      "Premium brand presentation with conversion-focused product pages",
+      "Shopify/WooCommerce store with secure payment integrations",
+      "Mobile-optimized catalog, cart, and checkout experience",
+      "SEO, GEO, analytics, and email automation foundations",
+    ],
+    features: [
+      "Product Catalog",
+      "Secure Checkout",
+      "Mobile Shopping",
+      "Payment Gateways",
+      "SEO & GEO",
+      "Email Automation",
+    ],
+    featuresTitle: "E-Commerce Features",
+    screenshots: VELMORA_SCREENSHOTS,
+    screenshotWidths: [1536, 1440],
+    screenshotHeights: [1024, 6197],
+    imageLabels: [
+      "Premium e-commerce storefront",
+      "Full portrait design showcase",
+    ],
+    screenshotsTitle: "Visual Mockups",
+    screenshotLayout: "stack",
+    processSteps: [
+      "Discovery",
+      "UX / UI Design",
+      "E-Commerce Development",
+      "Integrations",
+      "Launch",
+    ],
+    impactDescription:
+      "By combining elegant e-commerce design, secure checkout infrastructure, mobile optimization, and conversion-focused UX, Velmora became more than an online store — a premium digital retail experience built for growth.",
+    impactStats: [
+      { value: "Premium", label: "Store Launch" },
+      { value: "Mobile", label: "Shopping Ready" },
+      { value: "Payments", label: "Secure Checkout" },
+      { value: "Growth", label: "SEO & Analytics" },
+    ],
+    techStack: [
+      "Shopify",
+      "WooCommerce",
+      "Payment Gateways",
+      "Analytics",
+      "SEO Tools",
+      "GEO Optimization",
+      "Email Automation",
+      "Figma",
+    ],
+    similarSlugs: ["akodashi-premium-ecommerce-website", "styliste-ai-fashion-assistant-app", "planostra", "trustedpulse"],
+    ctaTitle: "Need an e-commerce website built to convert?",
+    ctaText:
+      "At Nova Impact, we design and develop premium online stores that combine brand identity, user experience, secure payments, SEO, marketing automation, and conversion strategy.",
+    ctaButton: "Start Your Project",
+  },
+  {
+    slug: "akodashi-premium-ecommerce-website",
+    title: "Akodashi",
+    subtitle: "Premium E-Commerce Platform",
+    seoTitle:
+      "Akodashi Case Study | Premium E-Commerce Website by Nova Impact",
+    metaDescription:
+      "Discover how Nova Impact designed and developed Akodashi, a premium e-commerce platform built to showcase products, improve customer experience, integrate secure payments, and support sustainable online sales growth.",
+    category: "E-Commerce / Online Retail",
+    client: "Akodashi",
+    startDate: null,
+    handoverDate: null,
+    eyebrow: "Case Study · E-Commerce Website, Online Retail & Digital Shopping Experience",
+    heroHeadline:
+      "Designing a High-Performance E-Commerce Platform Built for Sales Growth",
+    heroSubheadline:
+      "How Nova Impact designed and developed Akodashi — a premium e-commerce website built for modern online retail with elegant branding, secure checkout, and conversion-focused shopping journeys.",
+    description:
+      "Akodashi is a premium e-commerce website designed to deliver a smooth, modern, and conversion-focused online shopping experience.",
+    fullDescription:
+      "Modern e-commerce requires more than a product catalog. Customers expect a fast, attractive, easy-to-use shopping experience that works smoothly across desktop and mobile devices.\n\nAkodashi needed a platform capable of supporting product discovery, product showcase sections, customer accounts, secure checkout, multiple payment methods, promotional campaigns, inventory management, order processing, analytics, and long-term e-commerce growth.\n\nNova Impact created a complete online retail experience designed to combine design quality, usability, performance, and commercial functionality — with elegant branding, responsive web design, product showcase sections, secure payment integration, customer account features, order management, SEO optimization, and high-performance technology.",
+    quickStats: [
+      "Premium e-commerce launch",
+      "Secure payment integration",
+      "Product & order management",
+      "SEO & performance optimized",
+    ],
+    challengeTitle:
+      "Creating an E-Commerce Experience That Looks Premium and Converts",
+    challenge:
+      "The client needed a modern e-commerce platform that could present products clearly while making the shopping journey simple and trustworthy.\n\nThe main challenges were to create a clean and professional brand experience, design a visually engaging homepage, organize product categories and featured products, make browsing easy across devices, support secure checkout and payment gateways, manage products, inventory, and orders, integrate customer accounts and order tracking, optimize performance, and build a scalable foundation for future growth.\n\nThe goal was not only to create a beautiful store, but to build an e-commerce system that supports customer confidence, smooth navigation, and sales performance.",
+    approachTitle:
+      "Combining E-Commerce Design, Product Experience, and Technical Performance",
+    approach:
+      "Nova Impact approached Akodashi as a premium online retail platform focused on design, usability, and conversion. We focused on five strategic priorities:",
+    approachPoints: [
+      {
+        title: "Premium Visual Presentation",
+        text: "We designed the website with a clean, modern, and elegant visual style — highlighting the brand, collections, featured products, promotional blocks, service benefits, and blog-style content areas.",
+      },
+      {
+        title: "Product Discovery and Navigation",
+        text: "We created a structure that helps users explore products easily through clear product sections, featured product grids, promotional banners, and category-focused layouts.",
+      },
+      {
+        title: "Conversion-Focused Shopping Journey",
+        text: "The shopping experience was designed to reduce friction from product discovery to checkout, with clear calls to action, product cards, wishlist logic, customer accounts, and secure payment flows.",
+      },
+      {
+        title: "Mobile Optimization",
+        text: "The platform was built to work smoothly across desktop, tablet, and mobile devices, giving users a consistent shopping experience wherever they browse.",
+      },
+      {
+        title: "Scalable E-Commerce Infrastructure",
+        text: "We implemented the technical foundation needed for product management, inventory tracking, order processing, analytics, SEO, payment integration, and future marketing automation.",
+      },
+    ],
+    solutionTitle: "A Complete E-Commerce Platform Built for Online Sales",
+    solution:
+      "Nova Impact designed and developed a premium e-commerce website for Akodashi with a full set of online retail features.\n\nThe solution included branding, e-commerce design, UI/UX design, web development, mobile optimization, Shopify development, WooCommerce development, custom e-commerce development, payment gateway integration, product catalog management, inventory management, order management system, customer account system, SEO optimization, and performance optimization.\n\nThe platform was designed to support a complete online shopping journey, from homepage discovery to product browsing, checkout, customer account access, and post-purchase order tracking.",
+    resultsTitle: "Business Impact",
+    results: [
+      "Premium e-commerce website launched",
+      "Modern and responsive online shopping experience",
+      "Improved product showcase and catalog structure",
+      "Secure payment gateway integration",
+      "Customer account and order tracking functionality",
+      "Product, inventory, and order management systems",
+      "SEO and performance optimization",
+      "Analytics foundation for growth decisions",
+      "Scalable platform supporting future promotions and revenue growth",
+    ],
+    whyItMatters: {
+      title: "From Product Catalog to Complete Online Retail Experience",
+      content:
+        "Akodashi demonstrates how a modern e-commerce platform can combine strong design, technical performance, and commercial functionality. Nova Impact created a platform that helps the brand present products clearly, improve customer confidence, and build a stronger foundation for online sales — with product showcase, secure checkout, order management, mobile shopping, and analytics built in.",
+    },
+    servicesDelivered: [
+      {
+        category: "Strategy & Branding",
+        items: [
+          "Branding",
+          "E-Commerce Brand Direction",
+          "Visual Identity Support",
+          "Product Presentation Strategy",
+          "Customer Journey Strategy",
+        ],
+      },
+      {
+        category: "Design & Development",
+        items: [
+          "E-Commerce Design",
+          "UI/UX Design",
+          "Web Development",
+          "Mobile Optimization",
+          "Custom E-Commerce Development",
+          "Shopify Development",
+          "WooCommerce Development",
+          "Responsive Web Design",
+          "Performance Optimization",
+        ],
+      },
+      {
+        category: "E-Commerce Systems",
+        items: [
+          "Product Catalog Management",
+          "Inventory Management",
+          "Order Management System",
+          "Customer Account System",
+          "Wishlist Management",
+          "Discount & Promotion System",
+          "Secure Checkout",
+          "Multiple Payment Methods",
+        ],
+      },
+      {
+        category: "Growth & Optimization",
+        items: [
+          "SEO Optimization",
+          "Analytics & Reporting",
+          "Email Automation",
+          "Marketing Automation",
+          "Conversion Rate Optimization",
+          "Performance Monitoring",
+        ],
+      },
+    ],
+    services: [
+      "+ E-Commerce Design & Development",
+      "+ Shopify & WooCommerce",
+      "+ Payment Gateway Integration",
+      "+ Product & Order Management",
+      "+ SEO & Analytics",
+      "+ Conversion Optimization",
+    ],
+    thumbnail: AKODASHI_COVER,
+    thumbnailWidth: 1536,
+    thumbnailHeight: 1024,
+    images: AKODASHI_SCREENSHOTS,
+    heroLabel: "FEATURED PROJECT",
+    displayTitle: "Akodashi",
+    displaySubtitle: "Premium E-Commerce Platform",
+    heroDescription:
+      "A premium e-commerce platform — built to showcase products, streamline online sales, improve customer experience, and support sustainable revenue growth with secure checkout, accounts, and order tracking.",
+    heroImage: AKODASHI_COVER,
+    heroStats: [
+      { value: "Premium", label: "E-Commerce Launch" },
+      { value: "Secure", label: "Checkout & Payments" },
+      { value: "Mobile", label: "Responsive Shopping" },
+    ],
+    challengePoints: [
+      "Customers expect a fast, premium shopping experience across all devices",
+      "Product discovery, checkout, and accounts must work as one system",
+      "Inventory, orders, and payments need scalable backend infrastructure",
+      "Client needed a sales-ready store—not just a visual concept",
+    ],
+    solutionPoints: [
+      "Premium homepage with collections, featured products, and promotions",
+      "Product catalog with wishlist, accounts, and order tracking",
+      "Secure checkout with multiple payment gateway integrations",
+      "Shopify/WooCommerce-ready stack with SEO and analytics foundations",
+    ],
+    features: [
+      "Product Showcase",
+      "Secure Checkout",
+      "Customer Accounts",
+      "Order Tracking",
+      "Wishlist",
+      "Analytics",
+    ],
+    featuresTitle: "E-Commerce Features",
+    screenshots: AKODASHI_SCREENSHOTS,
+    screenshotWidths: [1536, 1440],
+    screenshotHeights: [1024, 5522],
+    imageLabels: [
+      "Premium e-commerce storefront",
+      "Full desktop shopping experience",
+    ],
+    screenshotsTitle: "Visual Mockups",
+    screenshotLayout: "stack",
+    processSteps: [
+      "Discovery",
+      "UX / UI Design",
+      "E-Commerce Development",
+      "Integrations",
+      "Launch",
+    ],
+    impactDescription:
+      "By combining elegant e-commerce design, secure checkout infrastructure, product management, mobile optimization, and performance-focused development, Akodashi became more than an online store — a complete digital retail platform built for growth.",
+    impactStats: [
+      { value: "Premium", label: "Store Launch" },
+      { value: "Payments", label: "Secure Checkout" },
+      { value: "Orders", label: "Management Ready" },
+      { value: "Growth", label: "SEO & Analytics" },
+    ],
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Shopify",
+      "WooCommerce",
+      "Stripe",
+      "PayPal",
+      "MongoDB",
+    ],
+    similarSlugs: ["velmora-premium-ecommerce-platform", "planostra", "trustedpulse", "styliste-ai-fashion-assistant-app"],
+    ctaTitle: "Need an e-commerce platform built to sell?",
+    ctaText:
+      "At Nova Impact, we design and develop e-commerce websites that combine branding, product experience, secure payments, SEO, analytics, and conversion-focused technology.",
+    ctaButton: "Start Your Project",
   }
 ];
 
@@ -1903,4 +2761,10 @@ export function getProjectBySlug(slug) {
 
 export function getAllProjectSlugs() {
   return projects.map((project) => project.slug);
+}
+
+export { PROJECTS as PROJECTS_IMG };
+
+export function getProjectCover(slug) {
+  return getProjectBySlug(slug)?.thumbnail ?? `${PROJECTS}/${slug}/hero.png`;
 }

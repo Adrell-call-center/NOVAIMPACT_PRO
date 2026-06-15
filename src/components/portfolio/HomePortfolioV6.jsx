@@ -5,16 +5,10 @@ import $ from "jquery";
 import Link from "next/link";
 import Image from "next/image";
 import animationCharCome from "@/lib/utils/animationCharCome";
+import { portfolioProjectCovers as covers } from "@/lib/project-images";
 
-const ExifInjector = "/images/exifinjector-portfolio.webp";
-const Planostra = "/images/planostra-portfolio.webp";
-const TrustedPulse = "/images/trustedpulse-portfolio.webp";
 const TRUSTEDPULSE_WIDTH = 1672;
 const TRUSTEDPULSE_HEIGHT = 941;
-const JeSwitch = "/images/jeswitch-portfolio.webp";
-const Mutuelles = "/images/mutuellespashchere-portfolio.webp";
-const ZoomAssurance = "/images/zoom-assurance-portfolio.webp";
-const AllWorld = "/images/allword-portfolio.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,7 +122,7 @@ const HomePortfolioV6 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={JeSwitch}
+                          src={covers.jeswitch}
                           alt="JeSwitch Portfolio"
                           data-speed="0.4"
                         />
@@ -147,7 +141,7 @@ const HomePortfolioV6 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={ZoomAssurance}
+                          src={covers.zoomassurance}
                           alt="ZoomAssurance Portfolio"
                           data-speed="0.4"
                         />
@@ -166,7 +160,7 @@ const HomePortfolioV6 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={Mutuelles}
+                          src={covers.mutuelles}
                           alt="MutuellesPasChere Portfolio"
                           data-speed="0.4"
                         />
@@ -185,7 +179,7 @@ const HomePortfolioV6 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={AllWorld}
+                          src={covers.allworld}
                           alt="AllWorld247 Portfolio"
                           data-speed="0.4"
                         />
@@ -198,19 +192,19 @@ const HomePortfolioV6 = () => {
 
                     {/* Project 5: Planostra */}
                     <div className="portfolio__item-6" data-portfitem="5">
-                      <Link href="https://planostra.com" target="_blank" rel="noopener noreferrer">
+                      <Link href="/portfolio/planostra">
                         <Image
                           priority
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={Planostra}
+                          src={covers.planostra}
                           alt="Planostra Portfolio"
                           data-speed="0.4"
                         />
                         <div className="portfolio__content-6">
                           <h4 className="portfolio__title-6">Planostra</h4>
-                          <h5 className="portfolio__date">Marketing Intelligence & Analytics SaaS</h5>
+                          <h5 className="portfolio__date">AI Social Media Management Platform</h5>
                         </div>
                       </Link>
                     </div>
@@ -223,7 +217,7 @@ const HomePortfolioV6 = () => {
                           width={TRUSTEDPULSE_WIDTH}
                           height={TRUSTEDPULSE_HEIGHT}
                           style={{ height: "auto" }}
-                          src={TrustedPulse}
+                          src={covers.trustedpulse}
                           alt="TrustedPulse Portfolio"
                           data-speed="0.4"
                         />
@@ -242,7 +236,7 @@ const HomePortfolioV6 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={ExifInjector}
+                          src={covers.exifinjector}
                           alt="ExifInjector Portfolio"
                           data-speed="0.4"
                         />

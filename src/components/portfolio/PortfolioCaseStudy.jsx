@@ -225,7 +225,11 @@ const PortfolioCaseStudy = ({ project }) => {
 
   return (
     <section className="case-study" ref={rootRef}>
-      <section className="case-study__hero">
+      <section
+        className={`case-study__hero${
+          p.screenshotLayout === "stack" ? " case-study__hero--stack" : ""
+        }`}
+      >
         <div className="case-study__hero-content">
           <span className="case-study__hero-label">{cs.heroLabel}</span>
           <h1 className="animation__char_come" ref={heroTitleRef}>
@@ -330,19 +334,31 @@ const PortfolioCaseStudy = ({ project }) => {
         <section className="case-study__screens">
           <h2 className="case-study__title-anim">{cs.screenshotsTitle}</h2>
           <div
-            className="case-study__screen-grid case-study__stagger"
-            data-count={cs.screenshots.length}
+            className={`case-study__screen-grid case-study__stagger${
+              p.screenshotLayout === "stack" ? " case-study__screen-grid--stack" : ""
+            }`}
           >
-            {cs.screenshots.map((src, i) => (
-              <Image
-                key={`${src}-${i}`}
-                width={imgW}
-                height={imgH}
-                style={{ width: "100%", height: "auto" }}
-                src={src}
-                alt={`${cs.title} screenshot ${i + 1}`}
-              />
-            ))}
+            {cs.screenshots.map((src, i) => {
+              const w = p.screenshotWidths?.[i] || imgW;
+              const h = p.screenshotHeights?.[i] || imgH;
+              const label = p.imageLabels?.[i];
+              const isTall = h > w * 1.2;
+              return (
+                <figure
+                  key={`${src}-${i}`}
+                  className={`case-study__screen-item${isTall ? " case-study__screen-item--tall" : ""}`}
+                >
+                  <Image
+                    width={w}
+                    height={h}
+                    style={{ width: "100%", height: "auto", objectFit: "contain" }}
+                    src={src}
+                    alt={label || `${cs.title} screenshot ${i + 1}`}
+                  />
+                  {label && <figcaption>{label}</figcaption>}
+                </figure>
+              );
+            })}
           </div>
         </section>
       )}

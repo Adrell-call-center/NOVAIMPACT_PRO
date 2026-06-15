@@ -2,17 +2,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Link from "next/link";
 import Image from "next/image";
-
-const AllWorld = "/images/allword-portfolio.webp";
+import { portfolioProjectCovers as covers } from "@/lib/project-images";
 
 const projects = [
-  { img: "/images/jeswitch-portfolio.webp",           title: "JeSwitch.fr",           subtitle: "Insurance Comparison & Lead Generation",      link: "https://jeswitch.fr" },
-  { img: "/images/planostra-portfolio.webp",          title: "Planostra",             subtitle: "Marketing Intelligence & Analytics SaaS",     link: "https://planostra.com" },
-  { img: "/images/trustedpulse-portfolio.webp", width: 1672, height: 941, title: "TrustedPulse",          subtitle: "Review & Reputation Platform",                link: "/portfolio/trustedpulse" },
-  { img: "/images/exifinjector-portfolio.webp",       title: "ExifInjector",          subtitle: "AI Metadata Optimization for eCommerce",      link: "https://exifinjector.com" },
-  { img: "/images/mutuellespashchere-portfolio.webp", title: "MutuellesPasChere.com", subtitle: "Health Insurance Resource",                   link: "https://mutuellespaschere.com" },
-  { img: "/images/zoom-assurance-portfolio.webp",    title: "ZoomAssurance.fr",      subtitle: "Insurance Insights & Guides",                  link: "https://zoomassurance.fr" },
-  { img: AllWorld, title: "AllWorld247.com", subtitle: "Multi-Category Content Portal", link: "https://allworld247.com" },
+  { img: covers.jeswitch,           title: "JeSwitch.fr",           subtitle: "Insurance Comparison & Lead Generation",      link: "https://jeswitch.fr" },
+  { img: covers.planostra,          title: "Planostra",             subtitle: "AI Social Media Management Platform",         link: "/portfolio/planostra" },
+  { img: covers.trustedpulse, width: 1672, height: 941, title: "TrustedPulse",          subtitle: "Review & Reputation Platform",                link: "/portfolio/trustedpulse" },
+  { img: covers.exifinjector,       title: "ExifInjector",          subtitle: "AI Metadata Optimization for eCommerce",      link: "https://exifinjector.com" },
+  { img: covers.mutuelles, title: "MutuellesPasChere.com", subtitle: "Health Insurance Resource",                   link: "https://mutuellespaschere.com" },
+  { img: covers.zoomassurance,    title: "ZoomAssurance.fr",      subtitle: "Insurance Insights & Guides",                  link: "https://zoomassurance.fr" },
+  { img: covers.allworld, title: "AllWorld247.com", subtitle: "Multi-Category Content Portal", link: "https://allworld247.com" },
 ];
 
 const StartupAgencyPortfolio = () => {

@@ -3,13 +3,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "@/plugins";
 import $ from "jquery";
 import Link from "next/link";
-const ExifInjector = "/images/exifinjector-portfolio.webp";
-const Planostra = "/images/planostra-portfolio.webp";
-const TrustedPulse = "/images/trustedpulse-portfolio.webp";
+import { portfolioProjectCovers as covers } from "@/lib/project-images";
 const TRUSTEDPULSE_WIDTH = 1672;
 const TRUSTEDPULSE_HEIGHT = 941;
-const JeSwitch = "/images/jeswitch-portfolio.webp";
-const Mutuelles = "/images/mutuellespashchere-portfolio.webp";
 const Portfilio61 = "/images/portfolio-analytics.webp";
 const Portfilio62 = "/images/portfolio-website.webp";
 const Portfilio63 = "/images/portfolio-marketing.webp";
@@ -144,7 +140,7 @@ const Portfolio1 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={ExifInjector}
+                          src={covers.exifinjector}
                           alt="ExifInjector Portfolio"
                           data-speed="0.4"
                         />
@@ -156,19 +152,19 @@ const Portfolio1 = () => {
                     </div>
 
                     <div className="portfolio__item-6" data-portfitem="2">
-                      <Link href="/portfolio-details">
+                      <Link href="/portfolio/planostra">
                         <Image
                           priority
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={Planostra}
+                          src={covers.planostra}
                           alt="Planostra Portfolio"
                           data-speed="0.4"
                         />
                         <div className="portfolio__content-6">
                           <h4 className="portfolio__title-6">Planostra</h4>
-                          <h5 className="portfolio__date">SaaS Tool</h5>
+                          <h5 className="portfolio__date">AI Social Media Management Platform</h5>
                         </div>
                       </Link>
                     </div>
@@ -180,7 +176,7 @@ const Portfolio1 = () => {
                           width={TRUSTEDPULSE_WIDTH}
                           height={TRUSTEDPULSE_HEIGHT}
                           style={{ height: "auto" }}
-                          src={TrustedPulse}
+                          src={covers.trustedpulse}
                           alt="TrustedPulse Portfolio"
                           data-speed="0.4"
                         />
@@ -198,7 +194,7 @@ const Portfolio1 = () => {
                           width={514}
                           height={770}
                           style={{ height: "auto" }}
-                          src={JeSwitch}
+                          src={covers.jeswitch}
                           alt="JeSwitch Portfolio"
                           data-speed="0.4"
                         />

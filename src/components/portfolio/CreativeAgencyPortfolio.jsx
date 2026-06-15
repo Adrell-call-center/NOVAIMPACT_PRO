@@ -1,15 +1,6 @@
 import { FreeMode } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Portfilio11 from "../../../public/assets/imgs/portfolio/1/1.jpg";
-import Portfilio12 from "../../../public/assets/imgs/portfolio/1/2.jpg";
-import Portfilio13 from "../../../public/assets/imgs/portfolio/1/3.jpg";
-const Planostra = "/images/planostra-portfolio.webp";
-const ExifInjector = "/images/exifinjector-portfolio.webp";
-const TrustedPulse = "/images/trustedpulse-portfolio.webp";
-const TRUSTEDPULSE_WIDTH = 1672;
-const TRUSTEDPULSE_HEIGHT = 941;
-const JeSwitch = "/images/jeswitch-portfolio.webp";
-const Mutuelles = "/images/mutuellespashchere-portfolio.webp";
+import { portfolioProjectCovers as covers } from "@/lib/project-images";
 import Image from "next/image";
 
 // Import Swiper styles
@@ -18,13 +9,13 @@ import "swiper/css/free-mode";
 import Link from "next/link";
 
 const projects = [
-  { title: "JeSwitch.fr", subtitle: "Insurance Comparison & Lead Generation", img: JeSwitch, link: "https://jeswitch.fr" },
-  { title: "ZoomAssurance.fr", subtitle: "Insurance Insights & Guides", img: Portfilio12, link: "https://zoomassurance.fr" },
-  { title: "MutuellesPasChere.com", subtitle: "Health Insurance Resource", img: Mutuelles, link: "https://mutuellespaschere.com" },
-  { title: "Planostra", subtitle: "Marketing Intelligence & Analytics SaaS", img: Planostra, link: "https://planostra.com" },
-  { title: "TrustedPulse", subtitle: "Review & Reputation Platform", img: TrustedPulse, link: "/portfolio/trustedpulse", width: TRUSTEDPULSE_WIDTH, height: TRUSTEDPULSE_HEIGHT },
-  { title: "ExifInjector", subtitle: "AI Metadata Optimization for eCommerce", img: ExifInjector, link: "https://exifinjector.com" },
-  { title: "AllWorld247.com", subtitle: "Multi-Category Content Portal", img: Portfilio13, link: "https://allworld247.com" },
+  { title: "JeSwitch.fr", subtitle: "Insurance Comparison & Lead Generation", img: covers.jeswitch, link: "https://jeswitch.fr" },
+  { title: "ZoomAssurance.fr", subtitle: "Insurance Insights & Guides", img: covers.zoomassurance, link: "https://zoomassurance.fr" },
+  { title: "MutuellesPasChere.com", subtitle: "Health Insurance Resource", img: covers.mutuelles, link: "https://mutuellespaschere.com" },
+  { title: "Planostra", subtitle: "AI Social Media Management Platform", img: covers.planostra, link: "/portfolio/planostra" },
+  { title: "TrustedPulse", subtitle: "Review & Reputation Platform", img: covers.trustedpulse, link: "/portfolio/trustedpulse", width: 1672, height: 941 },
+  { title: "ExifInjector", subtitle: "AI Metadata Optimization for eCommerce", img: covers.exifinjector, link: "https://exifinjector.com" },
+  { title: "AllWorld247.com", subtitle: "Multi-Category Content Portal", img: covers.allworld, link: "https://allworld247.com" },
 ];
 
 const CreativeAgencyPortfolio = () => {
