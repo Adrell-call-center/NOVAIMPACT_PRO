@@ -3,7 +3,7 @@ import RootLayout from '@/components/common/layout/RootLayout';
 import BlogIndex from '@/components/blog/BlogIndex';
 import { blogStore } from '@/lib/blog-store';
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const blogSchema = {
   "@context": "https://schema.org",

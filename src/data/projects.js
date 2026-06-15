@@ -1429,24 +1429,227 @@ export const projects = [
     seoTitle:
       "TrustedPulse Case Study | Review & Reputation Platform by Nova Impact",
     metaDescription:
-      "Discover how Nova Impact designed and developed TrustedPulse, a review and reputation management platform that helps businesses collect, manage, and showcase customer trust.",
+      "Discover how Nova Impact designed and developed TrustedPulse, a review and reputation management SaaS platform that helps businesses collect, moderate, and activate customer reviews — like Trustpilot, built for conversion and trust.",
     url: "https://trustedpulse.com/",
     category: "SaaS / Reputation Management",
     client: "TrustedPulse",
     startDate: null,
     handoverDate: null,
-    description: "Helping businesses collect, manage, and showcase customer trust.",
-    fullDescription: "Case study content for TrustedPulse is coming soon. Nova Impact is preparing the full project breakdown covering platform design, review workflows, and launch results.",
+    eyebrow: "Case Study · SaaS, Reviews & Reputation Management",
+    heroHeadline:
+      "Turning Customer Reviews into a Scalable Trust & Conversion Engine",
+    heroSubheadline:
+      "How Nova Impact designed and developed TrustedPulse — a complete review and reputation management SaaS platform built to collect, moderate, and activate authentic customer feedback at scale.",
+    description:
+      "TrustedPulse is a review and reputation management SaaS platform that helps businesses gather, manage, and display authentic customer reviews and testimonials — with AI-powered moderation, conversion widgets, and SEO-rich social proof.",
+    fullDescription:
+      "Online purchase decisions depend on trust. Yet most businesses struggle to collect reviews consistently, moderate feedback at scale, respond professionally, and activate social proof where it actually drives conversion — on product pages, checkout flows, landing pages, and local search results.\n\nTrustedPulse was created to solve this gap with a SaaS platform in the same category as Trustpilot, Avis Vérifiés, and other review ecosystems — but designed for marketing and operations teams who need faster activation, clearer ROI, and a unified workflow from collection to conversion.\n\nNova Impact supported the project from product positioning to platform launch — designing and building the full digital ecosystem behind the product, including public website, SaaS dashboard, review widgets, AI moderation workflows, and growth-oriented content architecture.",
+    quickStats: [
+      "26M+ reviews orchestrated monthly",
+      "500+ teams supported",
+      "AI-powered moderation & replies",
+      "Multi-channel review activation",
+    ],
+    challengeTitle:
+      "Building Trust at Scale in a Crowded Reviews Market",
+    challenge:
+      "The online reviews market is mature and competitive. Businesses already know that social proof matters — but they often face fragmented tools, slow moderation, poor widget performance, limited SEO impact, and platforms that are expensive or difficult to operationalize across teams.\n\nThe challenge was to create a SaaS product that could compete with established players like Trustpilot and Avis Vérifiés while offering a clearer path to ROI: simpler onboarding, faster review collection, AI-assisted moderation, flexible widget deployment, and dashboards that marketing, retail, and support teams could actually use.\n\nThe client needed more than a marketing website — a complete reputation management ecosystem with product design, dashboard development, widget infrastructure, content strategy, and acquisition-ready positioning.",
+    approachTitle:
+      "Combining Product Strategy, SaaS Design, and Conversion Marketing",
+    approach:
+      "Nova Impact approached TrustedPulse as a full product launch in the reviews and UGC category. We focused on five core priorities:",
+    approachPoints: [
+      {
+        title: "Category Positioning",
+        text: "We positioned TrustedPulse as a modern alternative to legacy review platforms — emphasizing verified reviews, conversion widgets, AI workflows, and measurable business impact for SMEs and enterprise teams.",
+      },
+      {
+        title: "SaaS User Experience",
+        text: "We designed a clear journey for collecting, moderating, responding to, and syndicating reviews — reducing operational friction for marketing, customer support, and multi-location teams.",
+      },
+      {
+        title: "AI Review Workflows",
+        text: "We built product logic around AI-assisted UGC creation, instant moderation, automated categorization, intelligent analysis, and assisted replies — making review management 6x faster.",
+      },
+      {
+        title: "Trust-Centered Brand Design",
+        text: "We created a credible, conversion-focused visual identity that communicates transparency, authenticity, and enterprise-grade reliability across the public site and SaaS dashboard.",
+      },
+      {
+        title: "Growth & SEO Ecosystem",
+        text: "We developed comparison content, industry landing pages, rich-snippet-ready structures, and activation-focused messaging to support organic acquisition and competitive evaluation journeys.",
+      },
+    ],
+    solutionTitle: "A Complete Review & Reputation Management SaaS Platform",
+    solution:
+      "Nova Impact designed, developed, and launched a complete SaaS platform for review collection, moderation, and activation.\n\nThe solution included public website design and development, SaaS dashboard UX/UI, review collection workflows, AI-powered moderation and reply assistance, embeddable marketing widgets, loyalty and referral program modules, multi-location reputation management, analytics and ROI dashboards, responsive design, SEO foundation with schema and rich snippets, conversion-focused landing pages, industry-specific solution pages, competitive comparison content, brand identity system, and integration-ready architecture for CRM and commerce platforms.\n\nThe platform helps businesses turn customer feedback into structured social proof — displayed at the moments that matter most for trust, conversion, and long-term brand reputation.",
+    resultsTitle: "Business Impact",
+    results: [
+      "Professional SaaS platform launch in the reviews category",
+      "Scalable review collection and moderation workflows",
+      "AI-assisted UGC creation, categorization, and replies",
+      "Conversion widgets and rich-snippet-ready review activation",
+      "Stronger brand positioning vs. Trustpilot and Avis Vérifiés",
+      "Multi-industry solution architecture for growth teams",
+      "Unified dashboard for marketing, retail, and support alignment",
+      "Foundation for subscription growth and partner integrations",
+    ],
+    whyItMatters: {
+      title: "From Review Collection to a Scalable Trust Platform",
+      content:
+        "TrustedPulse shows how a crowded SaaS category can still be entered with clarity, speed, and product discipline. Nova Impact built a full ecosystem designed to help businesses collect authentic reviews, moderate feedback efficiently, respond with confidence, activate social proof across high-intent pages, and measure reputation as a growth lever — not just a compliance checkbox.",
+    },
+    servicesDelivered: [
+      {
+        category: "Strategy & Branding",
+        items: [
+          "Brand Strategy",
+          "Logo Design & Brand Identity Development",
+          "Visual Identity System",
+          "Product Positioning",
+          "Competitive Positioning vs. Trustpilot & Avis Vérifiés",
+          "Go-To-Market Strategy",
+        ],
+      },
+      {
+        category: "Design & Development",
+        items: [
+          "UX/UI Design",
+          "Website Design & Development",
+          "SaaS Dashboard Design & Development",
+          "Review Widget Design & Development",
+          "User Journey Optimization",
+          "Mobile Responsive Design",
+          "Performance Optimization",
+          "SEO Foundation Setup",
+          "Conversion Rate Optimization",
+        ],
+      },
+      {
+        category: "Product Development",
+        items: [
+          "Review Collection & Invitation System",
+          "AI Moderation & Categorization Engine",
+          "Assisted Reply Workflows",
+          "UGC Creation & Translation Tools",
+          "Loyalty & Referral Program Modules",
+          "Multi-Location Reputation Management",
+          "Analytics & ROI Dashboard",
+          "CRM & Commerce Integrations",
+        ],
+      },
+      {
+        category: "Digital Marketing",
+        items: [
+          "Marketing Strategy",
+          "SEO Content Architecture",
+          "Comparison & Alternative Landing Pages",
+          "Industry Solution Pages",
+          "Lead Generation Campaigns",
+          "Email Marketing",
+          "Social Media Marketing",
+        ],
+      },
+      {
+        category: "Creative Production",
+        items: [
+          "Social Media Content Creation",
+          "Marketing Creatives",
+          "Product Visual Design",
+          "Case Study & Testimonial Layouts",
+          "Promotional Asset Design",
+        ],
+      },
+      {
+        category: "Growth & Analytics",
+        items: [
+          "Funnel Optimization",
+          "Review Activation Strategy",
+          "User Behavior Analytics",
+          "Performance Reporting",
+          "Product Growth Strategy",
+          "Data-Driven Optimization",
+        ],
+      },
+    ],
     services: [
-      "+ UX/UI Design",
-      "+ Front-end Development",
-      "+ Platform Architecture",
-      "+ Conversion Optimization"
+      "+ Product Strategy & Branding",
+      "+ SaaS Dashboard Development",
+      "+ Review Widgets & UGC Activation",
+      "+ AI Moderation Workflows",
+      "+ SEO & Comparison Content",
+      "+ Conversion Optimization",
     ],
     thumbnail: "/images/trustedpulse-portfolio.webp",
-    thumbnailWidth: 1024,
-    thumbnailHeight: 1536,
-    images: ["/images/trustedpulse-portfolio.webp"]
+    thumbnailWidth: 1672,
+    thumbnailHeight: 941,
+    images: ["/images/trustedpulse-portfolio.webp"],
+    heroLabel: "FEATURED PROJECT",
+    displayTitle: "TrustedPulse",
+    displaySubtitle: "Review & Reputation SaaS Platform",
+    heroDescription:
+      "A complete reviews and reputation management SaaS platform — built to help businesses collect verified customer feedback, moderate at scale with AI, and activate social proof across every high-intent touchpoint, from product pages to local SEO.",
+    heroImage: "/images/trustedpulse-portfolio.webp",
+    primaryCta: { label: "Visit Website", url: "https://trustedpulse.com/" },
+    heroStats: [
+      { value: "26M+", label: "Reviews Orchestrated Monthly" },
+      { value: "500+", label: "Teams Supported" },
+      { value: "AI", label: "Moderation & Replies" },
+    ],
+    challengePoints: [
+      "Review platforms like Trustpilot are powerful but often costly and hard to operationalize",
+      "Businesses need faster collection, moderation, and widget activation workflows",
+      "Marketing, retail, and support teams lack a single source of truth for customer feedback",
+      "Client needed a full SaaS ecosystem — not just a comparison landing page",
+    ],
+    solutionPoints: [
+      "Unified review collection, moderation, and activation in one SaaS dashboard",
+      "AI-assisted UGC creation, categorization, and reply workflows",
+      "Conversion-focused widgets and rich-snippet-ready review display",
+      "Industry pages, comparison content, and growth-ready product positioning",
+    ],
+    features: [
+      "Review Collection",
+      "AI Moderation",
+      "Assisted Replies",
+      "Marketing Widgets",
+      "Loyalty & Referral",
+      "SEO Rich Snippets",
+    ],
+    featuresTitle: "Platform Capabilities",
+    screenshots: ["/images/trustedpulse-portfolio.webp"],
+    screenshotsTitle: "Platform Screenshots",
+    processSteps: [
+      "Discovery",
+      "UX / UI Design",
+      "SaaS Development",
+      "AI Integration",
+      "Launch",
+    ],
+    impactDescription:
+      "By combining SaaS development, AI review workflows, trust-centered design, and conversion marketing, TrustedPulse became more than a reviews tool — a scalable reputation platform built to compete in the same category as Trustpilot and leading UGC ecosystems.",
+    impactStats: [
+      { value: "26M+", label: "Monthly Review Volume" },
+      { value: "500+", label: "Teams Onboarded" },
+      { value: "AI", label: "Moderation Speed" },
+      { value: "SaaS", label: "Platform Launch" },
+    ],
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "AI APIs",
+      "Stripe",
+      "Google Analytics",
+      "Salesforce",
+      "Figma",
+    ],
+    similarSlugs: ["exifinjector", "planostra", "jeswitch-fr", "zoomassurance-fr"],
+    ctaTitle: "Need a SaaS platform built for trust and growth?",
+    ctaText:
+      "At Nova Impact, we design and develop digital products that combine strategy, technology, design, and performance marketing — whether you need a review platform, reputation dashboard, or complete growth ecosystem.",
+    ctaButton: "Book a Strategy Call",
   },
   {
     slug: "exifinjector",

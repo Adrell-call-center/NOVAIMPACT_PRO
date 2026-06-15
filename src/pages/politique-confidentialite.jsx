@@ -27,7 +27,7 @@ export default function PolitiqueConfidentialite() {
             <p style={{ marginBottom: "40px", color: "var(--gray-2)" }}>Dernière mise à jour : 21 mai 2025 — Date d'entrée en vigueur : 21 mai 2025</p>
 
             <p style={{ marginBottom: "40px" }}>
-              Cette politique de confidentialité décrit les pratiques de NOVA IMPACT LTD, enregistrée au Royaume-Uni (Company Number : 16126510), dont le siège social est situé au 71-75, Shelton Street, Covent Garden, London, WC2H 9JQ, UNITED KINGDOM, e-mail : <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>, concernant la collecte, l'utilisation et la protection de vos données personnelles lors de votre utilisation du site internet <a href="https://novaimpact.io">https://novaimpact.io</a>.
+              Cette politique de confidentialité décrit les pratiques de NOVA IMPACT LTD, enregistrée au Royaume-Uni (Company Number : 16126510), dont le siège social est situé au 71-75, Shelton Street, Covent Garden, London, WC2H 9JQ, UNITED KINGDOM, e-mail : <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>, concernant la collecte, l'utilisation et la protection de vos données personnelles lors de votre utilisation du site internet <a href="https://novaimpactltd.com">https://novaimpactltd.com</a>.
             </p>
             <p style={{ marginBottom: "40px" }}>
               En accédant ou en utilisant nos services, vous acceptez les conditions de cette politique. Si vous êtes en désaccord, merci de ne pas utiliser le site. Nous nous réservons le droit de modifier cette politique à tout moment. Toute modification prendra effet 180 jours après sa publication sur notre site.
@@ -91,7 +91,7 @@ export default function PolitiqueConfidentialite() {
                 <li>Retrait du consentement</li>
                 <li>Dépôt de plainte auprès de l'autorité compétente</li>
               </ul>
-              <p>Pour exercer ces droits, contactez-nous à <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>. Vous pouvez également vous désinscrire de nos communications à tout moment via le lien de désabonnement.</p>
+              <p>Pour exercer ces droits, contactez-nous à <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>. Vous pouvez également vous désinscrire de nos communications à tout moment via le lien de désabonnement.</p>
             </section>
 
             <section style={{ marginBottom: "40px" }}>
@@ -116,7 +116,7 @@ export default function PolitiqueConfidentialite() {
                 NOVA IMPACT LTD<br />
                 71-75 Shelton Street, Covent Garden,<br />
                 London, WC2H 9JQ, United Kingdom<br />
-                Email : <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>
+                Email : <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>
               </address>
             </section>
           </div>

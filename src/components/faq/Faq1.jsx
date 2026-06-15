@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "How do I get started?",
-    a: "Simply reach out via our contact page or email us at contact@novaimpact.io. We'll schedule a free 30-minute discovery call to understand your goals, then propose a tailored action plan within 48 hours.",
+    a: "Simply reach out via our contact page or email us at contact@novaimpactltd.com. We'll schedule a free 30-minute discovery call to understand your goals, then propose a tailored action plan within 48 hours.",
   },
   {
     q: "Do you offer ongoing support after a project is delivered?",

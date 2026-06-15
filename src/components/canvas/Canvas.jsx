@@ -93,7 +93,7 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
               <p className="social-title">Follow Us</p>
               <ul>
                 <li><a href="https://www.youtube.com/@novaimpactagency" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-                <li><a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://www.instagram.com/novaimpactltd.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 <li><a href="https://x.com/ImpactNova_io" target="_blank" rel="noopener noreferrer">X (Twitter)</a></li>
                 <li><a href="https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
               </ul>
@@ -214,7 +214,7 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
                   <a href="tel:+33980801417">+33 980 801 417</a>
                 </li>
                 <li>
-                  <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>
+                  <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>
                 </li>
                 <li>Marseille · London · Agadir</li>
               </ul>

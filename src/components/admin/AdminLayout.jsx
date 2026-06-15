@@ -83,7 +83,7 @@ export default function AdminLayout({ children, title = 'Overview' }) {
             </div>
             <div className="stripe-user-info">
               <span className="stripe-user-name">Admin</span>
-              <span className="stripe-user-email">admin@novaimpact.io</span>
+              <span className="stripe-user-email">admin@novaimpactltd.com</span>
             </div>
             <i className="fa-solid fa-right-from-bracket stripe-user-logout"></i>
           </button>

@@ -3,7 +3,7 @@ import RootLayout from "@/components/common/layout/RootLayout";
 import VideoGalleryPage from "@/components/video/VideoGalleryPage";
 import PortfolioV2CTA from "@/components/cta/PortfolioV2CTA";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const Videos = () => {
   const title = "Videos — Nova Impact | Campaign Reels & Creative Work";

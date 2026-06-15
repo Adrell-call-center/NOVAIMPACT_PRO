@@ -4,12 +4,12 @@ This guide configures safe caching for a Next.js-style website:
 - no caching for dynamic/admin/API pages
 - strong caching for static theme assets (CSS/JS/images/fonts)
 
-Use this for `novaimpact.io`.
+Use this for `novaimpactltd.com`.
 
 ## 1) Open Cloudflare Dashboard
 
 1. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com/).
-2. Select your zone: `novaimpact.io`.
+2. Select your zone: `novaimpactltd.com`.
 3. Go to **Caching** -> **Cache Rules**.
 4. Click **Create rule**.
 
@@ -223,4 +223,4 @@ For each rule:
 ## Notes for Your Mail Issue
 
 Caching does not fix Gmail SMTP rejection.  
-For email delivery, you still need SPF, DKIM, and DMARC configured for `novaimpact.io`.
+For email delivery, you still need SPF, DKIM, and DMARC configured for `novaimpactltd.com`.

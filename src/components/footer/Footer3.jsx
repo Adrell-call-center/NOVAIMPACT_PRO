@@ -52,7 +52,7 @@ export default function Footer3() {
                         </a>
                       </li>
                       <li>
-                        <a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/novaimpactltd.com/" target="_blank" rel="noopener noreferrer">
                           <span><i className="fa-brands fa-instagram"></i></span>
                         </a>
                       </li>
@@ -97,7 +97,7 @@ export default function Footer3() {
                         Rue 204 Imm Afouize, Quartier Industriel, Agadir (Morocco)
                       </li>
                       <li>
-                        <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>
+                        <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>
                       </li>
                       <li>
                         <a href="tel:+447477884817">+44 7477884817</a>

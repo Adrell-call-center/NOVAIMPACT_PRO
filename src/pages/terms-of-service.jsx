@@ -37,8 +37,8 @@ export default function TermsOfService() {
               <h2>1. Description of Services</h2>
               <p>NOVA IMPACT LTD operates and provides the following SaaS products (collectively referred to as the "Services"):</p>
               <ul>
-                <li><strong>Bounce Checker</strong> (novaimpact.io) — An email verification and validation tool that enables users to verify the deliverability of email addresses in bulk or individually.</li>
-                <li><strong>Smart Sender</strong> (novaimpact.io) — An email campaign management platform that allows users to create, schedule, and send email campaigns.</li>
+                <li><strong>Bounce Checker</strong> (novaimpactltd.com) — An email verification and validation tool that enables users to verify the deliverability of email addresses in bulk or individually.</li>
+                <li><strong>Smart Sender</strong> (novaimpactltd.com) — An email campaign management platform that allows users to create, schedule, and send email campaigns.</li>
                 <li><strong>Exif Injector</strong> (exifinjector.com) — An AI-powered image metadata management tool that enables users to inject, view, and remove EXIF, IPTC, and XMP metadata from images in bulk.</li>
                 <li><strong>Planostra</strong> (planostra.com) — An AI-powered social media management platform that enables users to schedule posts, create content with AI assistance, and manage multiple social media accounts.</li>
                 <li><strong>Trusted Pulse</strong> (trustedpulse.com) — A customer review collection and management platform that enables businesses to gather, manage, and display authentic customer reviews and testimonials.</li>
@@ -59,7 +59,7 @@ export default function TermsOfService() {
 
             <section style={{ marginBottom: "40px" }}>
               <h2>3. Subscription Plans and Payment</h2>
-              <p>Our Services are available on a subscription basis, offered as monthly or annual plans. Pricing details are available on our website at <a href="https://novaimpact.io">https://novaimpact.io</a>.</p>
+              <p>Our Services are available on a subscription basis, offered as monthly or annual plans. Pricing details are available on our website at <a href="https://novaimpactltd.com">https://novaimpactltd.com</a>.</p>
               <p><strong>Billing:</strong> All payments are processed securely by Paddle.com Market Limited ("Paddle"), acting as our Merchant of Record. By purchasing a subscription, you agree to Paddle's terms of service and privacy policy.</p>
               <p><strong>Recurring payments:</strong> Subscriptions automatically renew at the end of each billing cycle unless cancelled before the renewal date.</p>
               <p><strong>Price changes:</strong> We reserve the right to modify our pricing. Any price changes will be communicated at least 30 days in advance.</p>
@@ -73,7 +73,7 @@ export default function TermsOfService() {
 
             <section style={{ marginBottom: "40px" }}>
               <h2>5. Cancellation</h2>
-              <p>You may cancel your subscription at any time through your account dashboard or by contacting us at <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>.</p>
+              <p>You may cancel your subscription at any time through your account dashboard or by contacting us at <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>.</p>
               <p>Upon cancellation:</p>
               <ul>
                 <li>Your subscription will remain active until the end of the current billing period</li>
@@ -114,7 +114,7 @@ export default function TermsOfService() {
             <section style={{ marginBottom: "40px" }}>
               <h2>9. Service Availability and Support</h2>
               <p>We strive to maintain a high level of service availability. However, we do not guarantee uninterrupted or error-free access to the Services.</p>
-              <p>Technical support is available via email at <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a> during business hours (Monday to Friday, 9:00 AM – 6:00 PM GMT). We aim to respond to support requests within 24 business hours.</p>
+              <p>Technical support is available via email at <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a> during business hours (Monday to Friday, 9:00 AM – 6:00 PM GMT). We aim to respond to support requests within 24 business hours.</p>
             </section>
 
             <section style={{ marginBottom: "40px" }}>
@@ -167,8 +167,8 @@ export default function TermsOfService() {
                 NOVA IMPACT LTD<br />
                 71-75 Shelton Street, Covent Garden<br />
                 London, WC2H 9JQ, United Kingdom<br />
-                Email: <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a><br />
-                Website: <a href="https://novaimpact.io">https://novaimpact.io</a>
+                Email: <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a><br />
+                Website: <a href="https://novaimpactltd.com">https://novaimpactltd.com</a>
               </address>
             </section>
           </div>

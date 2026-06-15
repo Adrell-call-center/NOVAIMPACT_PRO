@@ -5,7 +5,7 @@ import PortfolioElementV2 from "@/components/portfolio/PortfolioElementV2";
 import PortfolioV2CTA from "@/components/cta/PortfolioV2CTA";
 import animationCharCome from "@/lib/utils/animationCharCome";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const OurWork = () => {
   const charAnim = useRef();

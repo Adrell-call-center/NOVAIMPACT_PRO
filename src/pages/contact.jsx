@@ -2,11 +2,11 @@ import Head from "next/head";
 import RootLayout from "@/components/common/layout/RootLayout";
 import Contact1 from "@/components/contact/Contact1";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const Contact = () => {
   const title = "Contact Nova Impact — Digital Agency | London & Marseille";
-  const description = "Get in touch with Nova Impact. Contact our team in London or Marseille for digital marketing, SEO, web design, and advertising services. Email: contact@novaimpact.io";
+  const description = "Get in touch with Nova Impact. Contact our team in London or Marseille for digital marketing, SEO, web design, and advertising services. Email: contact@novaimpactltd.com";
   const ogImage = `${SITE_URL}/assets/imgs/logo/footer-logo-white.png`;
 
   const schema = {
@@ -33,7 +33,7 @@ const Contact = () => {
         "name": "Nova Impact",
         "url": SITE_URL,
         "telephone": "+44-7477-884817",
-        "email": "contact@novaimpact.io",
+        "email": "contact@novaimpactltd.com",
         "address": [
           {
             "@type": "PostalAddress",

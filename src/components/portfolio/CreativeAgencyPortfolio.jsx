@@ -6,6 +6,8 @@ import Portfilio13 from "../../../public/assets/imgs/portfolio/1/3.jpg";
 const Planostra = "/images/planostra-portfolio.webp";
 const ExifInjector = "/images/exifinjector-portfolio.webp";
 const TrustedPulse = "/images/trustedpulse-portfolio.webp";
+const TRUSTEDPULSE_WIDTH = 1672;
+const TRUSTEDPULSE_HEIGHT = 941;
 const JeSwitch = "/images/jeswitch-portfolio.webp";
 const Mutuelles = "/images/mutuellespashchere-portfolio.webp";
 import Image from "next/image";
@@ -20,7 +22,7 @@ const projects = [
   { title: "ZoomAssurance.fr", subtitle: "Insurance Insights & Guides", img: Portfilio12, link: "https://zoomassurance.fr" },
   { title: "MutuellesPasChere.com", subtitle: "Health Insurance Resource", img: Mutuelles, link: "https://mutuellespaschere.com" },
   { title: "Planostra", subtitle: "Marketing Intelligence & Analytics SaaS", img: Planostra, link: "https://planostra.com" },
-  { title: "TrustedPulse", subtitle: "Review & Reputation Platform", img: TrustedPulse, link: "https://trustedpulse.com" },
+  { title: "TrustedPulse", subtitle: "Review & Reputation Platform", img: TrustedPulse, link: "/portfolio/trustedpulse", width: TRUSTEDPULSE_WIDTH, height: TRUSTEDPULSE_HEIGHT },
   { title: "ExifInjector", subtitle: "AI Metadata Optimization for eCommerce", img: ExifInjector, link: "https://exifinjector.com" },
   { title: "AllWorld247.com", subtitle: "Multi-Category Content Portal", img: Portfilio13, link: "https://allworld247.com" },
 ];
@@ -72,8 +74,8 @@ const CreativeAgencyPortfolio = () => {
                     <Link href={project.link}>
                       <Image
                         priority
-                        width={520}
-                        height={700}
+                        width={project.width || 520}
+                        height={project.height || 700}
                         style={{ width: "100%", height: "auto", display: "block" }}
                         src={project.img}
                         alt={project.title}

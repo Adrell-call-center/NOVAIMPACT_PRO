@@ -20,22 +20,22 @@ const SEO = () => {
         <meta name="keywords" content="seo, search engine optimization, technical seo, on-page seo, link building, local seo, organic traffic, google rankings" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/seo" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/seo" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/seo" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/seo" />
         <meta property="og:title" content="SEO Services — Search Engine Optimization — Nova Impact" />
         <meta property="og:description" content="Professional SEO services to improve your organic visibility. Technical audits, on-page optimization, content strategy, and link building." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="SEO Services — Nova Impact" />
         <meta name="twitter:description" content="Professional SEO to improve organic visibility. Technical audits, on-page optimization, content strategy, and link building." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "SEO (Search Engine Optimization)",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/seo",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/seo",
           "description": "Technical SEO audits, on-page optimization, content strategy, and link building.",
           "serviceType": "Search Engine Optimization"
         }) }} />

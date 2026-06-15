@@ -36,7 +36,7 @@ export default function RefundPolicy() {
             <section style={{ marginBottom: "40px" }}>
               <h2>1. 14-Day Refund Period for New Subscriptions</h2>
               <p>We offer a 14-day money-back guarantee for all new subscriptions. If you are not satisfied with our Services for any reason, you may request a full refund within 14 days of your initial purchase date.</p>
-              <p>To request a refund within this period, please contact us at <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a> with your account email address and order reference number. Refunds requested within the 14-day window will be processed without requiring you to provide a reason.</p>
+              <p>To request a refund within this period, please contact us at <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a> with your account email address and order reference number. Refunds requested within the 14-day window will be processed without requiring you to provide a reason.</p>
               <p>This 14-day refund period applies to:</p>
               <ul>
                 <li>First-time subscriptions to Bounce Checker</li>
@@ -56,12 +56,12 @@ export default function RefundPolicy() {
                 <li><strong>Billing errors:</strong> If you have been charged incorrectly or billed for a subscription you did not authorize</li>
                 <li><strong>Duplicate charges:</strong> If you have been charged more than once for the same subscription period</li>
               </ul>
-              <p>To submit a refund request after the 14-day period, please email us at <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a> with a detailed description of the issue and any relevant documentation.</p>
+              <p>To submit a refund request after the 14-day period, please email us at <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a> with a detailed description of the issue and any relevant documentation.</p>
             </section>
 
             <section style={{ marginBottom: "40px" }}>
               <h2>3. Subscription Cancellation</h2>
-              <p>You may cancel your subscription at any time through your account dashboard or by contacting us at <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>.</p>
+              <p>You may cancel your subscription at any time through your account dashboard or by contacting us at <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>.</p>
               <p>When you cancel your subscription:</p>
               <ul>
                 <li>Your access to the Services will continue until the end of your current billing period</li>
@@ -114,8 +114,8 @@ export default function RefundPolicy() {
                 NOVA IMPACT LTD<br />
                 71-75 Shelton Street, Covent Garden<br />
                 London, WC2H 9JQ, United Kingdom<br />
-                Email: <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a><br />
-                Website: <a href="https://novaimpact.io">https://novaimpact.io</a>
+                Email: <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a><br />
+                Website: <a href="https://novaimpactltd.com">https://novaimpactltd.com</a>
               </address>
             </section>
           </div>

@@ -20,22 +20,22 @@ const ComparatorCreation = () => {
         <meta name="keywords" content="comparison platform, lead generation, offers comparison, marketplace aggregator, personalized recommendations, trusted providers, decision-making tool" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/comparator-creation" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/comparator-creation" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/comparator-creation" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/comparator-creation" />
         <meta property="og:title" content="Comparison Platform & Lead Generation — Nova Impact" />
         <meta property="og:description" content="We build comparison platforms and lead generation websites that help users compare offers and find the most suitable solutions based on their needs." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Comparison Platform & Lead Generation — Nova Impact" />
         <meta name="twitter:description" content="We build comparison platforms and lead generation websites that help users find the most suitable offers." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "Comparison Platform & Lead Generation",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/comparator-creation",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/comparator-creation",
           "description": "Custom comparison platforms and lead generation websites that help users find the best offers.",
           "serviceType": "Web Development & Lead Generation"
         }) }} />

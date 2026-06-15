@@ -31,10 +31,10 @@ export default function MentionsLegales() {
               <p><strong>Forme juridique :</strong> Private Limited Company (LTD)</p>
               <p><strong>Numéro d'enregistrement :</strong> 16126510 (Companies House – Royaume-Uni)</p>
               <p><strong>Siège social :</strong> 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, UNITED KINGDOM</p>
-              <p><strong>Site internet :</strong> <a href="https://novaimpact.io">https://novaimpact.io</a></p>
-              <p><strong>Email :</strong> <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a></p>
+              <p><strong>Site internet :</strong> <a href="https://novaimpactltd.com">https://novaimpactltd.com</a></p>
+              <p><strong>Email :</strong> <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a></p>
               <p><strong>Directeur de la publication :</strong> M. Zak MEG</p>
-              <p>Le site internet <a href="https://novaimpact.io">https://novaimpact.io</a> est édité par la société NOVA IMPACT LTD.</p>
+              <p>Le site internet <a href="https://novaimpactltd.com">https://novaimpactltd.com</a> est édité par la société NOVA IMPACT LTD.</p>
               <p>La conception et le développement ont été réalisés en interne par NOVA IMPACT LTD.</p>
               <p>L'hébergement est assuré par Namecheap, Inc. – 4600 East Washington Street, Suite 305, Phoenix, AZ 85034, USA.</p>
               <p>Ce site est régi par la législation britannique et, le cas échéant, par la réglementation européenne. Les utilisateurs étrangers sont invités à vérifier la conformité de leur navigation aux lois locales.</p>
@@ -44,7 +44,7 @@ export default function MentionsLegales() {
             <section style={{ marginBottom: "40px" }}>
               <h2>Crédits</h2>
               <p><strong>Responsable de la publication :</strong> M. Zak MEG</p>
-              <p><strong>Email de contact :</strong> <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a></p>
+              <p><strong>Email de contact :</strong> <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a></p>
             </section>
 
             <section style={{ marginBottom: "40px" }}>
@@ -58,7 +58,7 @@ export default function MentionsLegales() {
 
             <section style={{ marginBottom: "40px" }}>
               <h2>Propriété intellectuelle</h2>
-              <p>Tous les contenus présents sur le site <a href="https://novaimpact.io">https://novaimpact.io</a> (textes, images, illustrations, logos, icônes…) sont la propriété exclusive de NOVA IMPACT LTD, sauf mention contraire.</p>
+              <p>Tous les contenus présents sur le site <a href="https://novaimpactltd.com">https://novaimpactltd.com</a> (textes, images, illustrations, logos, icônes…) sont la propriété exclusive de NOVA IMPACT LTD, sauf mention contraire.</p>
               <p>Toute reproduction, représentation ou modification sans autorisation écrite préalable est strictement interdite.</p>
               <p>Toute utilisation non autorisée sera considérée comme une contrefaçon et pourra faire l'objet de poursuites selon les lois en vigueur au Royaume-Uni et dans l'UE.</p>
             </section>

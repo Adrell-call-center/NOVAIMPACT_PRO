@@ -20,22 +20,22 @@ const ContentCreation = () => {
         <meta name="keywords" content="content creation, blog writing, copywriting, video scripts, graphic design, brand content, visual storytelling" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/content-creation" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/content-creation" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/content-creation" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/content-creation" />
         <meta property="og:title" content="Content Creation Services — Nova Impact" />
         <meta property="og:description" content="Professional content creation — blog writing, video scripts, graphic design, and brand copywriting that resonates with your audience." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Content Creation Services — Nova Impact" />
         <meta name="twitter:description" content="Blog writing, video scripts, graphic design, and brand copywriting that resonates with your audience." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "Content Creation",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/content-creation",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/content-creation",
           "description": "Blog writing, video scripts, graphic design, and brand copywriting that educates, engages, and converts.",
           "serviceType": "Content Marketing"
         }) }} />

@@ -36,7 +36,7 @@ export default function AdminSettings() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Site URL</label>
-                  <input className="form-input form-input-mono" defaultValue="https://novaimpact.io" />
+                  <input className="form-input form-input-mono" defaultValue="https://novaimpactltd.com" />
                   <p className="form-hint">The primary URL of your website</p>
                 </div>
                 <div className="form-group">

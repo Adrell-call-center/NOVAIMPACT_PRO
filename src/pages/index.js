@@ -17,7 +17,7 @@ const Faq1                     = dynamic(() => import("@/components/faq/Faq1"), 
 const HomeProcess              = dynamic(() => import("@/components/home/HomeProcess"),                  { ssr: false });
 const HomeVideoGallery         = dynamic(() => import("@/components/home/HomeVideoGallery"),           { ssr: false });
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const Home = ({ latestPosts }) => {
   const title = "Nova Impact — Digital Agency | SEO, Ads & Web Design";
@@ -41,7 +41,7 @@ const Home = ({ latestPosts }) => {
           "@type": "ContactPoint",
           "telephone": "+44-7477-884817",
           "contactType": "customer service",
-          "email": "contact@novaimpact.io",
+          "email": "contact@novaimpactltd.com",
           "areaServed": ["GB", "FR", "MA", "EU"],
           "availableLanguage": ["English", "French"]
         },
@@ -111,7 +111,7 @@ const Home = ({ latestPosts }) => {
         "image": `${SITE_URL}/assets/imgs/logo/footer-logo-white.png`,
         "url": SITE_URL,
         "telephone": "+44-7477-884817",
-        "email": "contact@novaimpact.io",
+        "email": "contact@novaimpactltd.com",
         "priceRange": "€€",
         "address": {
           "@type": "PostalAddress",

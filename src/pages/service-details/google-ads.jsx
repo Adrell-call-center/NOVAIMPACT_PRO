@@ -20,22 +20,22 @@ const GoogleAds = () => {
         <meta name="keywords" content="google ads, search ads, display ads, youtube ads, ppc campaigns, keyword research, paid search" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/google-ads" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/google-ads" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/google-ads" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/google-ads" />
         <meta property="og:title" content="Google Ads Services — Search, Display & YouTube Advertising — Nova Impact" />
         <meta property="og:description" content="Professional Google Ads management. Search campaigns, display advertising, and YouTube ads to drive qualified traffic and generate measurable leads." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Google Ads Services — Nova Impact" />
         <meta name="twitter:description" content="Professional Google Ads management — Search, Display, and YouTube campaigns to drive qualified traffic." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "Google Ads",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/google-ads",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/google-ads",
           "description": "Search, Display, and YouTube ad campaign management to drive qualified traffic and generate measurable leads.",
           "serviceType": "Pay-Per-Click Advertising"
         }) }} />

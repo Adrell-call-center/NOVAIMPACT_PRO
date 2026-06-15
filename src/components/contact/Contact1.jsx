@@ -75,7 +75,7 @@ const Contact1 = () => {
                     <a href="tel:+33980801417">+33 980 801 417</a>
                   </li>
                   <li>
-                    <a href="mailto:contact@novaimpact.io">contact@novaimpact.io</a>
+                    <a href="mailto:contact@novaimpactltd.com">contact@novaimpactltd.com</a>
                   </li>
                   <li>
                     <span>Marseille · London · Agadir</span>

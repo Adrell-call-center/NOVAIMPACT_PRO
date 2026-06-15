@@ -726,7 +726,7 @@ Replace the current single-object schema with a proper `@graph` array: Organizat
 
 ```js
 // src/lib/schema-builder.js
-const BASE_URL = 'https://novaimpact.io';
+const BASE_URL = 'https://novaimpactltd.com';
 const ORG_NAME = 'Nova Impact';
 const ORG_LOGO = `${BASE_URL}/assets/imgs/logo/site-logo-white-2.png`;
 

@@ -20,22 +20,22 @@ const MetaAds = () => {
         <meta name="keywords" content="meta ads, facebook ads, instagram ads, paid social media, ad campaigns, retargeting, social media advertising" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/meta-ads" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/meta-ads" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/meta-ads" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/meta-ads" />
         <meta property="og:title" content="Meta Ads Services — Facebook & Instagram Advertising — Nova Impact" />
         <meta property="og:description" content="Professional Meta Ads management for Facebook and Instagram. Targeted ad campaigns, A/B testing, and ROI optimization." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Meta Ads Services — Nova Impact" />
         <meta name="twitter:description" content="Professional Meta Ads management for Facebook and Instagram. Targeted campaigns and ROI optimization." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "Meta Ads (Facebook & Instagram Advertising)",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/meta-ads",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/meta-ads",
           "description": "Targeted Facebook and Instagram ad campaigns with A/B testing and ROI optimization.",
           "serviceType": "Social Media Advertising"
         }) }} />

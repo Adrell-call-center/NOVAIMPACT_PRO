@@ -8,7 +8,7 @@ const AllWorld = "/images/allword-portfolio.webp";
 const projects = [
   { img: "/images/jeswitch-portfolio.webp",           title: "JeSwitch.fr",           subtitle: "Insurance Comparison & Lead Generation",      link: "https://jeswitch.fr" },
   { img: "/images/planostra-portfolio.webp",          title: "Planostra",             subtitle: "Marketing Intelligence & Analytics SaaS",     link: "https://planostra.com" },
-  { img: "/images/trustedpulse-portfolio.webp",       title: "TrustedPulse",          subtitle: "Review & Reputation Platform",                link: "https://trustedpulse.com" },
+  { img: "/images/trustedpulse-portfolio.webp", width: 1672, height: 941, title: "TrustedPulse",          subtitle: "Review & Reputation Platform",                link: "/portfolio/trustedpulse" },
   { img: "/images/exifinjector-portfolio.webp",       title: "ExifInjector",          subtitle: "AI Metadata Optimization for eCommerce",      link: "https://exifinjector.com" },
   { img: "/images/mutuellespashchere-portfolio.webp", title: "MutuellesPasChere.com", subtitle: "Health Insurance Resource",                   link: "https://mutuellespaschere.com" },
   { img: "/images/zoom-assurance-portfolio.webp",    title: "ZoomAssurance.fr",      subtitle: "Insurance Insights & Guides",                  link: "https://zoomassurance.fr" },
@@ -51,10 +51,17 @@ const StartupAgencyPortfolio = () => {
                     1400: { slidesPerView: 2, spaceBetween: 120 },
                   }}
                 >
-                  {projects.map((p, i) => (
+                  {projects.map((p, i) => {
+                    const isExternal = p.link.startsWith("http");
+                    return (
                     <SwiperSlide key={i}>
                       <div className="portfolio__item-4">
-                        <Link href={p.link} target="_blank" rel="noopener noreferrer">
+                        <Link
+                          href={p.link}
+                          {...(isExternal
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                        >
                           <div className="portfolio__item-inner">
                             <div className="portfolio__title-wrapper">
                               <h4 className="portfolio__title-4">{p.title}</h4>
@@ -68,8 +75,8 @@ const StartupAgencyPortfolio = () => {
                           </div>
                           <Image
                             priority
-                            width={600}
-                            height={800}
+                            width={p.width || 600}
+                            height={p.height || 800}
                             style={{ width: "100%", height: "auto" }}
                             src={p.img}
                             alt={p.title}
@@ -77,7 +84,8 @@ const StartupAgencyPortfolio = () => {
                         </Link>
                       </div>
                     </SwiperSlide>
-                  ))}
+                    );
+                  })}
                 </Swiper>
               </div>
             </div>

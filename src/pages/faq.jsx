@@ -3,7 +3,7 @@ import RootLayout from "@/components/common/layout/RootLayout";
 import Faq1 from "@/components/faq/Faq1";
 import FaqCTA from "@/components/cta/FaqCTA";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const Faq = () => {
   const title = "FAQs — Nova Impact | Digital Marketing Questions Answered";
@@ -52,7 +52,7 @@ const Faq = () => {
             "name": "How can I contact Nova Impact?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You can reach Nova Impact by email at contact@novaimpact.io or by phone at +44 7477 884817."
+              "text": "You can reach Nova Impact by email at contact@novaimpactltd.com or by phone at +44 7477 884817."
             }
           }
         ]

@@ -53,7 +53,7 @@ export default function AdminLogin() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label className="form-label" htmlFor="email">Email</label>
-                <input className="form-input" id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@novaimpact.io" required autoComplete="email" />
+                <input className="form-input" id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@novaimpactltd.com" required autoComplete="email" />
               </div>
 
               <div className="form-group">

@@ -6,8 +6,8 @@ Nova Impact helps brands and businesses grow through strategy, technology, desig
 
 ## Contact
 
-- Website: https://novaimpact.io
-- Email: contact@novaimpact.io
+- Website: https://novaimpactltd.com
+- Email: contact@novaimpactltd.com
 - Phone (UK): +44 7477 884817
 - Phone (FR): +33 980 801 417
 - LinkedIn: https://linkedin.com/company/novaimpact
@@ -23,51 +23,51 @@ Nova Impact helps brands and businesses grow through strategy, technology, desig
 
 ## Main pages
 
-- [Home](https://novaimpact.io/): Digital agency homepage — services overview, selected projects, process, FAQ
-- [About](https://novaimpact.io/about): Company story, values, and team
-- [Services](https://novaimpact.io/service): Full service catalog
-- [Portfolio](https://novaimpact.io/portfolio): Client success stories and case studies
-- [Videos](https://novaimpact.io/videos): Campaign reels and creative work
-- [Blog](https://novaimpact.io/blog): Digital marketing insights and articles
-- [Contact](https://novaimpact.io/contact): Get in touch, offices, contact form
-- [FAQ](https://novaimpact.io/faq): Frequently asked questions
-- [Team](https://novaimpact.io/team): Team members
+- [Home](https://novaimpactltd.com/): Digital agency homepage — services overview, selected projects, process, FAQ
+- [About](https://novaimpactltd.com/about): Company story, values, and team
+- [Services](https://novaimpactltd.com/service): Full service catalog
+- [Portfolio](https://novaimpactltd.com/portfolio): Client success stories and case studies
+- [Videos](https://novaimpactltd.com/videos): Campaign reels and creative work
+- [Blog](https://novaimpactltd.com/blog): Digital marketing insights and articles
+- [Contact](https://novaimpactltd.com/contact): Get in touch, offices, contact form
+- [FAQ](https://novaimpactltd.com/faq): Frequently asked questions
+- [Team](https://novaimpactltd.com/team): Team members
 
 ## Services
 
-- [Website Creation](https://novaimpact.io/service-details/website-creation): Custom websites and web applications
-- [SEO](https://novaimpact.io/service-details/seo): Search engine optimization and organic growth
-- [Meta Ads](https://novaimpact.io/service-details/meta-ads): Facebook and Instagram advertising
-- [Google Ads](https://novaimpact.io/service-details/google-ads): Search and display campaigns
-- [Social Media Management](https://novaimpact.io/service-details/social-media-management): Strategy, posting, and community
-- [Content Creation](https://novaimpact.io/service-details/content-creation): Copy, visuals, and multimedia content
-- [Brand Identity](https://novaimpact.io/service-details/brand-identity): Logo, visual identity, and brand systems
-- [Comparator Creation](https://novaimpact.io/service-details/comparator-creation): Comparison platforms and lead-generation tools
-- [Consulting & Support](https://novaimpact.io/service-details/consulting-support): Digital strategy and ongoing support
+- [Website Creation](https://novaimpactltd.com/service-details/website-creation): Custom websites and web applications
+- [SEO](https://novaimpactltd.com/service-details/seo): Search engine optimization and organic growth
+- [Meta Ads](https://novaimpactltd.com/service-details/meta-ads): Facebook and Instagram advertising
+- [Google Ads](https://novaimpactltd.com/service-details/google-ads): Search and display campaigns
+- [Social Media Management](https://novaimpactltd.com/service-details/social-media-management): Strategy, posting, and community
+- [Content Creation](https://novaimpactltd.com/service-details/content-creation): Copy, visuals, and multimedia content
+- [Brand Identity](https://novaimpactltd.com/service-details/brand-identity): Logo, visual identity, and brand systems
+- [Comparator Creation](https://novaimpactltd.com/service-details/comparator-creation): Comparison platforms and lead-generation tools
+- [Consulting & Support](https://novaimpactltd.com/service-details/consulting-support): Digital strategy and ongoing support
 
 ## Portfolio case studies
 
-- [JeSwitch.fr](https://novaimpact.io/portfolio/jeswitch-fr): Insurance comparison and lead generation platform
-- [ZoomAssurance.fr](https://novaimpact.io/portfolio/zoomassurance-fr): Finance and insurance media publishing platform
-- [MutuellesPasChere.com](https://novaimpact.io/portfolio/mutuellespaschere-com): Health insurance comparison platform
-- [AllWorld247](https://novaimpact.io/portfolio/allworld247-com): Global digital publishing and media platform
-- [MyGestion](https://novaimpact.io/portfolio/mygestion): Internal call center and workflow management software
-- [SwitchLeads](https://novaimpact.io/portfolio/switchleads): Lead generation and customer acquisition platform
-- [Planostra](https://novaimpact.io/portfolio/planostra): Marketing intelligence and analytics SaaS
-- [TrustedPulse](https://novaimpact.io/portfolio/trustedpulse): Review and reputation management platform
-- [EXIF Injector](https://novaimpact.io/portfolio/exifinjector): AI-powered metadata SaaS for images
+- [JeSwitch.fr](https://novaimpactltd.com/portfolio/jeswitch-fr): Insurance comparison and lead generation platform
+- [ZoomAssurance.fr](https://novaimpactltd.com/portfolio/zoomassurance-fr): Finance and insurance media publishing platform
+- [MutuellesPasChere.com](https://novaimpactltd.com/portfolio/mutuellespaschere-com): Health insurance comparison platform
+- [AllWorld247](https://novaimpactltd.com/portfolio/allworld247-com): Global digital publishing and media platform
+- [MyGestion](https://novaimpactltd.com/portfolio/mygestion): Internal call center and workflow management software
+- [SwitchLeads](https://novaimpactltd.com/portfolio/switchleads): Lead generation and customer acquisition platform
+- [Planostra](https://novaimpactltd.com/portfolio/planostra): Marketing intelligence and analytics SaaS
+- [TrustedPulse](https://novaimpactltd.com/portfolio/trustedpulse): Review and reputation management platform
+- [EXIF Injector](https://novaimpactltd.com/portfolio/exifinjector): AI-powered metadata SaaS for images
 
 ## Legal
 
-- [Terms of Service](https://novaimpact.io/terms-of-service)
-- [Refund Policy](https://novaimpact.io/refund-policy)
-- [Mentions légales](https://novaimpact.io/mentions-legales)
-- [Politique de confidentialité](https://novaimpact.io/politique-confidentialite)
+- [Terms of Service](https://novaimpactltd.com/terms-of-service)
+- [Refund Policy](https://novaimpactltd.com/refund-policy)
+- [Mentions légales](https://novaimpactltd.com/mentions-legales)
+- [Politique de confidentialité](https://novaimpactltd.com/politique-confidentialite)
 
 ## Technical
 
-- Sitemap: https://novaimpact.io/api/sitemap.xml
-- Primary domain: https://novaimpact.io
+- Sitemap: https://novaimpactltd.com/api/sitemap.xml
+- Primary domain: https://novaimpactltd.com
 - Admin routes (`/admin/*`) are private and should not be indexed or summarized
 
 ## Optional

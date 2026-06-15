@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 import { getAllProjectSlugs } from '@/data/projects';
 
-const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://novaimpact.io';
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://novaimpactltd.com';
 
 const url = (loc, lastmod, changefreq, priority) =>
   `<url><loc>${SITE_URL}${loc}</loc><lastmod>${lastmod}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;

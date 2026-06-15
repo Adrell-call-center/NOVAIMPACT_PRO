@@ -1,5 +1,5 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_APP_URL || "https://novaimpact.io";
+  process.env.NEXT_PUBLIC_APP_URL || "https://novaimpactltd.com";
 export const SITE_NAME = "Nova Impact";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/imgs/logo/footer-logo-white.png`;
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;

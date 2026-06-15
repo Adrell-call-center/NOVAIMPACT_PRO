@@ -9,6 +9,8 @@ import animationCharCome from "@/lib/utils/animationCharCome";
 const ExifInjector = "/images/exifinjector-portfolio.webp";
 const Planostra = "/images/planostra-portfolio.webp";
 const TrustedPulse = "/images/trustedpulse-portfolio.webp";
+const TRUSTEDPULSE_WIDTH = 1672;
+const TRUSTEDPULSE_HEIGHT = 941;
 const JeSwitch = "/images/jeswitch-portfolio.webp";
 const Mutuelles = "/images/mutuellespashchere-portfolio.webp";
 const ZoomAssurance = "/images/zoom-assurance-portfolio.webp";
@@ -215,11 +217,11 @@ const HomePortfolioV6 = () => {
 
                     {/* Project 6: TrustedPulse */}
                     <div className="portfolio__item-6" data-portfitem="6">
-                      <Link href="https://trustedpulse.com" target="_blank" rel="noopener noreferrer">
+                      <Link href="/portfolio/trustedpulse">
                         <Image
                           priority
-                          width={514}
-                          height={770}
+                          width={TRUSTEDPULSE_WIDTH}
+                          height={TRUSTEDPULSE_HEIGHT}
                           style={{ height: "auto" }}
                           src={TrustedPulse}
                           alt="TrustedPulse Portfolio"

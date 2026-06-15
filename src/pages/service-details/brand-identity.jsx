@@ -20,22 +20,22 @@ const BrandIdentity = () => {
         <meta name="keywords" content="brand identity, logo design, visual identity, brand guidelines, branding, brand strategy, corporate identity" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/brand-identity" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/brand-identity" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/brand-identity" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/brand-identity" />
         <meta property="og:title" content="Brand Identity Services — Logo Design & Visual Identity — Nova Impact" />
         <meta property="og:description" content="Professional brand identity — logo design, color systems, typography, and brand guidelines that communicate your values." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Brand Identity — Nova Impact" />
         <meta name="twitter:description" content="Logo design, color systems, typography, and brand guidelines that communicate your values and differentiate you." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "Brand Identity",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/brand-identity",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/brand-identity",
           "description": "Logo design, color systems, typography, and brand guidelines to build recognition and trust.",
           "serviceType": "Branding"
         }) }} />

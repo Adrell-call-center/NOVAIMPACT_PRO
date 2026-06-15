@@ -9,7 +9,7 @@ import AboutTeam from "@/components/team/AboutTeam";
 import DigitalAgencyWorkflow from "@/components/workflow/DigitalAgencyWorkflow";
 import Head from "next/head";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const About = () => {
   const title = "About Nova Impact — Digital Agency | Our Story & Team";

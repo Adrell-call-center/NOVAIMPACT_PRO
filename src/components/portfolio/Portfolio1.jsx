@@ -6,6 +6,8 @@ import Link from "next/link";
 const ExifInjector = "/images/exifinjector-portfolio.webp";
 const Planostra = "/images/planostra-portfolio.webp";
 const TrustedPulse = "/images/trustedpulse-portfolio.webp";
+const TRUSTEDPULSE_WIDTH = 1672;
+const TRUSTEDPULSE_HEIGHT = 941;
 const JeSwitch = "/images/jeswitch-portfolio.webp";
 const Mutuelles = "/images/mutuellespashchere-portfolio.webp";
 const Portfilio61 = "/images/portfolio-analytics.webp";
@@ -172,11 +174,11 @@ const Portfolio1 = () => {
                     </div>
 
                     <div className="portfolio__item-6" data-portfitem="3">
-                      <Link href="https://trustedpulse.com" target="_blank" rel="noopener noreferrer">
+                      <Link href="/portfolio/trustedpulse">
                         <Image
                           priority
-                          width={514}
-                          height={770}
+                          width={TRUSTEDPULSE_WIDTH}
+                          height={TRUSTEDPULSE_HEIGHT}
                           style={{ height: "auto" }}
                           src={TrustedPulse}
                           alt="TrustedPulse Portfolio"

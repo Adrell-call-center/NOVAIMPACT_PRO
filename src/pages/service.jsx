@@ -4,7 +4,7 @@ import ServiceHero from "@/components/hero/ServiceHero";
 import ServiceElementV5 from "@/components/service/ServiceElementV5";
 import DigitalAgencyCTA from "@/components/cta/DigitalAgencyCTA";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const Service = () => {
   const title = "Our Services — Nova Impact | Digital Marketing, SEO & Web Design";

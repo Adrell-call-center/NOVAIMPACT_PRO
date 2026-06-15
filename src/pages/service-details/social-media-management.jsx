@@ -20,22 +20,22 @@ const SocialMediaManagement = () => {
         <meta name="keywords" content="social media management, community management, content planning, social media strategy, Instagram management, Facebook management" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://novaimpact.io/service-details/social-media-management" />
+        <link rel="canonical" href="https://novaimpactltd.com/service-details/social-media-management" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://novaimpact.io/service-details/social-media-management" />
+        <meta property="og:url" content="https://novaimpactltd.com/service-details/social-media-management" />
         <meta property="og:title" content="Social Media Management Services — Nova Impact" />
         <meta property="og:description" content="Professional social media management. Content planning, community engagement, and performance reporting across Instagram, Facebook, LinkedIn, and more." />
-        <meta property="og:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta property="og:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <meta property="og:site_name" content="Nova Impact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Social Media Management — Nova Impact" />
         <meta name="twitter:description" content="Professional social media management. Content planning, community engagement, and performance reporting." />
-        <meta name="twitter:image" content="https://novaimpact.io/assets/imgs/logo/footer-logo-white.png" />
+        <meta name="twitter:image" content="https://novaimpactltd.com/assets/imgs/logo/footer-logo-white.png" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Service",
           "name": "Social Media Management",
-          "provider": { "@id": "https://novaimpact.io/#organization" },
-          "url": "https://novaimpact.io/service-details/social-media-management",
+          "provider": { "@id": "https://novaimpactltd.com/#organization" },
+          "url": "https://novaimpactltd.com/service-details/social-media-management",
           "description": "End-to-end social media management — content planning, community engagement, and performance reporting.",
           "serviceType": "Social Media Management"
         }) }} />

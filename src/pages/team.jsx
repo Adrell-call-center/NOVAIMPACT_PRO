@@ -4,7 +4,7 @@ import Team1 from "@/components/team/Team1";
 import TeamCounter from "@/components/counter/TeamCounter";
 import DigitalAgencyCTA from "@/components/cta/DigitalAgencyCTA";
 
-const SITE_URL = "https://novaimpact.io";
+const SITE_URL = "https://novaimpactltd.com";
 
 const Team = () => {
   const title = "Our Team — Nova Impact | Digital Marketing Experts";
