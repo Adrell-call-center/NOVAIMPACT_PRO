@@ -36,7 +36,9 @@ const ZOOMASSURANCE = `${PROJECTS}/zoomassurance-fr`;
 const MUTUELLES = `${PROJECTS}/mutuellespaschere-com`;
 const ALLWORLD = `${PROJECTS}/allworld247-com`;
 const MYGESTION = `${PROJECTS}/mygestion`;
+const MYGESTION_COVER = `${MYGESTION}/mygestion.webp`;
 const SWITCHLEADS = `${PROJECTS}/switchleads`;
+const SWITCHLEADS_COVER = `${SWITCHLEADS}/SwitchLeads.webp`;
 const PLANOSTRA = `${PROJECTS}/planostra`;
 const TRUSTEDPULSE = `${PROJECTS}/trustedpulse`;
 const EXIFINJECTOR = `${PROJECTS}/exifinjector`;
@@ -1122,16 +1124,16 @@ export const projects = [
       "+ Dashboard & Reporting",
       "+ System Architecture",
     ],
-    thumbnail: `${MYGESTION}/cover.svg`,
+    thumbnail: MYGESTION_COVER,
     thumbnailWidth: 1672,
     thumbnailHeight: 941,
-    images: [`${MYGESTION}/cover.svg`],
+    images: [MYGESTION_COVER],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "MyGestion",
     displaySubtitle: "Call Center Management Software",
     heroDescription:
       "A custom internal management platform designed to centralize call center operations, manage business workflows, and improve administrative control through one secure and scalable system.",
-    heroImage: `${MYGESTION}/cover.svg`,
+    heroImage: MYGESTION_COVER,
     heroStats: [
       { value: "CRM", label: "Client Management" },
       { value: "RBAC", label: "Role Permissions" },
@@ -1158,12 +1160,7 @@ export const projects = [
       "RBAC Security",
     ],
     featuresTitle: "Platform Capabilities",
-    screenshots: [
-      `${MYGESTION}/cover.svg`,
-      `${MYGESTION}/cover.svg`,
-      `${MYGESTION}/cover.svg`,
-      `${MYGESTION}/cover.svg`,
-    ],
+    screenshots: [MYGESTION_COVER],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
       "Discovery",
@@ -1351,16 +1348,16 @@ export const projects = [
       "+ Conversion Optimization",
       "+ Campaign Analytics",
     ],
-    thumbnail: `${SWITCHLEADS}/cover.svg`,
-    thumbnailWidth: 1672,
-    thumbnailHeight: 941,
-    images: [`${SWITCHLEADS}/cover.svg`],
+    thumbnail: SWITCHLEADS_COVER,
+    thumbnailWidth: 1536,
+    thumbnailHeight: 1024,
+    images: [SWITCHLEADS_COVER],
     heroLabel: "FEATURED PROJECT",
     displayTitle: "SwitchLeads",
     displaySubtitle: "Lead Generation Platform",
     heroDescription:
       "A lead generation platform created to help businesses acquire, manage, qualify, and convert high-quality prospects through a structured digital acquisition ecosystem.",
-    heroImage: `${SWITCHLEADS}/cover.svg`,
+    heroImage: SWITCHLEADS_COVER,
     heroStats: [
       { value: "Leads", label: "Centralized Management" },
       { value: "CRM", label: "Pipeline Integration" },
@@ -1387,12 +1384,7 @@ export const projects = [
       "Funnel Analytics",
     ],
     featuresTitle: "Platform Capabilities",
-    screenshots: [
-      `${SWITCHLEADS}/cover.svg`,
-      `${SWITCHLEADS}/cover.svg`,
-      `${SWITCHLEADS}/cover.svg`,
-      `${SWITCHLEADS}/cover.svg`,
-    ],
+    screenshots: [SWITCHLEADS_COVER],
     screenshotsTitle: "Platform Screenshots",
     processSteps: [
       "Discovery",
