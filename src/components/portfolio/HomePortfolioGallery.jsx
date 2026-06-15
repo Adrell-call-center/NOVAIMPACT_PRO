@@ -63,7 +63,7 @@ const HomePortfolioGallery = () => {
                   <div className="slide-img home-portfolio-gallery__thumb">
                     <Link href={`/portfolio/${project.slug}`}>
                       <Image
-                        priority={i < 3}
+                        loading={i === 0 ? "eager" : "lazy"}
                         width={project.thumbnailWidth}
                         height={project.thumbnailHeight}
                         style={{

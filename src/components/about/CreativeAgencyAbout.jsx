@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger, ScrollSmoother, ScrollToPlugin } from "@/plugins";
+import { ScrollTrigger } from "@/plugins";
 import A1 from "../../../public/assets/imgs/home-7/a1.jpg";
 import Video from "../../../public/assets/imgs/home-7/video.jpg";
 import Shape4 from "../../../public/assets/imgs/home-7/shape-4.png";
@@ -9,20 +9,12 @@ import A2 from "../../../public/assets/imgs/home-7/a2.jpg";
 import A3 from "../../../public/assets/imgs/home-7/a3.jpg";
 import Image from "next/image";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 const CreativeAgencyAbout = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let device_width = window.innerWidth;
       let tHero = gsap.context(() => {
-        ScrollSmoother.create({
-          smooth: 1.35,
-          effects: device_width < 1025 ? false : true,
-          smoothTouch: false,
-          normalizeScroll: false,
-          ignoreMobileResize: true,
-        });
         gsap.to(".about__img-2 img", {
           scale: 1.15,
           duration: 1,

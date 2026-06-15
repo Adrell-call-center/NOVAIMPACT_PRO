@@ -4,9 +4,12 @@ const nextConfig = {
   output: 'standalone',
   compress: true,
   poweredByHeader: false,
+  swcMinify: true,
   eslint: {
-    // ESLint is checked locally; ignore during production builds
     ignoreDuringBuilds: true,
+  },
+  experimental: {
+    optimizePackageImports: ['@fortawesome/react-fontawesome', 'swiper', 'react-bootstrap'],
   },
   images: {
     domains: [
@@ -20,8 +23,9 @@ const nextConfig = {
       'storage.googleapis.com',
     ],
     formats: ['image/webp', 'image/avif'],
-    // Disable blur placeholder for sharper images
-    minimumCacheTTL: 604800, // 1 week
+    minimumCacheTTL: 604800,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 64, 128, 256],
   },
   async headers() {
     return [

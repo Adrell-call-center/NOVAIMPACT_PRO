@@ -1,29 +1,9 @@
-import { useEffect } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger, ScrollSmoother } from "@/plugins";
 import Link from "next/link";
 import Image from "next/image";
 const About11 = "/images/about-team-meeting.webp";
 const About12 = "/images/nova-impact-ltd-office-agency-london-marketing-agency-london-1.jpg.webp";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
 const DigitalAgencyAbout = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      let device_width = window.innerWidth;
-      let tHero = gsap.context(() => {
-        ScrollSmoother.create({
-          smooth: 1.35,
-          effects: device_width < 1025 ? false : true,
-          smoothTouch: false,
-          normalizeScroll: false,
-          ignoreMobileResize: true,
-        });
-      });
-      return () => tHero.revert();
-    }
-  }, []);
   return (
     <>
       <section className="about__area">
@@ -41,7 +21,7 @@ const DigitalAgencyAbout = () => {
                 <div className="about__img">
                   <div className="img-anim about__img_left">
                     <Image
-                      priority
+                      loading="lazy"
                       width={800}
                       height={1067}
                       style={{ width: "auto", height: "auto" }}
@@ -53,7 +33,7 @@ const DigitalAgencyAbout = () => {
 
                   <div className="about__img-right">
                     <Image
-                      priority
+                      loading="lazy"
                       width={220}
                       height={293}
                       style={{ height: "auto" }}

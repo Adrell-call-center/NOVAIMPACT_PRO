@@ -1,28 +1,8 @@
-import { useEffect } from "react";
-import { gsap } from "gsap";
-import { ScrollSmoother } from "@/plugins";
 import Link from "next/link.js";
 import About31 from "../../../public/assets/imgs/about/3/1.jpg";
 import Image from "next/image.js";
 
-gsap.registerPlugin(ScrollSmoother);
-
 const DigitalMarketingAbout = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      let device_width = window.innerWidth;
-      let tHero = gsap.context(() => {
-        ScrollSmoother.create({
-          smooth: 1.35,
-          effects: device_width < 1025 ? false : true,
-          smoothTouch: false,
-          normalizeScroll: false,
-          ignoreMobileResize: true,
-        });
-      });
-      return () => tHero.revert();
-    }
-  }, []);
   return (
     <>
       <section className="about__area-3">

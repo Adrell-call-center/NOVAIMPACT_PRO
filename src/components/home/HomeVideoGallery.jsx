@@ -8,24 +8,63 @@ import { homeVideos } from "@/data/videos";
 import "swiper/css";
 import "swiper/css/free-mode";
 
+const LazyVideo = ({ src, label }) => {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !videoRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && videoRef.current && !videoRef.current.src) {
+          videoRef.current.src = src;
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [src]);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) videoRef.current.play().catch(() => {});
+  };
+
+  const handleMouseLeave = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0;
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="slide-img home-video-gallery__media"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-label={label}
+      />
+    </div>
+  );
+};
+
 const HomeVideoGallery = () => {
   const charAnim = useRef();
 
   useEffect(() => {
     animationCharCome(charAnim.current);
   }, []);
-
-  const handleVideoEnter = (event) => {
-    const video = event.currentTarget.querySelector("video");
-    if (video) video.play().catch(() => {});
-  };
-
-  const handleVideoLeave = (event) => {
-    const video = event.currentTarget.querySelector("video");
-    if (!video) return;
-    video.pause();
-    video.currentTime = 0;
-  };
 
   return (
     <section className="portfolio__area-7 home-video-gallery">
@@ -69,20 +108,10 @@ const HomeVideoGallery = () => {
           {homeVideos.map((video) => (
             <SwiperSlide key={video.id}>
               <div className="portfolio__slide-7">
-                <div
-                  className="slide-img home-video-gallery__media"
-                  onMouseEnter={handleVideoEnter}
-                  onMouseLeave={handleVideoLeave}
-                >
-                  <video
-                    src={video.src}
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    aria-label={`${video.title} ${video.titleAccent}`}
-                  />
-                </div>
+                <LazyVideo
+                  src={video.src}
+                  label={`${video.title} ${video.titleAccent}`}
+                />
                 <div className="slide-content">
                   <h2 className="title">
                     {video.title}{" "}
