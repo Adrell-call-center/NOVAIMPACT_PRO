@@ -92,10 +92,10 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
             <div className="offcanvas__social">
               <p className="social-title">Follow Us</p>
               <ul>
-                <li><a href="https://www.youtube.com/@novaimpactagency" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-                <li><a href="https://www.instagram.com/novaimpactltd.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                <li><a href="https://x.com/ImpactNova_io" target="_blank" rel="noopener noreferrer">X (Twitter)</a></li>
-                <li><a href="https://www.linkedin.com/company/nova-impact-io/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://www.instagram.com/novaimpact.io/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://www.linkedin.com/company/nova-impact-io/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://www.youtube.com/@NovaImpact.agency/" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                <li><a href="https://www.facebook.com/novaimpact.agency" target="_blank" rel="noopener noreferrer">Facebook</a></li>
               </ul>
             </div>
             <div className="offcanvas__links">

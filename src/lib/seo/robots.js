@@ -1,4 +1,7 @@
-User-agent: *
+import { absoluteUrl } from '@/lib/site';
+
+export function generateRobotsTxt() {
+  return `User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
@@ -29,6 +32,8 @@ Allow: /
 User-agent: CCBot
 Disallow: /
 
-Sitemap: https://novaimpactltd.com/api/sitemap.xml
+Sitemap: ${absoluteUrl('/sitemap.xml')}
 
-# LLM context: https://novaimpactltd.com/llms.txt
+# LLM context: ${absoluteUrl('/llms.txt')}
+`;
+}

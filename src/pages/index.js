@@ -62,10 +62,10 @@ const Home = ({ latestPosts }) => {
           }
         ],
         "sameAs": [
-          "https://linkedin.com/company/novaimpact",
-          "https://instagram.com/novaimpact",
-          "https://x.com/novaimpact",
-          "https://youtube.com/@novaimpact"
+          "https://www.instagram.com/novaimpact.io/",
+          "https://www.linkedin.com/company/nova-impact-io/",
+          "https://www.youtube.com/@NovaImpact.agency/",
+          "https://www.facebook.com/novaimpact.agency"
         ],
         "foundingDate": "2022",
         "numberOfEmployees": { "@type": "QuantitativeValue", "value": 10 },

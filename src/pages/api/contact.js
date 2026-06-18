@@ -24,10 +24,10 @@ const emailIllustrationSecondary = toAbsolute(
 
 // Social Links
 const socialLinks = {
-  youtube: process.env.SOCIAL_YOUTUBE_URL,
   instagram: process.env.SOCIAL_INSTAGRAM_URL,
-  twitter: process.env.SOCIAL_TWITTER_URL,
   linkedin: process.env.SOCIAL_LINKEDIN_URL,
+  youtube: process.env.SOCIAL_YOUTUBE_URL,
+  facebook: process.env.SOCIAL_FACEBOOK_URL,
 };
 
 export default async function handler(req, res) {
@@ -98,10 +98,10 @@ export default async function handler(req, res) {
   const dark = "#0f1115";
 
   const socialIconsHTML = [
-    { href: socialLinks.youtube, label: "YT" },
-    { href: socialLinks.linkedin, label: "IN" },
     { href: socialLinks.instagram, label: "IG" },
-    { href: socialLinks.twitter, label: "X" },
+    { href: socialLinks.linkedin, label: "IN" },
+    { href: socialLinks.youtube, label: "YT" },
+    { href: socialLinks.facebook, label: "FB" },
   ]
     .filter((s) => s.href)
     .map(

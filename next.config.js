@@ -89,6 +89,16 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/robots.txt', destination: '/api/robots.txt' },
+        { source: '/sitemap.xml', destination: '/api/sitemap.xml' },
+        { source: '/llms.txt', destination: '/api/llms.txt' },
+        { source: '/llm.txt', destination: '/api/llms.txt' },
+      ],
+    };
+  },
   async redirects() {
     return [
       // Redirect old /blog/fr/slug and /blog/en/slug → clean /blog/slug
