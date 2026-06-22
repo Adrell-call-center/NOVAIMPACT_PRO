@@ -41,7 +41,8 @@ const Service = () => {
           { "@type": "ListItem", "position": 6, "name": "Content Creation", "url": `${SITE_URL}/service-details/content-creation` },
           { "@type": "ListItem", "position": 7, "name": "Brand Identity", "url": `${SITE_URL}/service-details/brand-identity` },
           { "@type": "ListItem", "position": 8, "name": "Comparator Creation", "url": `${SITE_URL}/service-details/comparator-creation` },
-          { "@type": "ListItem", "position": 9, "name": "Consulting & Support", "url": `${SITE_URL}/service-details/consulting-support` }
+          { "@type": "ListItem", "position": 9, "name": "Consulting & Support", "url": `${SITE_URL}/service-details/consulting-support` },
+          { "@type": "ListItem", "position": 10, "name": "Videos", "url": `${SITE_URL}/videos` }
         ]
       }
     ]

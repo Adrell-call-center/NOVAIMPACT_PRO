@@ -18,6 +18,7 @@ const ServiceElementV5 = () => {
     { title: "Brand Identity", slug: "brand-identity", items: ["+ Logo Design", "+ Brand Guidelines", "+ Visual Systems"] },
     { title: "Comparator Creation", slug: "comparator-creation", items: ["+ Custom Platforms", "+ Affiliate Marketing", "+ Lead Generation"] },
     { title: "Consulting & Support", slug: "consulting-support", items: ["+ Strategy Planning", "+ Training", "+ Ongoing Support"] },
+    { title: "Videos", href: "/videos", items: ["+ Campaign Reels", "+ Brand Content", "+ Motion Graphics"] },
   ];
 
   return (
@@ -43,7 +44,7 @@ const ServiceElementV5 = () => {
               {services.map((s, i) => (
                 <div key={i} className="col-xxl-4 col-xl-4 col-lg-4 col-md-4">
                   <div className="portfolio__service-item">
-                    <Link href={`/service-details/${s.slug}`}>
+                    <Link href={s.href || `/service-details/${s.slug}`}>
                       <h3 className="ps-title">
                         {s.title.split(" ").slice(0, Math.ceil(s.title.split(" ").length / 2)).join(" ")}<br />
                         {s.title.split(" ").slice(Math.ceil(s.title.split(" ").length / 2)).join(" ")}
