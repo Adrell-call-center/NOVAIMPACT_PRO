@@ -157,6 +157,8 @@ const Canvas = ({ bladeMode = "", ofCanvasArea }) => {
                       <li><Link href="/service-details/seo" prefetch={false}>SEO (Search Engine Optimization)</Link></li>
                       <li><Link href="/service-details/brand-identity" prefetch={false}>Brand Identity</Link></li>
                       <li><Link href="/service-details/comparator-creation" prefetch={false}>Comparator Creation</Link></li>
+                      <li><Link href="/developpement-comparateur-assurance" prefetch={false}>Comparateur Assurance (FR)</Link></li>
+                      <li><Link href="/insurance-comparison-platform-development" prefetch={false}>Insurance Comparator (EN)</Link></li>
                       <li><Link href="/service-details/consulting-support" prefetch={false}>Consulting & Support</Link></li>
                     </ul>
                   </li>

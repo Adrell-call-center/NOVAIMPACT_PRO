@@ -3,8 +3,22 @@ import { getAllProjectSlugs } from '@/data/projects';
 import { absoluteUrl, SITE_URL } from '@/lib/site';
 import { STATIC_SITEMAP_PAGES } from '@/lib/seo/static-pages';
 
-const urlEntry = (loc, lastmod, changefreq, priority) =>
-  `<url><loc>${absoluteUrl(loc)}</loc><lastmod>${lastmod}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+const urlEntry = (loc, lastmod, changefreq, priority, alternates = []) => {
+  if (!alternates.length) {
+    return `<url><loc>${absoluteUrl(loc)}</loc><lastmod>${lastmod}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+  }
+
+  let xml = '<url>';
+  xml += `<loc>${absoluteUrl(loc)}</loc>`;
+  xml += `<lastmod>${lastmod}</lastmod>`;
+  xml += `<changefreq>${changefreq}</changefreq>`;
+  xml += `<priority>${priority}</priority>`;
+  for (const alt of alternates) {
+    xml += `<xhtml:link rel="alternate" hreflang="${alt.hrefLang}" href="${absoluteUrl(alt.href)}"/>`;
+  }
+  xml += '</url>';
+  return xml;
+};
 
 export async function generateSitemapXml() {
   const today = new Date().toISOString();
@@ -19,7 +33,7 @@ export async function generateSitemapXml() {
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
 
   for (const page of STATIC_SITEMAP_PAGES) {
-    xml += urlEntry(page.loc, today, page.changefreq, page.priority);
+    xml += urlEntry(page.loc, today, page.changefreq, page.priority, page.alternates || []);
   }
 
   for (const slug of getAllProjectSlugs()) {

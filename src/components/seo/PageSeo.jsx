@@ -4,6 +4,7 @@ import { DEFAULT_OG_IMAGE, SITE_NAME } from "@/lib/site";
 export default function PageSeo({
   title,
   description,
+  keywords,
   canonical,
   ogImage = DEFAULT_OG_IMAGE,
   ogType = "website",
@@ -21,6 +22,7 @@ export default function PageSeo({
     <Head>
       <title>{title}</title>
       {description && <meta name="description" content={description} />}
+      {keywords && <meta name="keywords" content={keywords} />}
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {robots && <meta name="robots" content={robots} />}
       {canonical && <link rel="canonical" href={canonical} />}

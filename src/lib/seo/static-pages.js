@@ -17,6 +17,26 @@ export const STATIC_SITEMAP_PAGES = [
   { loc: '/service-details/brand-identity', changefreq: 'monthly', priority: '0.7' },
   { loc: '/service-details/comparator-creation', changefreq: 'monthly', priority: '0.7' },
   { loc: '/service-details/consulting-support', changefreq: 'monthly', priority: '0.7' },
+  {
+    loc: '/developpement-comparateur-assurance',
+    changefreq: 'monthly',
+    priority: '0.8',
+    alternates: [
+      { hrefLang: 'fr', href: '/developpement-comparateur-assurance' },
+      { hrefLang: 'en', href: '/insurance-comparison-platform-development' },
+      { hrefLang: 'x-default', href: '/insurance-comparison-platform-development' },
+    ],
+  },
+  {
+    loc: '/insurance-comparison-platform-development',
+    changefreq: 'monthly',
+    priority: '0.8',
+    alternates: [
+      { hrefLang: 'en', href: '/insurance-comparison-platform-development' },
+      { hrefLang: 'fr', href: '/developpement-comparateur-assurance' },
+      { hrefLang: 'x-default', href: '/insurance-comparison-platform-development' },
+    ],
+  },
   { loc: '/mentions-legales', changefreq: 'yearly', priority: '0.3' },
   { loc: '/politique-confidentialite', changefreq: 'yearly', priority: '0.3' },
   { loc: '/refund-policy', changefreq: 'yearly', priority: '0.3' },
@@ -45,6 +65,16 @@ export const SERVICE_PAGES = [
   { path: '/service-details/brand-identity', label: 'Brand Identity', description: 'Logo, visual identity, and brand systems' },
   { path: '/service-details/comparator-creation', label: 'Comparator Creation', description: 'Comparison platforms and lead-generation tools' },
   { path: '/service-details/consulting-support', label: 'Consulting & Support', description: 'Digital strategy and ongoing support' },
+  {
+    path: '/developpement-comparateur-assurance',
+    label: 'Développement comparateur assurance',
+    description: 'Création et modernisation de comparateurs d’assurance sur mesure',
+  },
+  {
+    path: '/insurance-comparison-platform-development',
+    label: 'Insurance Comparison Platform Development',
+    description: 'Custom insurance comparison platforms, APIs, CRM and mobile apps',
+  },
 ];
 
 export const LEGAL_PAGES = [
