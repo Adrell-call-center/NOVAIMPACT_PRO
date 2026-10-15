@@ -1,8 +1,15 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
+import PageSeo from "@/components/seo/PageSeo";
+import { absoluteUrl, ORGANIZATION_ID, SITE_URL } from "@/lib/site";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema-helpers";
 import styles from "@/styles/avant-appel.module.css";
 
 const image = (name) => `/images/avant/${name}`;
+const PAGE_PATH = "/demarchage-telephonique-solution";
+const PAGE_URL = absoluteUrl(PAGE_PATH);
+const PAGE_TITLE = "Solution de démarchage téléphonique AVANT | Nova Impact";
+const PAGE_DESCRIPTION = "AVANT vérifie les données et preuves disponibles de vos prospects, puis relie votre site d’acquisition à un tableau de bord pour les nouveaux leads et leur consentement.";
 
 const faqs = [
   ["Le formulaire suffit-il à autoriser un appel ?", "Non. Le consentement doit être libre, spécifique, éclairé, univoque et révocable. Une case précochée ou une simple saisie de numéro ne suffit pas."],
@@ -10,6 +17,32 @@ const faqs = [
   ["Puis-je appeler une ancienne base de prospects ?", "Pas automatiquement. Chaque contact doit disposer d’une base légale applicable et d’une autorisation valable lorsque celle-ci est requise."],
   ["Combien de temps le consentement reste-t-il valable ?", "La durée dépend des règles applicables et du contexte. Les échéances et les retraits doivent être suivis avant toute prise de contact."],
 ];
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { ...webPageSchema({ url: PAGE_URL, name: PAGE_TITLE, description: PAGE_DESCRIPTION }), inLanguage: "fr-FR", primaryImageOfPage: { "@type": "ImageObject", url: absoluteUrl(image("hero-dashboard-real.png")) } },
+    breadcrumbSchema([
+      { name: "Accueil", url: SITE_URL },
+      { name: "Solution de démarchage téléphonique", url: PAGE_URL },
+    ]),
+    {
+      "@type": "Service",
+      "@id": `${PAGE_URL}#service`,
+      name: "AVANT — solution de démarchage téléphonique",
+      description: PAGE_DESCRIPTION,
+      url: PAGE_URL,
+      serviceType: "Vérification des contacts, traçabilité du consentement et acquisition de prospects",
+      provider: { "@id": ORGANIZATION_ID },
+      areaServed: { "@type": "Country", name: "France" },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${PAGE_URL}#faq`,
+      mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })),
+    },
+  ],
+};
 
 function DemoForm({ onSuccess }) {
   const [status, setStatus] = useState("idle");
@@ -93,10 +126,8 @@ export default function AvantAppel() {
 
   return (
     <>
+      <PageSeo title={PAGE_TITLE} description={PAGE_DESCRIPTION} keywords="solution démarchage téléphonique, vérification contacts, consentement prospection, leads organiques, AVANT" canonical={PAGE_URL} ogImage={absoluteUrl(image("hero-dashboard-real.png"))} schema={pageSchema} />
       <Head>
-        <title>AVANT — La preuve avant l’appel | Nova Impact</title>
-        <meta name="description" content="Documentez le consentement et vérifiez les autorisations avant vos appels commerciaux. Découvrez AVANT, la solution pensée pour vos équipes et votre CRM." />
-        <link rel="canonical" href="https://novaimpactltd.com/demarchage-telephonique-solution" />
         <meta name="theme-color" content="#fafaf8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
