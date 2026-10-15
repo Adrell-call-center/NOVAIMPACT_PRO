@@ -92,6 +92,7 @@ function DemoForm({ onSuccess }) {
 
 export default function AvantAppel() {
   const [demoOpen, setDemoOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const closeButtonRef = useRef(null);
   const pageRef = useRef(null);
@@ -137,8 +138,8 @@ export default function AvantAppel() {
         <header className={styles.header}>
           <div className={styles.wrap + " " + styles.nav}>
             <a className={styles.headerLogo} href="/" aria-label="Nova Impact, accueil"><img src="/assets/imgs/logo/logo-black.png" alt="Nova Impact" /></a>
-            <nav aria-label="Navigation principale"><a href="#solution">La solution</a><a href="#fonctionnement">Comment ça marche</a><a href="#faq">Questions fréquentes</a></nav>
-            <button className={styles.limeButton} type="button" onClick={() => setDemoOpen(true)}>Demander une démo <b>→</b></button>
+            <nav id="avant-navigation" className={menuOpen ? styles.mobileNavOpen : ""} aria-label="Navigation principale"><a href="#solution" onClick={() => setMenuOpen(false)}>La solution</a><a href="#fonctionnement" onClick={() => setMenuOpen(false)}>Comment ça marche</a><a href="#clients" onClick={() => setMenuOpen(false)}>Nos clients</a><a href="#faq" onClick={() => setMenuOpen(false)}>Questions fréquentes</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav>
+            <div className={styles.headerActions}><button className={styles.limeButton} type="button" onClick={() => { setMenuOpen(false); setDemoOpen(true); }}><span className={styles.desktopDemoLabel}>Demander une démo</span><span className={styles.mobileDemoLabel}>Démo</span> <b>→</b></button><button className={styles.menuToggle} type="button" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-controls="avant-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}><span /><span /><span /></button></div>
           </div>
         </header>
 
