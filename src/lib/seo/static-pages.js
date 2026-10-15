@@ -6,6 +6,7 @@ export const STATIC_SITEMAP_PAGES = [
   { loc: '/videos', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/demarchage-telephonique-solution', changefreq: 'monthly', priority: '0.8' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.6' },
   { loc: '/team', changefreq: 'monthly', priority: '0.6' },
   { loc: '/service-details/website-creation', changefreq: 'monthly', priority: '0.8' },

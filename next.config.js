@@ -101,6 +101,11 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: '/avant-appel',
+        destination: '/demarchage-telephonique-solution',
+        permanent: true,
+      },
       // Redirect old /blog/fr/slug and /blog/en/slug → clean /blog/slug
       {
         source: '/blog/:lang(fr|en)/:slug*',
