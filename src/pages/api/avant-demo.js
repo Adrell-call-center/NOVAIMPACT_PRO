@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
-const AVANT_NOTIFICATION_EMAIL = "assurancezoom@gmail.com";
+const SOLUTION_CONTACT_EMAIL = "contact@novaimpactltd.com";
+const SOLUTION_NAME = "SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE";
 
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -29,11 +30,6 @@ export default async function handler(req, res) {
   const smtpUser = process.env.SMTP_USER || process.env.SMTP_USERNAME;
   const smtpPass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
   const fromEmail = process.env.SMTP_FROM_EMAIL;
-  const recipients = [...new Set([
-    process.env.CONTACT_NOTIFICATION_EMAIL1 || process.env.CONTACT_NOTIFICATION_EMAIL,
-    process.env.CONTACT_NOTIFICATION_EMAIL2,
-    AVANT_NOTIFICATION_EMAIL,
-  ].filter(Boolean))];
 
   if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !smtpUser || !smtpPass || !fromEmail) {
     return res.status(500).json({ error: "Email service is not configured." });
@@ -49,33 +45,34 @@ export default async function handler(req, res) {
 
   const details = [
     ["Nom", cleanName], ["Email", cleanEmail], ["Téléphone", cleanPhone || "Non renseigné"],
-    ["Entreprise", cleanCompany], ["Besoin", cleanMessage || "Demande de démonstration AVANT"],
+    ["Entreprise", cleanCompany], ["Besoin", cleanMessage || "Demande de démonstration"],
   ];
-  const html = `<h1>Nouvelle demande de démonstration AVANT</h1>${details.map(([label, value]) => `<p><strong>${label} :</strong> ${escapeHtml(value).replace(/\n/g, "<br>")}</p>`).join("")}`;
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://novaimpactltd.com";
+  const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:#f2f2f2;font-family:Arial,Helvetica,sans-serif;color:#0f1115">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f2f2;padding:32px 16px"><tr><td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#fff;border-radius:14px;overflow:hidden">
+        <tr><td style="background:#0f1115;padding:23px 32px;text-align:center"><img src="${siteUrl}/assets/imgs/logo/footer-logo-white.png" width="180" alt="Nova Impact" style="display:block;max-width:180px;height:auto;margin:auto"></td></tr>
+        <tr><td style="background:#ffc81a;padding:28px 32px"><p style="margin:0 0 8px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase">Nouvelle demande de démonstration</p><h1 style="margin:0;font-size:27px;line-height:1.25;color:#0f1115">${SOLUTION_NAME}</h1></td></tr>
+        <tr><td style="padding:30px 32px 12px"><p style="margin:0 0 20px;font-size:15px;line-height:1.6">Une personne a demandé une démonstration depuis la page de la solution. Voici les informations transmises :</p>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden">${details.map(([label, value], index) => `<tr style="background:${index % 2 ? "#fff" : "#f8f9fa"}"><td style="width:115px;padding:12px 15px;border-bottom:1px solid #e5e7eb;color:#6b7280;font-size:12px;font-weight:800;text-transform:uppercase;vertical-align:top">${label}</td><td style="padding:12px 15px;border-bottom:1px solid #e5e7eb;font-size:14px;line-height:1.5;overflow-wrap:anywhere">${escapeHtml(value).replace(/\n/g, "<br>")}</td></tr>`).join("")}</table>
+        </td></tr>
+        <tr><td style="padding:18px 32px 34px"><a href="mailto:${encodeURIComponent(cleanEmail)}?subject=${encodeURIComponent(`Re: ${SOLUTION_NAME}`)}" style="display:inline-block;background:#ffc81a;color:#0f1115;border-radius:8px;padding:13px 22px;text-decoration:none;font-size:14px;font-weight:800">Répondre à ${escapeHtml(cleanName)}</a></td></tr>
+        <tr><td style="background:#0f1115;padding:20px 32px;color:#aeb4be;text-align:center;font-size:12px">Nova Impact · ${SOLUTION_NAME}</td></tr>
+      </table>
+    </td></tr></table></body></html>`;
 
   try {
     await transporter.sendMail({
       from: `"${process.env.SMTP_FROM_NAME || "Nova Impact"}" <${fromEmail}>`,
-      to: recipients.join(","),
+      to: SOLUTION_CONTACT_EMAIL,
       replyTo: cleanEmail,
-      subject: "[AVANT] Nouvelle demande de démonstration",
+      subject: `[Contact] ${SOLUTION_NAME} — Demande de démonstration`,
       html,
-      text: details.map(([label, value]) => `${label} : ${value}`).join("\n"),
+      text: `${SOLUTION_NAME}\nDemande de démonstration\n\n${details.map(([label, value]) => `${label} : ${value}`).join("\n")}`,
     });
   } catch (error) {
-    console.error("AVANT demo notification failed:", error);
+    console.error("AVANT demo email failed:", error);
     return res.status(502).json({ error: "We could not send your request. Please try again." });
-  }
-
-  try {
-    await transporter.sendMail({
-      from: `"${process.env.SMTP_FROM_NAME || "Nova Impact"}" <${fromEmail}>`,
-      to: cleanEmail,
-      subject: "Votre demande de démonstration AVANT",
-      text: `Bonjour ${cleanName},\n\nNous avons bien reçu votre demande de démonstration AVANT. Notre équipe reviendra vers vous prochainement.\n\nNova Impact`,
-    });
-  } catch (error) {
-    console.error("AVANT demo confirmation failed:", error);
   }
 
   return res.status(200).json({ success: true });
