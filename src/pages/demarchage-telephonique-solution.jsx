@@ -92,9 +92,11 @@ function DemoForm({ onSuccess }) {
 
 export default function AvantAppel() {
   const [demoOpen, setDemoOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const closeButtonRef = useRef(null);
+  const videoTriggerRef = useRef(null);
   const pageRef = useRef(null);
 
   useEffect(() => {
@@ -116,14 +118,19 @@ export default function AvantAppel() {
   }, []);
 
   useEffect(() => {
-    if (!demoOpen && !imagePreview) return;
+    if (!demoOpen && !imagePreview && !videoOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     closeButtonRef.current?.focus();
-    const onKeyDown = (event) => { if (event.key === "Escape") { setDemoOpen(false); setImagePreview(null); } };
+    const onKeyDown = (event) => { if (event.key === "Escape") { setDemoOpen(false); setImagePreview(null); setVideoOpen(false); } };
     window.addEventListener("keydown", onKeyDown);
     return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", onKeyDown); };
-  }, [demoOpen, imagePreview]);
+  }, [demoOpen, imagePreview, videoOpen]);
+
+  useEffect(() => {
+    if (!videoOpen) return;
+    return () => videoTriggerRef.current?.focus();
+  }, [videoOpen]);
 
   return (
     <>
@@ -150,7 +157,7 @@ export default function AvantAppel() {
                 <span className={styles.tag}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span>
                 <h1>Vos commerciaux savent vendre.<br />Donnez-leur le droit d’appeler.</h1>
                 <p className={styles.lead}>Gardez vos équipes, votre CRM et votre méthode de travail. Ajoutez la preuve de consentement avant chaque appel.</p>
-                <div className={styles.actions}><a className={styles.darkButton} href="#solution">Découvrir la solution <span>→</span></a><a className={styles.outlineButton} href="#fonctionnement"><span>▷</span> Voir comment ça marche</a></div>
+                <div className={styles.actions}><a className={styles.darkButton} href="#solution">Découvrir la solution <span>→</span></a><button ref={videoTriggerRef} className={styles.outlineButton} type="button" onClick={() => setVideoOpen(true)}><span>▷</span> Voir comment ça marche</button></div>
                 <div className={styles.benefits}><span><b>♧</b>Vos équipes restent les mêmes</span><span><b>▤</b>Compatible avec votre CRM</span><span><b>♢</b>Une prospection plus sereine</span></div>
               </div>
               <div className={styles.heroVisual}>
@@ -191,6 +198,7 @@ export default function AvantAppel() {
 
         <footer className={styles.footer}><div className={styles.wrap}><a className={styles.footerLogo} href="/" aria-label="Nova Impact, accueil"><img src="/assets/imgs/logo/footer-logo-white.png" alt="Nova Impact" /></a><nav aria-label="Liens de pied de page"><a href="#solution">La solution</a><a href="#fonctionnement">Comment ça marche</a><a href="#clients">Nos clients</a><a href="#faq">Questions fréquentes</a><a href="#contact">Nous contacter</a></nav><small>AVANT · La preuve avant l’appel</small></div></footer>
         {demoOpen && <div className={styles.modalBackdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setDemoOpen(false); }}><div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="demo-modal-title"><button ref={closeButtonRef} className={styles.modalClose} type="button" aria-label="Fermer" onClick={() => setDemoOpen(false)}>×</button><span className={styles.eyebrow}>DÉCOUVREZ AVANT</span><h2 id="demo-modal-title">Demander une démo</h2><p>Décrivez votre activité et nous organiserons une présentation adaptée.</p><DemoForm /></div></div>}
+        {videoOpen && <div className={styles.modalBackdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setVideoOpen(false); }}><div className={styles.videoModal} role="dialog" aria-modal="true" aria-labelledby="video-modal-title"><button ref={closeButtonRef} className={styles.videoClose} type="button" aria-label="Fermer la vidéo" onClick={() => setVideoOpen(false)}>×</button><span className={styles.eyebrow}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span><h2 id="video-modal-title">Comment ça marche</h2><video controls autoPlay playsInline preload="metadata" poster="/videos/demo-prospection-consentement-poster.jpg" aria-label="Démonstration de la prospection avec consentement"><source src="/videos/demo-prospection-consentement-30s.mp4" type="video/mp4" />Votre navigateur ne peut pas lire cette vidéo.</video></div></div>}
         {imagePreview && <div className={styles.imageBackdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setImagePreview(null); }}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label={imagePreview.alt}><button ref={closeButtonRef} className={styles.imageClose} type="button" aria-label="Fermer l’image" onClick={() => setImagePreview(null)}>×</button><img src={imagePreview.src} alt={imagePreview.alt} /></div></div>}
       </div>
     </>
