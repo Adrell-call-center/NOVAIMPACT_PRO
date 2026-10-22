@@ -1,5 +1,5 @@
 .banner{position:fixed;bottom:0;left:0;right:0;z-index:2000;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;background:#0b1930;color:#fff;box-shadow:0 -8px 30px #0b193033}
-.text{margin:0;max-width:760px;font-size:14px;line-height:1.55}
+.text{margin:0;max-width:760px;font-size:14px;line-height:1.55;color:#fff!important}
 .text a{color:#d6fa59;text-decoration:underline}
 .actions{display:flex;flex-shrink:0;gap:10px}
 .actions button{border:1px solid transparent;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;padding:12px 22px}
