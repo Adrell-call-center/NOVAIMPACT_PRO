@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import PageSeo from "@/components/seo/PageSeo";
+import { trackLead } from "@/lib/consent";
 import { absoluteUrl, ORGANIZATION_ID, SITE_URL } from "@/lib/site";
 import { breadcrumbSchema, webPageSchema } from "@/lib/schema-helpers";
 import styles from "@/styles/avant-appel.module.css";
@@ -67,6 +68,8 @@ function DemoForm({ onSuccess }) {
         }),
       });
       if (!response.ok) throw new Error("Votre demande n’a pas pu être envoyée. Réessayez dans un instant.");
+      // Tracked only once the server has accepted the lead.
+      trackLead();
       form.reset();
       setStatus("sent");
       onSuccess?.();
