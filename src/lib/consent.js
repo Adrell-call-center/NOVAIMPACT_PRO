@@ -84,6 +84,6 @@ export function trackLead({ email = "", phone = "", name = "" } = {}) {
   const eventId = typeof window.crypto?.randomUUID === "function"
     ? window.crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-  window.fbq("track", "Lead", { content_name: "AVANT demo request" }, { eventID: eventId });
+  window.fbq("track", "Lead", { content_name: "SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE" }, { eventID: eventId });
   return true;
 }
