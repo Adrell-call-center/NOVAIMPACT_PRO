@@ -21,6 +21,10 @@ export function writeConsent(value) {
 
 let pixelLoaded = false;
 
+function hasMarketingConsent() {
+  return typeof window !== "undefined" && readConsent() === "granted";
+}
+
 // Meta's base pixel, loaded only once marketing consent has been granted.
 export function loadMetaPixel() {
   if (pixelLoaded || typeof window === "undefined") return;
@@ -51,12 +55,35 @@ export function loadMetaPixel() {
 
 // Client-side navigations do not reload the base pixel, so count them here.
 export function trackPageView() {
-  if (!pixelLoaded) return;
+  if (!hasMarketingConsent()) return;
+  if (!pixelLoaded) loadMetaPixel();
   window.fbq?.("track", "PageView");
 }
 
-// Meta standard Lead event. No form values are sent.
-export function trackLead() {
-  if (!pixelLoaded) return;
-  window.fbq?.("track", "Lead");
+// Meta standard Lead event. Advanced matching values are passed to Meta's
+// init call; Meta hashes these values before sending them.
+export function trackLead({ email = "", phone = "", name = "" } = {}) {
+  if (!hasMarketingConsent()) return false;
+  if (!pixelLoaded) loadMetaPixel();
+  if (typeof window.fbq !== "function") return false;
+
+  const [firstName = "", ...lastNameParts] = String(name).trim().split(/\s+/).filter(Boolean);
+  const advancedMatching = Object.fromEntries(
+    Object.entries({
+      em: String(email).trim().toLowerCase(),
+      ph: String(phone).replace(/\D/g, ""),
+      fn: firstName,
+      ln: lastNameParts.join(" "),
+    }).filter(([, value]) => value)
+  );
+
+  if (Object.keys(advancedMatching).length) {
+    window.fbq("init", PIXEL_ID, advancedMatching);
+  }
+
+  const eventId = typeof window.crypto?.randomUUID === "function"
+    ? window.crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  window.fbq("track", "Lead", { content_name: "AVANT demo request" }, { eventID: eventId });
+  return true;
 }

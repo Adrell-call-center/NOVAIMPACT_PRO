@@ -69,7 +69,11 @@ function DemoForm({ onSuccess }) {
       });
       if (!response.ok) throw new Error("Votre demande n’a pas pu être envoyée. Réessayez dans un instant.");
       // Tracked only once the server has accepted the lead.
-      trackLead();
+      trackLead({
+        email: values.email,
+        phone: values.phone,
+        name: values.name,
+      });
       form.reset();
       setStatus("sent");
       onSuccess?.();
