@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import PageSeo from "@/components/seo/PageSeo";
 import { trackLead } from "@/lib/consent";
 import { absoluteUrl, ORGANIZATION_ID, SITE_URL } from "@/lib/site";
@@ -105,7 +106,15 @@ export default function AvantAppel() {
   const closeButtonRef = useRef(null);
   const videoTriggerRef = useRef(null);
   const pageRef = useRef(null);
-  const openContact = () => { setMenuOpen(false); setDemoOpen(true); };
+  const openContact = () => {
+    setMenuOpen(false);
+    if (window.matchMedia("(max-width: 650px)").matches) {
+      setDemoOpen(false);
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    setDemoOpen(true);
+  };
 
   useEffect(() => {
     const root = pageRef.current;
@@ -206,10 +215,10 @@ export default function AvantAppel() {
         </main>
 
         <footer className={styles.footer}><div className={styles.wrap}><a className={styles.footerLogo} href="/" aria-label="Nova Impact, accueil"><img src="/assets/imgs/logo/footer-logo-white.png" alt="Nova Impact" /></a><nav aria-label="Liens de pied de page"><a href="#solution">La solution</a><a href="#fonctionnement">Comment ça marche</a><a href="#clients">Nos clients</a><a href="#faq">Questions fréquentes</a><a href="#contact">Nous contacter</a></nav><small>AVANT · La preuve avant l’appel</small></div></footer>
-        {demoOpen && <div className={styles.modalBackdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setDemoOpen(false); }}><div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="demo-modal-title"><button ref={closeButtonRef} className={styles.modalClose} type="button" aria-label="Fermer" onClick={() => setDemoOpen(false)}>×</button><span className={styles.eyebrow}>CONTACTEZ-NOUS</span><h2 id="demo-modal-title">Parlons de votre projet</h2><p>Décrivez votre activité et nous reviendrons vers vous avec une présentation adaptée.</p><DemoForm /></div></div>}
-        {videoOpen && <div className={styles.modalBackdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setVideoOpen(false); }}><div className={styles.videoModal} role="dialog" aria-modal="true" aria-labelledby="video-modal-title"><button ref={closeButtonRef} className={styles.videoClose} type="button" aria-label="Fermer la vidéo" onClick={() => setVideoOpen(false)}>×</button><span className={styles.eyebrow}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span><h2 id="video-modal-title">Comment ça marche</h2><video controls autoPlay playsInline preload="metadata" poster="/videos/prospection-consentement-poster.jpg" aria-label="Démonstration de la prospection avec consentement"><source src="/videos/prospection-consentement.mp4" type="video/mp4" />Votre navigateur ne peut pas lire cette vidéo.</video></div></div>}
-        {imagePreview && <div className={styles.imageBackdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setImagePreview(null); }}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label={imagePreview.alt}><button ref={closeButtonRef} className={styles.imageClose} type="button" aria-label="Fermer l’image" onClick={() => setImagePreview(null)}>×</button><img src={imagePreview.src} alt={imagePreview.alt} /></div></div>}
       </div>
+      {demoOpen && createPortal(<div className={styles.modalBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setDemoOpen(false); }}><div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="demo-modal-title"><button ref={closeButtonRef} className={styles.modalClose} type="button" aria-label="Fermer" onClick={() => setDemoOpen(false)}>×</button><span className={styles.eyebrow}>CONTACTEZ-NOUS</span><h2 id="demo-modal-title">Parlons de votre projet</h2><p>Décrivez votre activité et nous reviendrons vers vous avec une présentation adaptée.</p><DemoForm /></div></div>, document.body)}
+      {videoOpen && createPortal(<div className={styles.modalBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setVideoOpen(false); }}><div className={styles.videoModal} role="dialog" aria-modal="true" aria-labelledby="video-modal-title"><button ref={closeButtonRef} className={styles.videoClose} type="button" aria-label="Fermer la vidéo" onClick={() => setVideoOpen(false)}>×</button><span className={styles.eyebrow}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span><h2 id="video-modal-title">Comment ça marche</h2><video controls autoPlay playsInline preload="metadata" poster="/videos/prospection-consentement-poster.jpg" aria-label="Démonstration de la prospection avec consentement"><source src="/videos/prospection-consentement.mp4" type="video/mp4" />Votre navigateur ne peut pas lire cette vidéo.</video></div></div>, document.body)}
+      {imagePreview && createPortal(<div className={styles.imageBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setImagePreview(null); }}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label={imagePreview.alt}><button ref={closeButtonRef} className={styles.imageClose} type="button" aria-label="Fermer l’image" onClick={() => setImagePreview(null)}>×</button><img src={imagePreview.src} alt={imagePreview.alt} /></div></div>, document.body)}
     </>
   );
 }
