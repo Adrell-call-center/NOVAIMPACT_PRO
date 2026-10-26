@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import PageSeo from "@/components/seo/PageSeo";
 import { trackLead } from "@/lib/consent";
 import { absoluteUrl, ORGANIZATION_ID, SITE_URL } from "@/lib/site";
@@ -84,7 +83,7 @@ function DemoForm({ onSuccess }) {
     }
   }
 
-  return <form className={styles.demoForm} onSubmit={handleSubmit}>
+  return <form className={styles.demoForm} action="/api/avant-demo" method="post" onSubmit={handleSubmit}>
     <div className={styles.formFields}>
       <label>Nom complet <input name="name" autoComplete="name" required placeholder="Votre nom" /></label>
       <label>Email professionnel <input name="email" type="email" autoComplete="email" required placeholder="vous@entreprise.fr" /></label>
@@ -99,22 +98,7 @@ function DemoForm({ onSuccess }) {
 }
 
 export default function AvantAppel() {
-  const [demoOpen, setDemoOpen] = useState(false);
-  const [videoOpen, setVideoOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const closeButtonRef = useRef(null);
-  const videoTriggerRef = useRef(null);
   const pageRef = useRef(null);
-  const openContact = () => {
-    setMenuOpen(false);
-    if (window.matchMedia("(max-width: 650px)").matches) {
-      setDemoOpen(false);
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-    setDemoOpen(true);
-  };
 
   useEffect(() => {
     const root = pageRef.current;
@@ -135,19 +119,12 @@ export default function AvantAppel() {
   }, []);
 
   useEffect(() => {
-    if (!demoOpen && !imagePreview && !videoOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-    const onKeyDown = (event) => { if (event.key === "Escape") { setDemoOpen(false); setImagePreview(null); setVideoOpen(false); } };
-    window.addEventListener("keydown", onKeyDown);
-    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", onKeyDown); };
-  }, [demoOpen, imagePreview, videoOpen]);
-
-  useEffect(() => {
-    if (!videoOpen) return;
-    return () => videoTriggerRef.current?.focus();
-  }, [videoOpen]);
+    const pauseClosedVideo = () => {
+      if (window.location.hash !== "#video-dialog") document.querySelector("#video-dialog video")?.pause();
+    };
+    window.addEventListener("hashchange", pauseClosedVideo);
+    return () => window.removeEventListener("hashchange", pauseClosedVideo);
+  }, []);
 
   return (
     <>
@@ -162,8 +139,8 @@ export default function AvantAppel() {
         <header className={styles.header}>
           <div className={styles.wrap + " " + styles.nav}>
             <a className={styles.headerLogo} href="/" aria-label="Nova Impact, accueil"><img src="/assets/imgs/logo/logo-black.png" alt="Nova Impact" /></a>
-            <nav id="avant-navigation" className={menuOpen ? styles.mobileNavOpen : ""} aria-label="Navigation principale"><a href="#solution" onClick={() => setMenuOpen(false)}>La solution</a><a href="#fonctionnement" onClick={() => setMenuOpen(false)}>Comment ça marche</a><a href="#clients" onClick={() => setMenuOpen(false)}>Nos clients</a><a href="#faq" onClick={() => setMenuOpen(false)}>Questions fréquentes</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav>
-            <div className={styles.headerActions}><button className={styles.limeButton} type="button" onClick={openContact}><span className={styles.desktopDemoLabel}>Nous contacter</span><span className={styles.mobileDemoLabel}>Contact</span> <b>→</b></button><button className={styles.menuToggle} type="button" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-controls="avant-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}><span /><span /><span /></button></div>
+            <nav id="avant-navigation" aria-label="Navigation principale"><a href="#solution">La solution</a><a href="#fonctionnement">Comment ça marche</a><a href="#clients">Nos clients</a><a href="#faq">Questions fréquentes</a><a href="#contact">Contact</a></nav>
+            <div className={styles.headerActions}><a className={styles.limeButton} href="#contact-dialog"><span className={styles.desktopDemoLabel}>Nous contacter</span><span className={styles.mobileDemoLabel}>Contact</span> <b>→</b></a><details className={styles.mobileMenu}><summary aria-label="Ouvrir le menu"><span /><span /><span /></summary><nav aria-label="Navigation mobile"><a href="#solution">La solution</a><a href="#fonctionnement">Comment ça marche</a><a href="#clients">Nos clients</a><a href="#faq">Questions fréquentes</a><a href="#contact">Contact</a></nav></details></div>
           </div>
         </header>
 
@@ -174,7 +151,7 @@ export default function AvantAppel() {
                 <span className={styles.tag}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span>
                 <h1>Vos commerciaux savent vendre.<br />Donnez-leur le droit d’appeler.</h1>
                 <p className={styles.lead}>Gardez vos équipes, votre CRM et votre méthode de travail. Ajoutez la preuve de consentement avant chaque appel.</p>
-                <div className={styles.actions}><button className={styles.darkButton} type="button" onClick={openContact}>Parler de votre projet <span>→</span></button><button ref={videoTriggerRef} className={styles.outlineButton} type="button" onClick={() => setVideoOpen(true)}><span>▷</span> Voir comment ça marche</button></div>
+                <div className={styles.actions}><a className={styles.darkButton} href="#contact-dialog">Parler de votre projet <span>→</span></a><a className={styles.outlineButton} href="#video-dialog"><span>▷</span> Voir comment ça marche</a></div>
                 <div className={styles.benefits}><span><b>♧</b>Vos équipes restent les mêmes</span><span><b>▤</b>Compatible avec votre CRM</span><span><b>♢</b>Une prospection plus sereine</span></div>
               </div>
               <div className={styles.heroVisual}>
@@ -192,15 +169,15 @@ export default function AvantAppel() {
           <section className={styles.section} id="solution"><div className={styles.wrap}>
             <span className={styles.eyebrow}>NOTRE SOLUTION</span><div className={styles.sectionIntro}><h2>Votre liste de prospects, vérifiée.<br />De nouveaux leads, documentés dès leur arrivée.</h2><p>AVANT relie deux besoins : contrôler les contacts déjà présents dans votre CRM et créer un parcours d’acquisition qui recueille le consentement des nouveaux prospects.</p></div>
             <div className={styles.solutionCards}>
-              <article className={styles.solutionCard}><div className={styles.solutionNumber}>01 <i /></div><h3>Vous avez déjà une liste de prospects</h3><p>Votre CRM ou votre fichier peut contenir des contacts sans preuve d’accord valable. Avant de les appeler, identifiez ceux dont l’autorisation manque ou doit être examinée.</p><span className={styles.solutionBadge + " " + styles.solutionBadgeRed}>⚠ Liste à vérifier</span><button type="button" className={styles.solutionImage} onClick={() => setImagePreview({ src: image("liste-de-prospects.png"), alt: "Exemple de liste importée avec consentement manquant" })} aria-label="Agrandir l’image de la liste de prospects"><img src={image("liste-de-prospects.png")} alt="Exemple de liste importée avec consentement manquant" /><span>Agrandir l’image ↗</span></button><div className={styles.solutionCaption}><strong>Le point de départ :</strong> posséder un numéro ne donne pas, à lui seul, le droit d’appeler.</div></article>
-              <article className={styles.solutionCard}><div className={styles.solutionNumber}>02 <i /></div><h3>AVANT contrôle chaque contact</h3><p>La solution analyse les données disponibles, repère les preuves manquantes et distingue les contacts vérifiés de ceux à compléter ou à exclure de la prospection.</p><span className={styles.solutionBadge + " " + styles.solutionBadgePurple}>✓ Vérification et tri</span><button type="button" className={styles.solutionImage} onClick={() => setImagePreview({ src: image("verification-des-contacts.png"), alt: "Exemple de tableau de vérification des contacts et de leurs statuts" })} aria-label="Agrandir l’image de vérification des contacts"><img src={image("verification-des-contacts.png")} alt="Exemple de tableau de vérification des contacts et de leurs statuts" /><span>Agrandir l’image ↗</span></button><div className={styles.solutionCaption}><strong>Pour votre équipe :</strong> un statut et une preuve visibles avant de décider d’appeler. Une ancienne liste sans accord ne devient pas autorisée par simple import.</div></article>
-              <article className={styles.solutionCard}><div className={styles.solutionNumber}>03 <i /></div><h3>Nous créons aussi de nouveaux leads</h3><p>Un site personnalisé attire des visiteurs depuis la recherche. Ses formulaires recueillent les demandes et transmettent les nouveaux leads à votre tableau de bord avec leur source et leur preuve de consentement.</p><span className={styles.solutionBadge + " " + styles.solutionBadgeGreen}>↗ Site, leads et tableau de bord</span><button type="button" className={styles.solutionImage} onClick={() => setImagePreview({ src: image("leads-organiques.png"), alt: "Parcours du trafic organique au formulaire puis au tableau de bord des leads" })} aria-label="Agrandir l’image des nouveaux leads"><img src={image("leads-organiques.png")} alt="Parcours du trafic organique au formulaire puis au tableau de bord des leads" /><span>Agrandir l’image ↗</span></button><div className={styles.solutionCaption}><strong>Le résultat :</strong> un parcours d’acquisition sur mesure, des demandes entrantes et une trace de l’accord donné lors de chaque formulaire.</div></article>
+              <article className={styles.solutionCard}><div className={styles.solutionNumber}>01 <i /></div><h3>Vous avez déjà une liste de prospects</h3><p>Votre CRM ou votre fichier peut contenir des contacts sans preuve d’accord valable. Avant de les appeler, identifiez ceux dont l’autorisation manque ou doit être examinée.</p><span className={styles.solutionBadge + " " + styles.solutionBadgeRed}>⚠ Liste à vérifier</span><a className={styles.solutionImage} href="#image-prospects-dialog" aria-label="Agrandir l’image de la liste de prospects"><img src={image("liste-de-prospects.png")} alt="Exemple de liste importée avec consentement manquant" /><span>Agrandir l’image ↗</span></a><div className={styles.solutionCaption}><strong>Le point de départ :</strong> posséder un numéro ne donne pas, à lui seul, le droit d’appeler.</div></article>
+              <article className={styles.solutionCard}><div className={styles.solutionNumber}>02 <i /></div><h3>AVANT contrôle chaque contact</h3><p>La solution analyse les données disponibles, repère les preuves manquantes et distingue les contacts vérifiés de ceux à compléter ou à exclure de la prospection.</p><span className={styles.solutionBadge + " " + styles.solutionBadgePurple}>✓ Vérification et tri</span><a className={styles.solutionImage} href="#image-verification-dialog" aria-label="Agrandir l’image de vérification des contacts"><img src={image("verification-des-contacts.png")} alt="Exemple de tableau de vérification des contacts et de leurs statuts" /><span>Agrandir l’image ↗</span></a><div className={styles.solutionCaption}><strong>Pour votre équipe :</strong> un statut et une preuve visibles avant de décider d’appeler. Une ancienne liste sans accord ne devient pas autorisée par simple import.</div></article>
+              <article className={styles.solutionCard}><div className={styles.solutionNumber}>03 <i /></div><h3>Nous créons aussi de nouveaux leads</h3><p>Un site personnalisé attire des visiteurs depuis la recherche. Ses formulaires recueillent les demandes et transmettent les nouveaux leads à votre tableau de bord avec leur source et leur preuve de consentement.</p><span className={styles.solutionBadge + " " + styles.solutionBadgeGreen}>↗ Site, leads et tableau de bord</span><a className={styles.solutionImage} href="#image-leads-dialog" aria-label="Agrandir l’image des nouveaux leads"><img src={image("leads-organiques.png")} alt="Parcours du trafic organique au formulaire puis au tableau de bord des leads" /><span>Agrandir l’image ↗</span></a><div className={styles.solutionCaption}><strong>Le résultat :</strong> un parcours d’acquisition sur mesure, des demandes entrantes et une trace de l’accord donné lors de chaque formulaire.</div></article>
             </div>
             <p className={styles.solutionNote}><strong>Le parcours en bref :</strong> importez vos contacts existants pour identifier les situations à vérifier, puis développez une acquisition organique avec un site et un tableau de bord adaptés à votre activité.</p>
-            <div className={styles.sectionCta}><button className={styles.limeButton} type="button" onClick={openContact}>Parler de votre projet <b>→</b></button></div>
+            <div className={styles.sectionCta}><a className={styles.limeButton} href="#contact-dialog">Parler de votre projet <b>→</b></a></div>
           </div></section>
 
-          <section className={styles.process} id="fonctionnement"><div className={styles.wrap}><span className={styles.eyebrow}>VOTRE PARCOURS, SIMPLEMENT SÉCURISÉ</span><div className={styles.processHeading}><h2>Même équipe.<br />Même CRM.<br />Un nouveau réflexe.</h2><p>Contrôlez votre base existante et recevez de nouveaux leads documentés avant la prise de contact.</p></div><div className={styles.steps}>{[["glossy_purple_database_icon.png","VOTRE LISTE","Importez les contacts de votre CRM"],["glossy_purple_shield_checkmark_icon.png","VÉRIFICATION","Repérez les preuves et les accords manquants"],["glossy_purple_form_icon_badge.png","NOUVEAUX LEADS","Le site recueille les demandes et leur consentement"],["glossy_lime_phone_call_button.png","APPEL","Vos équipes vérifient avant d’appeler"]].map(([src,title,desc])=><div className={styles.step} key={title}><img src={image(src)} alt=""/><strong>{title}</strong><p>{desc}</p></div>)}</div><div className={styles.sectionCta}><button className={styles.limeButton} type="button" onClick={openContact}>Parler de votre projet <b>→</b></button></div></div></section>
+          <section className={styles.process} id="fonctionnement"><div className={styles.wrap}><span className={styles.eyebrow}>VOTRE PARCOURS, SIMPLEMENT SÉCURISÉ</span><div className={styles.processHeading}><h2>Même équipe.<br />Même CRM.<br />Un nouveau réflexe.</h2><p>Contrôlez votre base existante et recevez de nouveaux leads documentés avant la prise de contact.</p></div><div className={styles.steps}>{[["glossy_purple_database_icon.png","VOTRE LISTE","Importez les contacts de votre CRM"],["glossy_purple_shield_checkmark_icon.png","VÉRIFICATION","Repérez les preuves et les accords manquants"],["glossy_purple_form_icon_badge.png","NOUVEAUX LEADS","Le site recueille les demandes et leur consentement"],["glossy_lime_phone_call_button.png","APPEL","Vos équipes vérifient avant d’appeler"]].map(([src,title,desc])=><div className={styles.step} key={title}><img src={image(src)} alt=""/><strong>{title}</strong><p>{desc}</p></div>)}</div><div className={styles.sectionCta}><a className={styles.limeButton} href="#contact-dialog">Parler de votre projet <b>→</b></a></div></div></section>
 
           <section className={styles.clients} id="clients"><div className={styles.wrap}><div className={styles.clientsIntro}><div><span className={styles.eyebrow}>NOS CLIENTS</span><h2>Des parcours d’acquisition<br />dans des secteurs exigeants.</h2></div><p>Découvrez trois plateformes de comparaison et d’information dans l’univers de la complémentaire santé.</p></div><div className={styles.clientCards}>
             <a className={styles.clientCard} href="https://my-mutuelle.com/" target="_blank" rel="noopener noreferrer"><img src={image("client-my-mutuelle.png")} alt="Logo MyMutuelle" /><div className={styles.clientDomain}>my-mutuelle.com <span>↗</span></div><p>Comparaison de complémentaires santé et parcours de demande personnalisée.</p><strong>Découvrir le site →</strong></a>
@@ -210,15 +187,17 @@ export default function AvantAppel() {
 
           <section className={styles.section + " " + styles.faqSection} id="faq"><div className={styles.wrap + " " + styles.faqGrid}><div className={styles.faqHeading}><span className={styles.eyebrow}>QUESTIONS FRÉQUENTES</span><h2>Des questions ?<br />Nous y répondons.</h2></div><div className={styles.faqList}>{faqs.map(([question,answer])=><details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div><div className={styles.faqVisual}><img className={styles.faqPhoto} src={image("friendly_tech_support_professional.png")} alt="Conseiller AVANT prêt à accompagner votre équipe" /><span>Une équipe à vos côtés<br />à chaque étape.</span></div></div></section>
 
-          <section className={styles.cta}><div className={styles.wrap + " " + styles.ctaGrid}><div><span className={styles.eyebrow}>PASSEZ À L’ACTION</span><h2>Ne laissez pas la réglementation freiner votre croissance.</h2><p className={styles.lead}>Découvrez comment préparer vos équipes à une prospection mieux documentée.</p><button className={styles.limeButton} type="button" onClick={openContact}>Parler de votre projet <b>→</b></button></div><div className={styles.ctaVisual}><img src={image("friendly_tech_support_professional.png")} alt="Un conseiller disponible pour présenter AVANT"/><p className={styles.signature}>La preuve avant l’appel.<br />Simple. Efficace. Durable.</p><div className={styles.brandCard}><strong>AVANT<span>.</span></strong><small>La preuve avant l’appel.</small></div></div></div></section>
-          <section className={styles.contactSection} id="contact"><div className={styles.wrap + " " + styles.contactGrid}><div><span className={styles.eyebrow}>PARLONS DE VOTRE PROJET</span><h2>Voyons comment AVANT s’intègre à votre activité.</h2><p>Présentez-nous vos équipes et vos outils. Nous reviendrons vers vous pour préparer une présentation adaptée à vos besoins.</p></div><div className={styles.contactPanel}><h3>Parlons de votre projet</h3><DemoForm /></div></div></section>
+          <section className={styles.cta}><div className={styles.wrap + " " + styles.ctaGrid}><div><span className={styles.eyebrow}>PASSEZ À L’ACTION</span><h2>Ne laissez pas la réglementation freiner votre croissance.</h2><p className={styles.lead}>Découvrez comment préparer vos équipes à une prospection mieux documentée.</p><a className={styles.limeButton} href="#contact-dialog">Parler de votre projet <b>→</b></a></div><div className={styles.ctaVisual}><img src={image("friendly_tech_support_professional.png")} alt="Un conseiller disponible pour présenter AVANT"/><p className={styles.signature}>La preuve avant l’appel.<br />Simple. Efficace. Durable.</p><div className={styles.brandCard}><strong>AVANT<span>.</span></strong><small>La preuve avant l’appel.</small></div></div></div></section>
+          <section className={styles.contactSection} id="contact"><div className={styles.wrap + " " + styles.contactGrid}><div><span className={styles.eyebrow}>PARLONS DE VOTRE PROJET</span><h2>Voyons comment AVANT s’intègre à votre activité.</h2><p>Présentez-nous vos équipes et vos outils. Nous reviendrons vers vous pour préparer une présentation adaptée à vos besoins.</p></div><div className={styles.contactPanel}><h3>Parlons de votre projet</h3><p id="contact-sent" className={styles.nativeSuccess} role="status">Merci ! Votre demande a bien été envoyée.</p><p id="contact-error" className={styles.nativeError} role="alert">L’envoi a échoué. Réessayez ou contactez-nous directement.</p><DemoForm /></div></div></section>
         </main>
 
         <footer className={styles.footer}><div className={styles.wrap}><a className={styles.footerLogo} href="/" aria-label="Nova Impact, accueil"><img src="/assets/imgs/logo/footer-logo-white.png" alt="Nova Impact" /></a><nav aria-label="Liens de pied de page"><a href="#solution">La solution</a><a href="#fonctionnement">Comment ça marche</a><a href="#clients">Nos clients</a><a href="#faq">Questions fréquentes</a><a href="#contact">Nous contacter</a></nav><small>AVANT · La preuve avant l’appel</small></div></footer>
       </div>
-      {demoOpen && createPortal(<div className={styles.modalBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setDemoOpen(false); }}><div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="demo-modal-title"><button ref={closeButtonRef} className={styles.modalClose} type="button" aria-label="Fermer" onClick={() => setDemoOpen(false)}>×</button><span className={styles.eyebrow}>CONTACTEZ-NOUS</span><h2 id="demo-modal-title">Parlons de votre projet</h2><p>Décrivez votre activité et nous reviendrons vers vous avec une présentation adaptée.</p><DemoForm /></div></div>, document.body)}
-      {videoOpen && createPortal(<div className={styles.modalBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setVideoOpen(false); }}><div className={styles.videoModal} role="dialog" aria-modal="true" aria-labelledby="video-modal-title"><button ref={closeButtonRef} className={styles.videoClose} type="button" aria-label="Fermer la vidéo" onClick={() => setVideoOpen(false)}>×</button><span className={styles.eyebrow}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span><h2 id="video-modal-title">Comment ça marche</h2><video controls autoPlay playsInline preload="metadata" poster="/videos/prospection-consentement-poster.jpg" aria-label="Démonstration de la prospection avec consentement"><source src="/videos/prospection-consentement.mp4" type="video/mp4" />Votre navigateur ne peut pas lire cette vidéo.</video></div></div>, document.body)}
-      {imagePreview && createPortal(<div className={styles.imageBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setImagePreview(null); }}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label={imagePreview.alt}><button ref={closeButtonRef} className={styles.imageClose} type="button" aria-label="Fermer l’image" onClick={() => setImagePreview(null)}>×</button><img src={imagePreview.src} alt={imagePreview.alt} /></div></div>, document.body)}
+      <div id="contact-dialog" className={styles.modalBackdrop}><div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="demo-modal-title"><a className={styles.modalClose} href="#contact" aria-label="Fermer">×</a><span className={styles.eyebrow}>CONTACTEZ-NOUS</span><h2 id="demo-modal-title">Parlons de votre projet</h2><p>Décrivez votre activité et nous reviendrons vers vous avec une présentation adaptée.</p><DemoForm /></div></div>
+      <div id="video-dialog" className={styles.modalBackdrop}><div className={styles.videoModal} role="dialog" aria-modal="true" aria-labelledby="video-modal-title"><a className={styles.videoClose} href="/demarchage-telephonique-solution?video=closed#fonctionnement" onClick={(event) => { event.preventDefault(); window.location.hash = "fonctionnement"; }} aria-label="Fermer la vidéo">×</a><span className={styles.eyebrow}>SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE</span><h2 id="video-modal-title">Comment ça marche</h2><video controls playsInline preload="metadata" poster="/videos/prospection-consentement-poster.jpg" aria-label="Démonstration de la prospection avec consentement"><source src="/videos/prospection-consentement.mp4" type="video/mp4" />Votre navigateur ne peut pas lire cette vidéo.</video></div></div>
+      <div id="image-prospects-dialog" className={styles.imageBackdrop}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label="Liste de prospects"><a className={styles.imageClose} href="#solution" aria-label="Fermer l’image">×</a><img src={image("liste-de-prospects.png")} alt="Exemple de liste importée avec consentement manquant" /></div></div>
+      <div id="image-verification-dialog" className={styles.imageBackdrop}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label="Vérification des contacts"><a className={styles.imageClose} href="#solution" aria-label="Fermer l’image">×</a><img src={image("verification-des-contacts.png")} alt="Exemple de tableau de vérification des contacts et de leurs statuts" /></div></div>
+      <div id="image-leads-dialog" className={styles.imageBackdrop}><div className={styles.imageDialog} role="dialog" aria-modal="true" aria-label="Nouveaux leads"><a className={styles.imageClose} href="#solution" aria-label="Fermer l’image">×</a><img src={image("leads-organiques.png")} alt="Parcours du trafic organique au formulaire puis au tableau de bord des leads" /></div></div>
     </>
   );
 }

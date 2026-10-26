@@ -58,3 +58,24 @@
 .videoModal video{max-height:calc(100vh - 170px);max-height:calc(100dvh - 170px)}
 .imageDialog img{max-height:calc(100vh - 92px);max-height:calc(100dvh - 92px)}
 @media(max-width:650px){.modalBackdrop{padding:env(safe-area-inset-top) 10px env(safe-area-inset-bottom);align-items:center}.modal,.videoModal{width:100%;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px)}.videoModal video{max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px)}.imageDialog img{max-height:calc(100vh - 50px);max-height:calc(100dvh - 50px)}}
+
+/* Native controls keep the page usable when an in-app browser does not hydrate React. */
+.modalBackdrop{display:none}
+.modalBackdrop:target{display:grid}
+.imageBackdrop{display:none}
+.imageBackdrop:target{display:grid}
+.modalClose,.videoClose,.imageClose{display:grid;place-items:center;text-decoration:none}
+.mobileMenu{display:none}
+.nativeSuccess,.nativeError{display:none;margin:0 0 18px;padding:14px 16px;border-radius:10px;font-size:14px;line-height:1.5;scroll-margin-top:105px}
+.nativeSuccess:target{display:block;background:#e9f9dc;color:#246227}
+.nativeError:target{display:block;background:#fff0f0;color:#a32d35}
+@media(max-width:900px){
+  .mobileMenu{display:block}
+  .mobileMenu summary{display:flex;flex-direction:column;justify-content:center;gap:4px;width:42px;height:42px;padding:9px;border:1px solid #dce0e8;border-radius:11px;background:#fff;cursor:pointer;list-style:none}
+  .mobileMenu summary::-webkit-details-marker{display:none}
+  .mobileMenu summary span{display:block;height:2px;width:100%;border-radius:2px;background:#0b1930}
+  .nav .mobileMenu:not([open]) nav{display:none}
+  .nav .mobileMenu[open] nav{display:flex;position:absolute;top:100%;left:0;right:0;z-index:25;flex-direction:column;align-items:stretch;gap:0;padding:10px 20px 18px;background:#fff;border:1px solid #e7eaf0;border-top:0;border-radius:0 0 16px 16px;box-shadow:0 18px 35px #0b193019}
+  .nav .mobileMenu nav a{padding:12px 4px;font-size:14px;border-bottom:1px solid #eef0f4}
+  .nav .mobileMenu nav a:last-child{border-bottom:0}
+}

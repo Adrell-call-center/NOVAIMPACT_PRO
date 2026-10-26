@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 
 const SOLUTION_CONTACT_EMAIL = "contact@novaimpactltd.com";
 const SOLUTION_NAME = "SOLUTION DÉMARCHAGE TÉLÉPHONIQUE · FRANCE";
+const SOLUTION_PATH = "/demarchage-telephonique-solution";
 
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -13,6 +14,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const nativeForm = String(req.headers["content-type"] || "").includes("application/x-www-form-urlencoded");
+  const respondError = (status, error) => nativeForm
+    ? res.redirect(303, `${SOLUTION_PATH}#contact-error`)
+    : res.status(status).json({ error });
+
   const { name, email, phone = "", company, message = "" } = req.body || {};
   const cleanName = String(name || "").trim();
   const cleanEmail = String(email || "").trim();
@@ -21,10 +27,10 @@ export default async function handler(req, res) {
   const cleanMessage = String(message || "").trim();
 
   if (!cleanName || !cleanCompany || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
-    return res.status(400).json({ error: "Please provide your name, company, and a valid email address." });
+    return respondError(400, "Please provide your name, company, and a valid email address.");
   }
   if ([cleanName, cleanEmail, cleanPhone, cleanCompany, cleanMessage].some((value) => value.length > 5000)) {
-    return res.status(400).json({ error: "One or more fields are too long." });
+    return respondError(400, "One or more fields are too long.");
   }
 
   const smtpUser = process.env.SMTP_USER || process.env.SMTP_USERNAME;
@@ -32,7 +38,7 @@ export default async function handler(req, res) {
   const fromEmail = process.env.SMTP_FROM_EMAIL;
 
   if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !smtpUser || !smtpPass || !fromEmail) {
-    return res.status(500).json({ error: "Email service is not configured." });
+    return respondError(500, "Email service is not configured.");
   }
 
   const transporter = nodemailer.createTransport({
@@ -72,8 +78,8 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error("AVANT demo email failed:", error);
-    return res.status(502).json({ error: "We could not send your request. Please try again." });
+    return respondError(502, "We could not send your request. Please try again.");
   }
 
-  return res.status(200).json({ success: true });
+  return nativeForm ? res.redirect(303, `${SOLUTION_PATH}#contact-sent`) : res.status(200).json({ success: true });
 }
