@@ -65,6 +65,10 @@
 .imageBackdrop{display:none}
 .imageBackdrop:target{display:grid}
 .modalClose,.videoClose,.imageClose{display:grid;place-items:center;text-decoration:none}
+.modalClose,.videoClose,.imageClose{font-size:0;line-height:0}
+.modalClose::before,.modalClose::after,.videoClose::before,.videoClose::after,.imageClose::before,.imageClose::after{content:"";position:absolute;top:50%;left:50%;width:18px;height:2px;border-radius:2px;background:currentColor;pointer-events:none}
+.modalClose::before,.videoClose::before,.imageClose::before{transform:translate(-50%,-50%) rotate(45deg)}
+.modalClose::after,.videoClose::after,.imageClose::after{transform:translate(-50%,-50%) rotate(-45deg)}
 .mobileMenu{display:none}
 .nativeSuccess,.nativeError{display:none;margin:0 0 18px;padding:14px 16px;border-radius:10px;font-size:14px;line-height:1.5;scroll-margin-top:105px}
 .nativeSuccess:target{display:block;background:#e9f9dc;color:#246227}
