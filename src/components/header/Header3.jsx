@@ -78,6 +78,20 @@ export default function Header3() {
                 alt="Menubar Icon"
               />
             </button>
+            <details className="header__mobile-menu">
+              <summary aria-label="Open navigation">
+                <Image width={22} height={22} src={MenuWhite} alt="" />
+              </summary>
+              <nav aria-label="Mobile navigation">
+                <a href="/">Home</a>
+                <a href="/service">Services</a>
+                <a href="/portfolio">Portfolio</a>
+                <a href="/about">About</a>
+                <a href="/blog">Blog</a>
+                <a href="/demarchage-telephonique-solution">Solution démarchage téléphonique</a>
+                <a href="/contact">Contact</a>
+              </nav>
+            </details>
           </div>
           <div className="header__support">
             <p>

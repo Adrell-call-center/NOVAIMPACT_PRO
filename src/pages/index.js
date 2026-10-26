@@ -3,19 +3,19 @@ import dynamic from "next/dynamic";
 import RootLayout from "@/components/common/layout/RootLayout";
 import DigitalAgencyHero from "@/components/hero/DigitalAgencyHero";
 
-const DigitalAgencyRoll        = dynamic(() => import("@/components/roll/DigitalAgencyRoll"),            { ssr: false });
-const DigitalAgencyAbout       = dynamic(() => import("@/components/about/DigitalAgencyAbout"),          { ssr: false });
-const DigitalAgencyService     = dynamic(() => import("@/components/service/DigitalAgencyService"),      { ssr: false });
-const DigitalAgencyCounter     = dynamic(() => import("@/components/counter/DigitalAgencyCounter"),      { ssr: false });
-const DigitalAgencyWorkflow    = dynamic(() => import("@/components/workflow/DigitalAgencyWorkflow"),    { ssr: false });
-const HomePortfolioGallery      = dynamic(() => import("@/components/portfolio/HomePortfolioGallery"),      { ssr: false });
-const DigitalMarketingWorkflow = dynamic(() => import("@/components/workflow/DigitalMarketingWorkflow"), { ssr: false });
-const DigitalAgencyBlog        = dynamic(() => import("@/components/blog/DigitalAgencyBlog"),            { ssr: false });
-const DigitalAgencyCTA         = dynamic(() => import("@/components/cta/DigitalAgencyCTA"),              { ssr: false });
-const Team1                    = dynamic(() => import("@/components/team/Team1"),                        { ssr: false });
-const Faq1                     = dynamic(() => import("@/components/faq/Faq1"),                          { ssr: false });
-const HomeProcess              = dynamic(() => import("@/components/home/HomeProcess"),                  { ssr: false });
-const HomeVideoGallery         = dynamic(() => import("@/components/home/HomeVideoGallery"),           { ssr: false });
+const DigitalAgencyRoll        = dynamic(() => import("@/components/roll/DigitalAgencyRoll"));
+const DigitalAgencyAbout       = dynamic(() => import("@/components/about/DigitalAgencyAbout"));
+const DigitalAgencyService     = dynamic(() => import("@/components/service/DigitalAgencyService"));
+const DigitalAgencyCounter     = dynamic(() => import("@/components/counter/DigitalAgencyCounter"));
+const DigitalAgencyWorkflow    = dynamic(() => import("@/components/workflow/DigitalAgencyWorkflow"));
+const HomePortfolioGallery     = dynamic(() => import("@/components/portfolio/HomePortfolioGallery"));
+const DigitalMarketingWorkflow = dynamic(() => import("@/components/workflow/DigitalMarketingWorkflow"));
+const DigitalAgencyBlog        = dynamic(() => import("@/components/blog/DigitalAgencyBlog"));
+const DigitalAgencyCTA         = dynamic(() => import("@/components/cta/DigitalAgencyCTA"));
+const Team1                    = dynamic(() => import("@/components/team/Team1"));
+const Faq1                     = dynamic(() => import("@/components/faq/Faq1"));
+const HomeProcess              = dynamic(() => import("@/components/home/HomeProcess"));
+const HomeVideoGallery         = dynamic(() => import("@/components/home/HomeVideoGallery"));
 
 const SITE_URL = "https://novaimpactltd.com";
 
