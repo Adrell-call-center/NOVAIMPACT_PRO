@@ -3,6 +3,7 @@ export const STATIC_SITEMAP_PAGES = [
   { loc: '/about', changefreq: 'monthly', priority: '0.8' },
   { loc: '/service', changefreq: 'monthly', priority: '0.9' },
   { loc: '/portfolio', changefreq: 'monthly', priority: '0.8' },
+  { loc: '/exif-injector-seo-case-study', changefreq: 'monthly', priority: '0.8' },
   { loc: '/videos', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.7' },
